@@ -19,8 +19,8 @@ void SegmentShape::setSecondPoint(const sf::Vector2f& p)
 
 void SegmentShape::setPoints(const sf::Vector2f& p1, const sf::Vector2f& p2)
 {
-	_array[0].position = p1;
-	_array[1].position = p2;
+	setFirstPoint(p1);
+	setSecondPoint(p2);
 }
 
 void SegmentShape::setColor(const sf::Color& color)
