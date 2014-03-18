@@ -3,6 +3,7 @@
 #include <cstdarg>
 #include <cstring>
 
+#include "vector2.hpp"
 #include "shapes.hpp"
 #include "render.hpp"
 
@@ -207,5 +208,4 @@ void DebugRenderer::DrawAABB(b2AABB* aabb, const b2Color& color)
 	_window.draw(s2);
 	_window.draw(s3);
 	_window.draw(s4);
-	//*/
 }
