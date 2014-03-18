@@ -6,6 +6,7 @@
 #include "render.hpp"
 #include "rectangleShape.hpp"
 #include "vector2.hpp"
+#include "Physics/phyWorld.hpp"
 
 void handleEvents(sf::RenderWindow& window);
 void helloBox2D(void);
@@ -17,7 +18,7 @@ int main(int argc, char* argv[])
 
     /* World */
     Vector2f gravity(0.0f, -10.0f);
-    b2World world(gravity.toBox2D());
+	PhyWorld world(gravity.toBox2D());
 
     /* Ground */
     b2BodyDef groundBodyDef;
