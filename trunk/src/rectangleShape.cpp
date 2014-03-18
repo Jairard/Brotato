@@ -1,5 +1,9 @@
 #include "rectangleShape.hpp"
 
+#ifndef M_PI
+#define M_PI 3.1415
+#endif
+
 RectangleShape::RectangleShape(b2World* world, sf::Vector2f center, sf::Vector2f size, float angle, const sf::Color& color, b2BodyType type):
 	sf::RectangleShape(),
 	_body(0)

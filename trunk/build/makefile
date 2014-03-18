@@ -60,7 +60,10 @@ INC = -I$(SFML_DIR)/include -I$(BOX2D_INCLUDE_DIR)
 
 # SRC files
 SRC_DIR = ../src
-SRC = $(wildcard $(SRC_DIR)/*.cpp)
+PHYSICS_DIR = Physics
+
+PHYSICS_SRC = $(wildcard $(SRC_DIR)/$(PHYSICS_DIR)/*.cpp)
+SRC = $(wildcard $(SRC_DIR)/*.cpp) $(PHYSICS_SRC)
 
 # OBJ files
 OBJ_DIR = ../obj
@@ -68,10 +71,6 @@ OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # BIN files
 BIN_DIR = ../bin
-
-#ALL: ../obj/main.o
-#	$(CC) $(LDFLAGS) -o $(BIN_DIR)/$(EXE) $^
-#	@ echo 'Executable' $(EXE) 'successfully compiled !'
 
 ALL: $(OBJ)
 	$(CC) -o $(BIN_DIR)/$(EXE) $^ $(LDFLAGS)
@@ -83,6 +82,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp
 
 clean:
 	$(RM) $(OBJ_DIR)/*.o
+	$(RM) $(OBJ_DIR)/$(PHYSICS_DIR)/*.o
 	@ echo 'Object files removed'
 
 mrproper: clean
