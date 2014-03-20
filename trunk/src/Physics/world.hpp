@@ -24,8 +24,10 @@ namespace Phy
 			
 			void step(void);
 			
-			Vector2f transformPosition(const Vector2f& position);
-			float transformAngle(float angle);
+			virtual Vector2f vectorFromPhy(const Vector2f& v);
+			virtual Vector2f vectorToPhy(const Vector2f v);
+			virtual float angleFromPhy(float angle);
+			virtual float angleToPhy(float angle);
 			
 			
 		protected:

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Physics/Entity.hpp"
 #include "RectangleShape.hpp"
+#include "Math.hpp"
 
 RectangleShape::RectangleShape(Phy::World* world, sf::Vector2f center, sf::Vector2f size, float angle, const sf::Color& color, b2BodyType type):
 	sf::RectangleShape(),
@@ -16,7 +17,7 @@ RectangleShape::RectangleShape(Phy::World* world, sf::Vector2f center, sf::Vecto
 	setPosition(center);
 	setOrigin(realSize.toSFML()/2.f);
 	setFillColor(color);
-	setRotation(-angle * 180/M_PI);
+	setRotation(-angle * 180/Math::pi());
 }
 
 void RectangleShape::update(const Vector2f& position, float angle)

@@ -57,20 +57,30 @@ namespace Phy
 		{
 			Entity* entity = *it;
 			b2Body* body = entity->body();
-			Vector2f position = transformPosition(body->GetPosition());
-			float32 angle = transformAngle(body->GetAngle());
+			Vector2f position = vectorFromPhy(body->GetPosition());
+			float32 angle = angleFromPhy(body->GetAngle());
 			
 			entity->update(position, angle);
 		}
 	}
 	
-	Vector2f World::transformPosition(const Vector2f& position)
+	Vector2f World::vectorFromPhy(const Vector2f& v)
 	{
-		return Vector2f(position.x, -position.y);
+		return Vector2f(v.x, -v.y);
+	}
+
+	Vector2f World::vectorToPhy(const Vector2f v)
+	{
+		return Vector2f(v.x, -v.y);
 	}
 	
-	float World::transformAngle(float angle)
+	float World::angleFromPhy(float angle)
 	{
 		return -Math::rad2deg(angle);
+	}
+
+	float World::angleToPhy(float angle)
+	{
+		return -Math::deg2rad(angle);
 	}
 }
