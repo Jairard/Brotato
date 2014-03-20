@@ -5,24 +5,18 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
-#include "vector2.hpp"
+#include "Vector2.hpp"
+#include "Physics/World.hpp"
+#include "Physics/Rectangle.hpp"
 
-class RectangleShape: public sf::RectangleShape
+class RectangleShape: public sf::RectangleShape, public Phy::Rectangle
 {
 	public:
-		RectangleShape(b2World* world, sf::Vector2f center, sf::Vector2f size,
+		RectangleShape(Phy::World* world, sf::Vector2f center, sf::Vector2f size,
 					 float angle, const sf::Color& color=sf::Color::White, b2BodyType type = b2_staticBody);
 		virtual ~RectangleShape() {}
-
-		b2BodyDef* bodyDef(void)	                         { return &_bodyDef; }
-		b2PolygonShape* shape(void)                          { return &_shape; }
-
-		void update(void);
-
-	protected:
-		b2Body* _body;
-		b2BodyDef _bodyDef;
-		b2PolygonShape _shape;
+		
+		virtual void update(const Vector2f& position, float angle);
 };
 
 #endif

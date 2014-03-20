@@ -42,28 +42,22 @@ LDFLAGS += $(LSFML)
 LBOX2D = -L$(BOX2D_LIB_DIR) -lBox2D
 LDFLAGS += $(LBOX2D)
 
-# LIBS
-#BOX2D_LIB = -lBox2D
-#SYSTEM_LIB = -lsfml-system
-#WINDOW_LIB = -lsfml-window
-#GRAPHICS_LIB = -lsfml-graphics
-#AUDIO_LIB = -lsfml-audio
-#NETWORK_LIB = -lsfml-network
-#SFML_LIB =  $(GRAPHICS_LIB) $(WINDOW_LIB) $(SYSTEM_LIB)
-##$(SYSTEM_LIB) $(WINDOW_LIB) $(GRAPHICS_LIB) $(AUDIO_LIB) $(NETWORK_LIB)
-#LDFLAGS = -L$(SFML_DIR)/lib $(BOX2D_LIB) $(SFML_LIB)
-##LDFLAGS = -L$(BOX2D_DIR)/lib $(BOX2D_LIB)
-
 #INCLUDE
 INC = -I$(SFML_DIR)/include -I$(BOX2D_INCLUDE_DIR)
-#INC = -I$(BOX2D_DIR)/include
 
 # SRC files
 SRC_DIR = ../src
 PHYSICS_DIR = Physics
+GRAPHICS_DIR = Graphics
+GAME_OBJECTS_DIR = GameObjects
 
 PHYSICS_SRC = $(wildcard $(SRC_DIR)/$(PHYSICS_DIR)/*.cpp)
-SRC = $(wildcard $(SRC_DIR)/*.cpp) $(PHYSICS_SRC)
+GRAPHICS_SRC = $(wildcard $(SRC_DIR)/$(GRAPHICS_DIR)/*.cpp)
+GAME_OBJECTS_SRC = $(wildcard $(SRC_DIR)/$(GAME_OBJECTS_DIR)/*.cpp)
+SRC = $(wildcard $(SRC_DIR)/*.cpp) 
+SRC += $(PHYSICS_SRC)
+SRC += $(GRAPHICS_SRC)
+SRC += $(GAME_OBJECTS_SRC)
 
 # OBJ files
 OBJ_DIR = ../obj
@@ -75,9 +69,13 @@ BIN_DIR = ../bin
 ALL: $(OBJ)
 	$(CC) -o $(BIN_DIR)/$(EXE) $^ $(LDFLAGS)
 	@echo 'Executable' $(EXE) 'successfully compiled !'
+	
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
+	$(CC) $(INC) $(CFLAGS) -o $@ -c $<
+	@ echo 'Source file' $< 'compiled with header'
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp
-	@ $(CC) $(INC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(INC) $(CFLAGS) -o $@ -c $<
 	@ echo 'Source file' $< 'compiled'
 
 clean:

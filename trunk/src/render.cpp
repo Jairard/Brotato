@@ -3,9 +3,9 @@
 #include <cstdarg>
 #include <cstring>
 
-#include "vector2.hpp"
-#include "shapes.hpp"
-#include "render.hpp"
+#include "Vector2.hpp"
+#include "Shapes.hpp"
+#include "Render.hpp"
 
 const sf::Color DebugRenderer::TRANSPARENT_COLOR = sf::Color(0, 0, 0, 0);
 const char* DebugRenderer::FONT_FILE = "../res/arial.ttf";

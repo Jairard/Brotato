@@ -3,13 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include "render.hpp"
-#include "rectangleShape.hpp"
-#include "vector2.hpp"
-#include "Physics/phyWorld.hpp"
+#include "Render.hpp"
+#include "RectangleShape.hpp"
+#include "Math.hpp"
+#include "Vector2.hpp"
+#include "Physics/World.hpp"
 
 void handleEvents(sf::RenderWindow& window);
-void helloBox2D(void);
 
 int main(int argc, char* argv[])
 {	
@@ -18,7 +18,10 @@ int main(int argc, char* argv[])
 
     /* World */
     Vector2f gravity(0.0f, -10.0f);
-	PhyWorld world(gravity.toBox2D());
+	float32 timeStep = 1.0f / 60.0f;
+    int32 velocityIterations = 6;
+    int32 positionIterations = 2;
+	Phy::World world(gravity.toBox2D(), timeStep, velocityIterations, positionIterations);
 
     /* Ground */
     b2BodyDef groundBodyDef;
@@ -30,12 +33,11 @@ int main(int argc, char* argv[])
     groundBody->CreateFixture(&groundBox, 0.0f);
 
     /* Boxes */
-    RectangleShape rect2(&world, sf::Vector2f(0.5, 1.), sf::Vector2f(2., 2.), 0., sf::Color::Blue, b2_dynamicBody);
+    RectangleShape rect2(&world, sf::Vector2f(0.5, 1.), sf::Vector2f(2., 2.), Math::pi()/4., sf::Color::Blue, b2_dynamicBody);
     RectangleShape rect(&world, sf::Vector2f(0., 20.), sf::Vector2f(2., 2.), 1., sf::Color::Red, b2_dynamicBody);
-
-    float32 timeStep = 1.0f / 60.0f;
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
+	
+	rect2.build();
+	rect.build();
 
     //sf::RectangleShape rect(sf::Vector2f(2., 2.));
     //rect.setOrigin(1., 1.);
@@ -54,11 +56,8 @@ int main(int argc, char* argv[])
         handleEvents(window);
         window.clear();
 
-        world.Step(timeStep, velocityIterations, positionIterations);
-        //printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-        world.DrawDebugData();
-        rect.update();
-        rect2.update();
+        world.step();
+        //world.DrawDebugData();
 
         window.draw(rect);
         window.draw(rect2);
@@ -92,8 +91,4 @@ void handleEvents(sf::RenderWindow& window)
 				break;
 		}
 	}
-}
-
-void helloBox2D()
-{
 }

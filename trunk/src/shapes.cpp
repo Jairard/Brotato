@@ -1,4 +1,4 @@
-#include "shapes.hpp"
+#include "Shapes.hpp"
 
 SegmentShape::SegmentShape(const sf::Vector2f& p1, const sf::Vector2f& p2):
 	_array(sf::Lines, 2)

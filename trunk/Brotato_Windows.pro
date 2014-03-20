@@ -5,17 +5,23 @@ CONFIG -= qt
 TARGET = ../../bin/test
 
 SOURCES += \
-	src/shapes.cpp \
-	src/render.cpp \
-	src/main.cpp \
-    src/rectangleShape.cpp \
-    src/Physics/phyWorld.cpp
+    src/Shapes.cpp \
+    src/Render.cpp \
+    src/RectangleShape.cpp \
+    src/Math.cpp \
+    src/main.cpp \
+    src/Physics/World.cpp \
+    src/Physics/Rectangle.cpp \
+    src/Physics/Entity.cpp
 
 OTHER_FILES += build/makifile
 
 HEADERS += \
-	src/shapes.hpp \
-	src/render.hpp \
-    src/rectangleShape.hpp \
-    src/vector2.hpp \
-    src/Physics/phyWorld.hpp
+    src/Vector2.hpp \
+    src/Shapes.hpp \
+    src/Render.hpp \
+    src/RectangleShape.hpp \
+    src/Math.hpp \
+    src/Physics/World.hpp \
+    src/Physics/Rectangle.hpp \
+    src/Physics/Entity.hpp

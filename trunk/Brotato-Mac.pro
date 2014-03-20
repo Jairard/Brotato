@@ -2,20 +2,26 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= qt
 
-SOURCES += \
-	src/shapes.cpp \
-	src/render.cpp \
-	src/main.cpp \
-    src/rectangleShape.cpp \
-    src/Physics/phyWorld.cpp \
-    src/Physics/phyEntity.cpp
+TARGET = ../../bin/test
+
+SOURCES += \ 
+    src/Shapes.cpp \
+    src/Render.cpp \
+    src/RectangleShape.cpp \
+    src/Math.cpp \
+    src/main.cpp \
+    src/Physics/World.cpp \
+    src/Physics/Rectangle.cpp \
+    src/Physics/Entity.cpp
 
 OTHER_FILES += build/makifile
 
-HEADERS += \
-	src/shapes.hpp \
-	src/render.hpp \
-    src/vector2.hpp \
-    src/rectangleShape.hpp \
-    src/Physics/phyWorld.hpp \
-    src/Physics/phyEntity.hpp
+HEADERS += \ 
+    src/Vector2.hpp \
+    src/Shapes.hpp \
+    src/Render.hpp \
+    src/RectangleShape.hpp \
+    src/Math.hpp \
+    src/Physics/World.hpp \
+    src/Physics/Rectangle.hpp \
+    src/Physics/Entity.hpp
