@@ -7,7 +7,7 @@ ifeq ($(OS),Windows_NT)
         LDFLAGS += -mwindows
         SFML_DIR = D:/lib/SFML
         BOX2D_DIR = D:/lib/Box2D
-		BOX2D_LIB_DIR = $(BOX2D_DIR)/Box2D
+        BOX2D_LIB_DIR = $(BOX2D_DIR)/Box2D
         BOX2D_INCLUDE_DIR = $(BOX2D_DIR)
 		RM = del /s
 		test += .exe
