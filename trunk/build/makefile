@@ -1,6 +1,8 @@
-CC = g++
-CFLAGS = -W -ansi -g
+export CC = g++
+export CFLAGS = -W -ansi -g
+export LDFLAGS
 EXE = test
+export RM=
 
 # Getting OS
 ifeq ($(OS),Windows_NT)
@@ -11,18 +13,15 @@ ifeq ($(OS),Windows_NT)
         BOX2D_INCLUDE_DIR = $(BOX2D_DIR)
 		RM = del /s
 		test += .exe
+		CREATE_DIR = echo 'Creating dir'
 else
         LDFLAGS +=
 		SFML_DIR = /usr/local
 		BOX2D_DIR = /usr/local
 		BOX2D_LIB_DIR = $(BOX2D_DIR)/lib
         BOX2D_INCLUDE_DIR = $(BOX2D_DIR)/include
-		RM = rm -rf
-#    UNAME_S := $(shell uname -s)
-#    ifeq ($(UNAME_S),Linux)
-#    endif
-#    ifeq ($(UNAME_S),Darwin)
-#    endif
+		RM = rm -R
+		CREATE_DIR = mkdir -p
 endif
 
 # SFML
@@ -43,49 +42,68 @@ LBOX2D = -L$(BOX2D_LIB_DIR) -lBox2D
 LDFLAGS += $(LBOX2D)
 
 #INCLUDE
-INC = -I$(SFML_DIR)/include -I$(BOX2D_INCLUDE_DIR)
+export INC = -I$(SFML_DIR)/include -I$(BOX2D_INCLUDE_DIR)
 
 # SRC files
-SRC_DIR = ../src
-PHYSICS_DIR = Physics
-GRAPHICS_DIR = Graphics
-GAME_OBJECTS_DIR = GameObjects
-
-PHYSICS_SRC = $(wildcard $(SRC_DIR)/$(PHYSICS_DIR)/*.cpp)
-GRAPHICS_SRC = $(wildcard $(SRC_DIR)/$(GRAPHICS_DIR)/*.cpp)
-GAME_OBJECTS_SRC = $(wildcard $(SRC_DIR)/$(GAME_OBJECTS_DIR)/*.cpp)
+export SRC_DIR = ../src
 SRC = $(wildcard $(SRC_DIR)/*.cpp) 
-SRC += $(PHYSICS_SRC)
-SRC += $(GRAPHICS_SRC)
-SRC += $(GAME_OBJECTS_SRC)
+# TODO test in Windows 
+SRC = $(shell find $(SRC_DIR) -type f -name '*.cpp')
 
 # OBJ files
-OBJ_DIR = ../obj
+export OBJ_DIR = ../obj
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # BIN files
 BIN_DIR = ../bin
 
-ALL: $(OBJ)
-	$(CC) -o $(BIN_DIR)/$(EXE) $^ $(LDFLAGS)
+# Subdirectories
+PHYSICS_SUBDIR = Physics
+OBJ += $(wildcard $(OBJ_DIR)/$(PHYSICS_SUBDIR)/*.o)
+
+GRAPHICS_SUBDIR = Graphics
+OBJ += $(wildcard $(OBJ_DIR)/$(GRAPHICS_SUBDIR)/*.o)
+
+GAMEOBJECTS_SUBDIR = GameObjects
+OBJ += $(wildcard $(OBJ_DIR)/$(GAMEOBJECTS_SUBDIR)/*.o)
+
+SUBDIRS = $(PHYSICS_SUBDIR) $(GRAPHICS_SUBDIR) $(GAMEOBJECTS_SUBDIR)
+
+#
+ALL: 
+	@$(MAKE) objects
+	@$(MAKE) link
+
+# At this step, $(OBJ) does not contain subdirectories files
+objects: $(OBJ) $(SUBDIRS)
+
+$(SUBDIRS):
+	@#echo 'Entering' $@ '...'
+	@#$(MAKE) -C $@ DIR=$@
+.PHONY: subdirs $(SUBDIRS)
+
+link: $(OBJ)
+	$(CC) $(LDFLAGS) -o $(BIN_DIR)/$(EXE) $^
 	@echo 'Executable' $(EXE) 'successfully compiled !'
 	
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
+	@ $(CREATE_DIR) $(@D)
 	$(CC) $(INC) $(CFLAGS) -o $@ -c $<
 	@ echo 'Source file' $< 'compiled with header'
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp
+	@ $(CREATE_DIR) $(@D)
 	$(CC) $(INC) $(CFLAGS) -o $@ -c $<
 	@ echo 'Source file' $< 'compiled'
 
 clean:
-	$(RM) $(OBJ_DIR)/*.o
-	$(RM) $(OBJ_DIR)/$(PHYSICS_DIR)/*.o
+	@ $(RM) $(OBJ_DIR)/*
+	@# $(MAKE) clean -C $(PHYSICS_SUBDIR) DIR=$(PHYSICS_SUBDIR)
+	@# $(MAKE) clean -C $(GRAPHICS_SUBDIR) DIR=$(GRAPHICS_SUBDIR)
+	@# $(MAKE) clean -C $(GAMEOBJECTS_SUBDIR) DIR=$(GAMEOBJECTS_SUBDIR)
 	@ echo 'Object files removed'
 
 mrproper: clean
 	@ $(RM) $(BIN_DIR)/$(EXE)
 	@ echo 'Executable file removed'
 
-test:
-	@echo $(OS)

@@ -1,5 +1,6 @@
 #include "Shapes.hpp"
 
+/*
 SegmentShape::SegmentShape(const sf::Vector2f& p1, const sf::Vector2f& p2):
 	_array(sf::Lines, 2)
 {
@@ -61,6 +62,7 @@ void PointShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	states.transform *= getTransform();
 	target.draw(&_v, 1, sf::Points);
 }
+//*/
 
 ThickPointShape::ThickPointShape(const sf::RenderWindow* window, const sf::Vector2f center):
 	sf::RectangleShape(),

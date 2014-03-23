@@ -8,6 +8,7 @@
 #include "Math.hpp"
 #include "Vector2.hpp"
 #include "Physics/World.hpp"
+#include "Graphics.hpp"
 
 void handleEvents(sf::RenderWindow& window);
 
@@ -38,6 +39,17 @@ int main(int argc, char* argv[])
 	
 	rect2.build();
 	rect.build();
+	
+	Graphics::SegmentShape segment(Vector2f(-20., -20.), Vector2f(20., 20.));
+	segment.setColors(sf::Color::Yellow, sf::Color::Magenta);
+	
+	Graphics::PointShape p1(Vector2f(-10., 10.));
+	Graphics::PointShape p2(Vector2f(10., -10.));
+	p1.setColor(sf::Color::Green);
+	p2.setColor(sf::Color::Cyan);
+	
+	Graphics::RectangleShape rectangle(Vector2f(2., 2.), Vector2f(10., -10.));
+	rectangle.setColor(sf::Color::Yellow);
 
     //sf::RectangleShape rect(sf::Vector2f(2., 2.));
     //rect.setOrigin(1., 1.);
@@ -61,6 +73,10 @@ int main(int argc, char* argv[])
 
         window.draw(rect);
         window.draw(rect2);
+		window.draw(segment);
+		window.draw(rectangle);
+		window.draw(p1);
+		window.draw(p2);
 
         window.display();
 

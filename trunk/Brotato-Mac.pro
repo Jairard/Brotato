@@ -14,9 +14,12 @@ SOURCES += \
     src/Physics/World.cpp \
     src/Physics/Rectangle.cpp \
     src/Physics/Entity.cpp \
-    src/Graphics/Entity.cpp
-
-OTHER_FILES += build/makifile
+    src/Graphics/Entity.cpp \
+    src/Graphics/SegmentShape.cpp \
+    src/Graphics/RectangleShape.cpp \
+    src/Graphics/Shape.cpp \
+    src/Graphics/PointShape.cpp \
+    src/GameObjects/GameObject.cpp
 
 HEADERS += \ 
     src/Vector2.hpp \
@@ -27,4 +30,10 @@ HEADERS += \
     src/Physics/World.hpp \
     src/Physics/Rectangle.hpp \
     src/Physics/Entity.hpp \
-    src/Graphics/Entity.hpp
+    src/Graphics/Entity.hpp \
+    src/Graphics/SegmentShape.hpp \
+    src/Graphics.hpp \
+    src/Graphics/RectangleShape.hpp \
+    src/Graphics/Shape.hpp \
+    src/Graphics/PointShape.hpp \
+    src/GameObjects/GameObject.hpp

@@ -1,16 +1,18 @@
-#ifndef __ENTITY__
-#define __ENTITY__
+#ifndef __GRAPHICS_ENTITY__
+#define __GRAPHICS_ENTITY__
 
 #include <SFML/Graphics.hpp>
 
 namespace Graphics
 {
-	class Entity: public sf::Drawable
+	class Entity: public sf::Drawable, public sf::Transformable
 	{
 		public:
 			Entity();
+			virtual ~Entity() {}
 			
-			virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const = 0;
+		protected:
+			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 	};
 }
 

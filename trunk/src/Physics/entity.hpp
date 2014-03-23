@@ -1,5 +1,5 @@
-#ifndef __ENTITY__
-#define __ENTITY__
+#ifndef __PHYSICS_ENTITY__
+#define __PHYSICS_ENTITY__
 
 #include <Box2D/Box2D.h>
 #include "../Vector2.hpp"
@@ -18,7 +18,7 @@ namespace Phy
 			/* Accessors */
 			World*				world()	const			{ return m_world; }
 			b2Body*				body() const			{ return m_body; }
-			b2Shape*			shape()	const			{ return m_shape; }
+			virtual b2Shape*	shape()	const			{ return m_shape; }
 			b2Fixture*			shapeFixture() const	{ return m_shapeFixture; }
 			const b2BodyDef&	bodyDef() const			{ return m_bodyDef; }
 			const b2FixtureDef&	fixtureDef() const		{ return m_fixtureDef; }

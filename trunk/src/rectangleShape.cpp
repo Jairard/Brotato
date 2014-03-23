@@ -10,6 +10,8 @@ RectangleShape::RectangleShape(Phy::World* world, sf::Vector2f center, sf::Vecto
 {
 	/* Physics initialization */
 	bodyDef().angle = angle;
+	b2PolygonShape* phyShape = shape();
+	b2Shape* phySimpleShape = shape();
 
 	/* Graphics initialization */
 	Vector2f realSize = Vector2f(size) + 2*shape()->m_radius;
