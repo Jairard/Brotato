@@ -9,6 +9,7 @@
 #include "Vector2.hpp"
 #include "Physics/World.hpp"
 #include "Graphics.hpp"
+#include "Singleton.hpp"
 
 void handleEvents(sf::RenderWindow& window);
 
@@ -16,6 +17,8 @@ int main(int argc, char* argv[])
 {	
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
+    
+    Singleton* s = Singleton::instance();
 
     /* World */
     Vector2f gravity(0.0f, -10.0f);
@@ -43,8 +46,7 @@ int main(int argc, char* argv[])
 	Graphics::SegmentShape segment(Vector2f(-20., -20.), Vector2f(20., 20.));
 	segment.setColors(sf::Color::Yellow, sf::Color::Magenta);
 	
-	Graphics::PointShape p1(Vector2f(-10., 10.));
-	Graphics::PointShape p2(Vector2f(10., -10.));
+	Graphics::PointShape p1(Vector2f(-10., 10.)), p2(Vector2f(10., -10.));
 	p1.setColor(sf::Color::Green);
 	p2.setColor(sf::Color::Cyan);
 	
@@ -69,7 +71,7 @@ int main(int argc, char* argv[])
         window.clear();
 
         world.step();
-        //world.DrawDebugData();
+        world.DrawDebugData();
 
         window.draw(rect);
         window.draw(rect2);

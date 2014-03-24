@@ -48,7 +48,7 @@ export INC = -I$(SFML_DIR)/include -I$(BOX2D_INCLUDE_DIR)
 export SRC_DIR = ../src
 SRC = $(wildcard $(SRC_DIR)/*.cpp) 
 # TODO test in Windows 
-SRC = $(shell find $(SRC_DIR) -type f -name '*.cpp')
+#SRC = $(shell find $(SRC_DIR) -type f -name '*.cpp')
 
 # OBJ files
 export OBJ_DIR = ../obj
@@ -59,28 +59,36 @@ BIN_DIR = ../bin
 
 # Subdirectories
 PHYSICS_SUBDIR = Physics
-OBJ += $(wildcard $(OBJ_DIR)/$(PHYSICS_SUBDIR)/*.o)
+SRC += $(wildcard $(SRC_DIR)/$(PHYSICS_SUBDIR)/*.cpp) 
+#OBJ += $(wildcard $(OBJ_DIR)/$(PHYSICS_SUBDIR)/*.o)
 
 GRAPHICS_SUBDIR = Graphics
-OBJ += $(wildcard $(OBJ_DIR)/$(GRAPHICS_SUBDIR)/*.o)
+SRC += $(wildcard $(SRC_DIR)/$(GRAPHICS_SUBDIR)/*.cpp) 
+#OBJ += $(wildcard $(OBJ_DIR)/$(GRAPHICS_SUBDIR)/*.o)
 
 GAMEOBJECTS_SUBDIR = GameObjects
-OBJ += $(wildcard $(OBJ_DIR)/$(GAMEOBJECTS_SUBDIR)/*.o)
+SRC += $(wildcard $(SRC_DIR)/$(GAMEOBJECTS_SUBDIR)/*.cpp) 
+#OBJ += $(wildcard $(OBJ_DIR)/$(GAMEOBJECTS_SUBDIR)/*.o)
 
+OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 SUBDIRS = $(PHYSICS_SUBDIR) $(GRAPHICS_SUBDIR) $(GAMEOBJECTS_SUBDIR)
 
 #
-ALL: 
-	@$(MAKE) objects
-	@$(MAKE) link
+#ALL: 
+#	@$(MAKE) objects
+#	@$(MAKE) link
 
 # At this step, $(OBJ) does not contain subdirectories files
-objects: $(OBJ) $(SUBDIRS)
+#objects: $(OBJ) $(SUBDIRS)
 
-$(SUBDIRS):
-	@#echo 'Entering' $@ '...'
-	@#$(MAKE) -C $@ DIR=$@
-.PHONY: subdirs $(SUBDIRS)
+#$(SUBDIRS):
+#	@#echo 'Entering' $@ '...'
+#	@#$(MAKE) -C $@ DIR=$@
+#.PHONY: subdirs $(SUBDIRS)
+
+all: $(OBJ)
+	$(CC) -o $(BIN_DIR)/$(EXE) $^ $(LDFLAGS) 
+	@echo 'Executable' $(EXE) 'successfully compiled !'
 
 link: $(OBJ)
 	$(CC) $(LDFLAGS) -o $(BIN_DIR)/$(EXE) $^

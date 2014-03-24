@@ -14,9 +14,11 @@ namespace Graphics
 			Shape(sf::PrimitiveType type, unsigned int vertexCount);
 			virtual ~Shape() {}
 			
+            /*
 			void setOrigin(const Vector2f& origin);
 			void setPosition(const Vector2f& position);
 			void setSize(const Vector2f& size);
+            //*/
 			void setColor(const sf::Color& color);
 			
 		protected:

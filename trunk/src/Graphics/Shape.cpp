@@ -7,6 +7,7 @@ namespace Graphics
 		m_array(type, vertexCount)
 	{}
 	
+    /*
 	void Shape::setOrigin(const Vector2f& origin)
 	{
 		setOrigin(origin.toSFML());
@@ -21,6 +22,7 @@ namespace Graphics
 	{
 		setSize(size.toSFML());
 	}
+    //*/
 	
 	void Shape::setColor(const sf::Color& color)
 	{
