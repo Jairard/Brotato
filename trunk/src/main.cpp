@@ -3,22 +3,21 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include "Render.hpp"
-#include "RectangleShape.hpp"
 #include "Math.hpp"
 #include "Vector2.hpp"
-#include "Physics/World.hpp"
-#include "Graphics.hpp"
 #include "Singleton.hpp"
+#include "Windows/FixedFramerateWindow.hpp"
+#include "Graphics.hpp"
+#include "Physics.hpp"
+#include "GameObjects.hpp"
 
 void handleEvents(sf::RenderWindow& window);
+void drawGrid(FixedFramerateWindow& window);
 
 int main(int argc, char* argv[])
 {	
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
-    
-    Singleton* s = Singleton::instance();
 
     /* World */
     Vector2f gravity(0.0f, -10.0f);
@@ -28,20 +27,12 @@ int main(int argc, char* argv[])
 	Phy::World world(gravity.toBox2D(), timeStep, velocityIterations, positionIterations);
 
     /* Ground */
-    b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(0.0f, -10.0f);
-    b2Body* groundBody = world.CreateBody(&groundBodyDef);
-
-    b2PolygonShape groundBox;
-    groundBox.SetAsBox(50.0f, 10.0f);
-    groundBody->CreateFixture(&groundBox, 0.0f);
+	GO::DecorBox ground(&world, Vector2f(0., -5.), Vector2f(25., 10.));
+	ground.setColor(sf::Color::Green);
 
     /* Boxes */
-    RectangleShape rect2(&world, sf::Vector2f(0.5, 1.), sf::Vector2f(2., 2.), Math::pi()/4., sf::Color::Blue, b2_dynamicBody);
-    RectangleShape rect(&world, sf::Vector2f(0., 20.), sf::Vector2f(2., 2.), 1., sf::Color::Red, b2_dynamicBody);
-	
-	rect2.build();
-	rect.build();
+	GO::Box rect(&world, Phy::Dynamic, sf::Vector2f(0., 20.), sf::Vector2f(2., 2.), 1., sf::Color::Red);
+	GO::Box rect2(&world, Phy::Dynamic, sf::Vector2f(0.5, sqrtf(2.)), sf::Vector2f(2., 2.), Math::pi()/4., sf::Color::Blue);
 	
 	Graphics::SegmentShape segment(Vector2f(-20., -20.), Vector2f(20., 20.));
 	segment.setColors(sf::Color::Yellow, sf::Color::Magenta);
@@ -50,15 +41,13 @@ int main(int argc, char* argv[])
 	p1.setColor(sf::Color::Green);
 	p2.setColor(sf::Color::Cyan);
 	
-	Graphics::RectangleShape rectangle(Vector2f(2., 2.), Vector2f(10., -10.));
+	Graphics::RectangleShape rectangle(Vector2f(10., -10.), Vector2f(2., 2.));
 	rectangle.setColor(sf::Color::Yellow);
 
-    //sf::RectangleShape rect(sf::Vector2f(2., 2.));
-    //rect.setOrigin(1., 1.);
     sf::View view(sf::Vector2f(), sf::Vector2f(50., 50.));
     sf::Clock clock;
-    sf::RenderWindow window(sf::VideoMode(400, 400), "Hello Box2D");
-    DebugRenderer renderer(window);
+    FixedFramerateWindow window(sf::VideoMode(400, 400), "Hello Box2D");
+    Graphics::DebugRenderer renderer(window);
 
     world.SetDebugDraw(&renderer);
     renderer.SetFlags(b2Draw::e_shapeBit);
@@ -71,14 +60,16 @@ int main(int argc, char* argv[])
         window.clear();
 
         world.step();
-        world.DrawDebugData();
+		drawGrid(window);
+        //world.DrawDebugData();
 
-        window.draw(rect);
-        window.draw(rect2);
-		window.draw(segment);
-		window.draw(rectangle);
-		window.draw(p1);
-		window.draw(p2);
+		window.render(ground);
+        window.render(rect);
+        window.render(rect2);
+		window.render(segment);
+		window.render(rectangle);
+		window.render(p1);
+		window.render(p2);
 
         window.display();
 
@@ -110,3 +101,22 @@ void handleEvents(sf::RenderWindow& window)
 		}
 	}
 }
+
+void drawGrid(FixedFramerateWindow& window)
+{
+	sf::View view = window.getView();
+	Vector2f center = view.getCenter(), size = view.getSize();
+	int minX = (int)ceil(center.x - size.x/2.), maxX = (int)floor(center.x + size.x/2.);
+	int minY = (int)ceil(center.y - size.y/2.), maxY = (int)floor(center.y + size.y/2.);
+	
+	for (int x=minX; x <=maxX; x++)
+	{
+		for (int y=minY; y<maxY; y++)
+		{
+			Graphics::PointShape point(Vector2f(x, y));
+			point.setColor(sf::Color::White);
+			window.render(point);
+		}
+	}
+}
+

@@ -5,14 +5,13 @@
 
 namespace Graphics
 {
-	class Entity: public sf::Drawable, public sf::Transformable
+	class Entity
 	{
 		public:
 			Entity();
 			virtual ~Entity() {}
 			
-		protected:
-			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
+			virtual void render(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 	};
 }
 

@@ -5,10 +5,10 @@ namespace Phy
 {
 	const float Rectangle::DEFAULT_DENSITY = 1.;
 	
-	Rectangle::Rectangle(World* world, const Vector2f& center, const Vector2f& size, b2BodyType type) :
+	Rectangle::Rectangle(World* world, const Vector2f& center, const Vector2f& size, BodyType type) :
 		Entity(world)
 	{
-		m_bodyDef.type = type;
+		m_bodyDef.type = World::toBox2DType(type);
 		m_bodyDef.position.Set(center.x, center.y);
 		m_bodyDef.allowSleep = true;
 		
@@ -22,10 +22,10 @@ namespace Phy
 	}
 	
 	/*
-	void Rectangle::update(const Vector2f& position, float angle)
+	void Rectangle::setup()
 	{
-		Entity::update(position, angle);
-		std::cout << "updating" << std::endl;
+		std::cout << "Rectangle::setup()" << std::endl;
+		Entity::setup();
 	}
-	//*/
+	*/
 }

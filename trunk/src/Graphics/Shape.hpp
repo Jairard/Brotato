@@ -3,11 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 #include "../Vector2.hpp"
-#include "Entity.hpp"
+#include "SFMLEntity.hpp"
 
 namespace Graphics
 {
-	class Shape : public Entity
+	class Shape : public SFMLEntity
 	{
 		/* Methods */
 		public:
@@ -22,6 +22,7 @@ namespace Graphics
 			void setColor(const sf::Color& color);
 			
 		protected:
+			virtual void render(sf::RenderTarget& target, sf::RenderStates states) const;
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 			
 		/* Members */

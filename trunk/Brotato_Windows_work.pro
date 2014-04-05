@@ -6,34 +6,45 @@ TARGET = ../../bin/test
 INCLUDEPATH += D:/lib/SFML/include
 
 SOURCES += \
-    src/Shapes.cpp \
-    src/Render.cpp \
-    src/RectangleShape.cpp \
     src/Math.cpp \
     src/main.cpp \
     src/Physics/World.cpp \
     src/Physics/Rectangle.cpp \
     src/Physics/Entity.cpp \
-    src/Graphics/Entity.cpp \
-    src/Graphics/PointShape.cpp \
-    src/Graphics/RectangleShape.cpp \
     src/Graphics/SegmentShape.cpp \
-    src/Graphics/Shape.cpp
+    src/Graphics/RectangleShape.cpp \
+    src/Graphics/Shape.cpp \
+    src/Graphics/PointShape.cpp \
+    src/GameObjects/GameObject.cpp \
+    src/Graphics/SFMLEntity.cpp \
+    src/Graphics/Entity.cpp \
+    src/Windows/FixedFramerateWindow.cpp \
+    src/GameObjects/DecorBox.cpp \
+    src/GameObjects/Box.cpp \
+    src/Graphics/_ThickPointShape.cpp \
+    src/Graphics/DebugRenderer.cpp
 
 OTHER_FILES += build/makifile
 
 HEADERS += \
     src/Vector2.hpp \
-    src/Shapes.hpp \
-    src/Render.hpp \
-    src/RectangleShape.hpp \
+    src/Singleton.hpp \
     src/Math.hpp \
     src/Physics/World.hpp \
     src/Physics/Rectangle.hpp \
     src/Physics/Entity.hpp \
-    src/Graphics/Entity.hpp \
-    src/Graphics/PointShape.hpp \
-    src/Graphics/RectangleShape.hpp \
     src/Graphics/SegmentShape.hpp \
+    src/Graphics.hpp \
+    src/Graphics/RectangleShape.hpp \
     src/Graphics/Shape.hpp \
-    src/Singleton.hpp
+    src/Graphics/PointShape.hpp \
+    src/GameObjects/GameObject.hpp \
+    src/Graphics/SFMLEntity.hpp \
+    src/Graphics/Entity.hpp \
+    src/Windows/FixedFramerateWindow.hpp \
+    src/GameObjects/DecorBox.hpp \
+    src/GameObjects/Box.hpp \
+    src/Physics.hpp \
+    src/GameObjects.hpp \
+    src/Graphics/_ThickPointShape.hpp \
+    src/Graphics/DebugRenderer.hpp

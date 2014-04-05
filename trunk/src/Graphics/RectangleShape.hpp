@@ -9,7 +9,7 @@ namespace Graphics
 	class RectangleShape : public Shape
 	{
 		public:
-			RectangleShape(const Vector2f& size=Vector2f(1., 1.), const Vector2f& pos=Vector2f());
+			RectangleShape(const Vector2f& pos=Vector2f(), const Vector2f& size=Vector2f(1., 1.));
 			virtual ~RectangleShape() {}
 	};
 }

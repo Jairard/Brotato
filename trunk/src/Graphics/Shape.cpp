@@ -3,7 +3,7 @@
 namespace Graphics
 {
 	Shape::Shape(sf::PrimitiveType type, unsigned int vertexCount):
-		Entity(),
+		SFMLEntity(),
 		m_array(type, vertexCount)
 	{}
 	
@@ -28,6 +28,11 @@ namespace Graphics
 	{
 		for (unsigned int i=0; i<m_array.getVertexCount(); i++)
 			m_array[i].color = color;
+	}
+	
+	void Shape::render(sf::RenderTarget& target, sf::RenderStates states) const
+	{
+		draw(target, states);
 	}
 	
 	void Shape::draw(sf::RenderTarget& target, sf::RenderStates states) const

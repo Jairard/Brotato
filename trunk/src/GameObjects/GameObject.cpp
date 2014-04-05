@@ -1,5 +1,8 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject()
+namespace GO
 {
+	GameObject::GameObject()
+	{
+	}
 }

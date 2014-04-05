@@ -60,15 +60,15 @@ BIN_DIR = ../bin
 # Subdirectories
 PHYSICS_SUBDIR = Physics
 SRC += $(wildcard $(SRC_DIR)/$(PHYSICS_SUBDIR)/*.cpp) 
-#OBJ += $(wildcard $(OBJ_DIR)/$(PHYSICS_SUBDIR)/*.o)
 
 GRAPHICS_SUBDIR = Graphics
 SRC += $(wildcard $(SRC_DIR)/$(GRAPHICS_SUBDIR)/*.cpp) 
-#OBJ += $(wildcard $(OBJ_DIR)/$(GRAPHICS_SUBDIR)/*.o)
 
 GAMEOBJECTS_SUBDIR = GameObjects
 SRC += $(wildcard $(SRC_DIR)/$(GAMEOBJECTS_SUBDIR)/*.cpp) 
-#OBJ += $(wildcard $(OBJ_DIR)/$(GAMEOBJECTS_SUBDIR)/*.o)
+
+WINDOWS_SUBDIR = Windows
+SRC += $(wildcard $(SRC_DIR)/$(WINDOWS_SUBDIR)/*.cpp) 
 
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 SUBDIRS = $(PHYSICS_SUBDIR) $(GRAPHICS_SUBDIR) $(GAMEOBJECTS_SUBDIR)

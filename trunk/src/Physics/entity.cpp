@@ -9,6 +9,7 @@ namespace Phy
 		m_body(0),
 		m_shape(0),
 		m_shapeFixture(0),
+		m_isSetup(false),
 		m_position(),
 		m_angle(0.)
 	{}
@@ -19,14 +20,16 @@ namespace Phy
 			delete m_shape;
 	}
 	
-	void Entity::build()
-	{
+	void Entity::setup()
+	{	
+		if (m_isSetup)
+			return;
+		
 		// Creates body
 		m_body = m_world->CreateBody(&m_bodyDef);
 		// Attaches collision shape to body
 		m_shapeFixture = m_body->CreateFixture(&m_fixtureDef);
-		
-		m_world->RegisterEntity(this, m_isSecure);
+		m_isSetup = true;
 	}
 	
 	void Entity::update(const Vector2f &position, float angle)

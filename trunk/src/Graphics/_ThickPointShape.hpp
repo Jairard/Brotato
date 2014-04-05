@@ -1,5 +1,5 @@
-#ifndef __SEGMENT_SHAPE__
-#define __SEGMENT_SHAPE__
+#ifndef __GRAPHICS_THICKPONT_SHAPE__
+#define __GRAPHICS_THICKPONT_SHAPE__
 
 #include <SFML/Graphics.hpp>
 

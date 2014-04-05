@@ -9,6 +9,13 @@ namespace Phy
 {
 	class Entity;
 	
+	typedef enum BodyType
+	{
+		Dynamic,
+		Kinematic,
+		Static
+	} BodyType;
+	
 	class World: public b2World
 	{
 	    public:
@@ -24,11 +31,11 @@ namespace Phy
 			
 			void step(void);
 			
-			virtual Vector2f vectorFromPhy(const Vector2f& v);
-			virtual Vector2f vectorToPhy(const Vector2f v);
-			virtual float angleFromPhy(float angle);
-			virtual float angleToPhy(float angle);
-			
+			static Vector2f vectorFromPhy(const Vector2f& v);
+			static Vector2f vectorToPhy(const Vector2f v);
+			static float angleFromPhy(float angle);
+			static float angleToPhy(float angle);
+			static b2BodyType toBox2DType(BodyType type);
 			
 		protected:
 			std::list<Entity*> m_entities;

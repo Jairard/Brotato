@@ -21,8 +21,11 @@ namespace Phy
 	{
 		bool found = false;
 		
+		if (!entity->isSetup())
+			entity->setup();
+		
 		if (secure)
-			found = UnregisterEntity(entity, true);
+			found = UnregisterEntity(entity, secure);
 		
 		m_entities.push_back(entity);
 		return !found;
@@ -82,5 +85,20 @@ namespace Phy
 	float World::angleToPhy(float angle)
 	{
 		return -Math::deg2rad(angle);
+	}
+	
+	b2BodyType World::toBox2DType(BodyType type)
+	{
+		switch (type)
+		{
+			case Dynamic:
+				return b2_dynamicBody;
+			case Kinematic:
+				return b2_kinematicBody;
+			case Static:
+				return b2_staticBody;
+			default:
+				return b2_staticBody;
+		}
 	}
 }

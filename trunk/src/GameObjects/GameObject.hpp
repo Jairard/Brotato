@@ -1,12 +1,14 @@
 #ifndef __GAMEOBJECT__
 #define __GAMEOBJECT__
 
-
-class GameObject
+namespace GO
 {
-	public:
-		GameObject();
-		virtual ~GameObject() {}
-};
+	class GameObject
+	{
+		public:
+			GameObject();
+			virtual ~GameObject() {}
+	};
+}
 
 #endif
