@@ -11,7 +11,7 @@ namespace Graphics
 		public:
 			PointShape(const Vector2f& p=Vector2f());
 			virtual ~PointShape() {}
-			
+
 		protected:
 			sf::Vertex&  vertice(void)		{ return m_array[0]; }
 	};

@@ -15,28 +15,28 @@ namespace Phy
 		Kinematic,
 		Static
 	} BodyType;
-	
+
 	class World: public b2World
 	{
-	    public:
+		public:
 			/* Constructors & destructor */
 			World(const Vector2f& gravity, float timeStep, int velocityIterations, int positionIterations);
 			~World();
-			
+
 			/* Accessors */
-			
+
 			/* Methods */
 			bool RegisterEntity(Entity* entity, bool secure = false);
 			bool UnregisterEntity(Entity* entity, bool secure = false);
-			
+
 			void step(void);
-			
+
 			static Vector2f vectorFromPhy(const Vector2f& v);
 			static Vector2f vectorToPhy(const Vector2f v);
 			static float angleFromPhy(float angle);
 			static float angleToPhy(float angle);
 			static b2BodyType toBox2DType(BodyType type);
-			
+
 		protected:
 			std::list<Entity*> m_entities;
 			float m_timeStep;

@@ -6,36 +6,36 @@
 namespace Phy
 {
 	World::World(const Vector2f& gravity, float timeStep, int velocityIterations, int positionIterations):
-	    b2World(gravity.toBox2D()),
+	             b2World(gravity.toBox2D()),
 		m_entities(),
 		m_timeStep(timeStep),
 		m_velocityIterations(velocityIterations),
 		m_positionIterations(positionIterations)
 	{
 	}
-	
+
 	World::~World()
 	{}
-	
+
 	bool World::RegisterEntity(Entity* entity, bool secure)
 	{
 		bool found = false;
-		
+
 		if (!entity->isSetup())
 			entity->setup();
-		
+
 		if (secure)
 			found = UnregisterEntity(entity, secure);
-		
+
 		m_entities.push_back(entity);
 		return !found;
 	}
-	
+
 	bool World::UnregisterEntity(Entity* entity, bool secure)
 	{
 		bool found = false;
 		std::list<Entity*>::iterator it;
-		
+
 		for (it=m_entities.begin(); it!=m_entities.end(); it++)
 		{
 			if (*it == entity)
@@ -46,27 +46,27 @@ namespace Phy
 					break;
 			}
 		}
-	
+
 		return found;
 	}
-	
+
 	void World::step()
 	{
 		Step(m_timeStep, m_velocityIterations, m_positionIterations);
-		
+
 		std::list<Entity*>::iterator it;
-		
+
 		for (it=m_entities.begin(); it!=m_entities.end(); it++)
 		{
 			Entity* entity = *it;
 			b2Body* body = entity->body();
 			Vector2f position = vectorFromPhy(body->GetPosition());
 			float32 angle = angleFromPhy(body->GetAngle());
-			
+
 			entity->update(position, angle);
 		}
 	}
-	
+
 	Vector2f World::vectorFromPhy(const Vector2f& v)
 	{
 		return Vector2f(v.x, -v.y);
@@ -76,7 +76,7 @@ namespace Phy
 	{
 		return Vector2f(v.x, -v.y);
 	}
-	
+
 	float World::angleFromPhy(float angle)
 	{
 		return -Math::rad2deg(angle);
@@ -86,7 +86,7 @@ namespace Phy
 	{
 		return -Math::deg2rad(angle);
 	}
-	
+
 	b2BodyType World::toBox2DType(BodyType type)
 	{
 		switch (type)

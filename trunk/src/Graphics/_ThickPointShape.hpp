@@ -17,7 +17,7 @@ class ThickPointShape: public sf::RectangleShape
 		const sf::RenderWindow* _window;
 
 	private:
-    	void update(void);
+		void update(void);
 };
 
 #endif

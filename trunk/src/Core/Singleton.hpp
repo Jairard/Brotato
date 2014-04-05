@@ -4,30 +4,30 @@
 template <typename T>
 class Singleton
 {
-    public:
-        static T* instance(void)
-        {
-            if (!m_instance)
-                m_instance = new T();
-            return m_instance;
-        }
-        
-        static void deleteInstance(void)
-        {
-            if (m_instance)
-            {
-                delete m_instance;
-                m_instance = 0;
-            }
-        }
-    
-    protected:
-        Singleton()
-        {}
-        
-        virtual ~Singleton()
-        {}
-		
+	public:
+		static T* instance(void)
+		{
+			if (!m_instance)
+				m_instance = new T();
+			return m_instance;
+		}
+
+		static void deleteInstance(void)
+		{
+			if (m_instance)
+			{
+				delete m_instance;
+				m_instance = 0;
+			}
+		}
+
+	protected:
+		Singleton()
+		{}
+
+		virtual ~Singleton()
+		{}
+
 	private:
 		static T* m_instance;
 };

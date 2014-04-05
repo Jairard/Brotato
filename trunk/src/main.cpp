@@ -13,22 +13,22 @@ void handleEvents(sf::RenderWindow& window);
 void drawGrid(FixedFramerateWindow& window);
 
 int main(int argc, char* argv[])
-{	
+{
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
 
-    /* World */
-    Vector2f gravity(0.0f, -10.0f);
+	/* World */
+	Vector2f gravity(0.0f, -10.0f);
 	float32 timeStep = 1.0f / 60.0f;
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
 	Phy::World world(gravity.toBox2D(), timeStep, velocityIterations, positionIterations);
 
-    /* Ground */
+	/* Ground */
 	GO::DecorBox ground(&world, Vector2f(0., -5.), Vector2f(25., 10.));
 	ground.setColor(sf::Color::Green);
 
-    /* Boxes */
+	/* Boxes */
 	GO::Box rect(&world, Phy::Dynamic, sf::Vector2f(0., 20.), sf::Vector2f(2., 2.), 1., sf::Color::Red);
 	GO::Box rect2(&world, Phy::Dynamic, sf::Vector2f(0.5, sqrt(2.)), sf::Vector2f(2., 2.), Math::pi()/4., sf::Color::Blue);
 	
@@ -42,42 +42,42 @@ int main(int argc, char* argv[])
 	Graphics::RectangleShape rectangle(Vector2f(10., -10.), Vector2f(2., 2.));
 	rectangle.setColor(sf::Color::Yellow);
 
-    sf::View view(sf::Vector2f(), sf::Vector2f(50., 50.));
-    sf::Clock clock;
-    FixedFramerateWindow window(sf::VideoMode(400, 400), "Hello Box2D");
-    Graphics::DebugRenderer renderer(window);
+	sf::View view(sf::Vector2f(), sf::Vector2f(50., 50.));
+	sf::Clock clock;
+	FixedFramerateWindow window(sf::VideoMode(400, 400), "Hello Box2D");
+	Graphics::DebugRenderer renderer(window);
 
-    world.SetDebugDraw(&renderer);
-    renderer.SetFlags(b2Draw::e_shapeBit);
+	world.SetDebugDraw(&renderer);
+	renderer.SetFlags(b2Draw::e_shapeBit);
 
-    window.setView(view);
+	window.setView(view);
 
-    while (window.isOpen())
-    {
-        handleEvents(window);
-        window.clear();
+	while (window.isOpen())
+	{
+		handleEvents(window);
+		window.clear();
 
-        world.step();
+		world.step();
 		drawGrid(window);
-        //world.DrawDebugData();
+		//world.DrawDebugData();
 
 		window.render(ground);
-        window.render(rect);
-        window.render(rect2);
+		window.render(rect);
+		window.render(rect2);
 		window.render(segment);
 		window.render(rectangle);
 		window.render(p1);
 		window.render(p2);
 
-        window.display();
+		window.display();
 
-        float elapsed = clock.getElapsedTime().asSeconds();
-        sf::Time toSleep = sf::seconds(timeStep - elapsed);
+		float elapsed = clock.getElapsedTime().asSeconds();
+		sf::Time toSleep = sf::seconds(timeStep - elapsed);
 
-        if (toSleep.asSeconds() > 0)
-            sf::sleep(toSleep);
-        clock.restart();
-    }
+		if (toSleep.asSeconds() > 0)
+			sf::sleep(toSleep);
+		clock.restart();
+	}
 }
 
 void handleEvents(sf::RenderWindow& window)

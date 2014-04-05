@@ -10,7 +10,7 @@ namespace Graphics
 		m_array[1].position = sf::Vector2f( 0.5, -0.5);
 		m_array[2].position = sf::Vector2f( 0.5,  0.5);
 		m_array[3].position = sf::Vector2f(-0.5,  0.5);
-        
+
 		//setOrigin((size/2.).toSFML());
 		setPosition(pos.toSFML());
 		setScale(size.toSFML());

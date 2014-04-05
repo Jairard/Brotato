@@ -10,7 +10,7 @@ namespace Graphics
 		public:
 			Entity();
 			virtual ~Entity() {}
-			
+
 			virtual void render(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 	};
 }

@@ -11,7 +11,7 @@ namespace Graphics
 		public:
 			SegmentShape(const Vector2f& p1=Vector2f(), const Vector2f& p2=Vector2f());
 			virtual ~SegmentShape() {}
-	
+
 			void setFirstPoint(const Vector2f& p);
 			void setSecondPoint(const Vector2f& p);
 			void setPoints(const Vector2f& p1, const Vector2f& p2);

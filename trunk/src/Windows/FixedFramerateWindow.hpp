@@ -8,8 +8,8 @@ class FixedFramerateWindow : public sf::RenderWindow
 {
 	public:
 		FixedFramerateWindow(sf::VideoMode mode, const sf::String& title, 
-							 sf::Uint32 style=sf::Style::Default, 
-							 const sf::ContextSettings& settings=sf::ContextSettings());
+		                     sf::Uint32 style=sf::Style::Default, 
+		                     const sf::ContextSettings& settings=sf::ContextSettings());
 
 	public:
 		void render(Graphics::Entity& entity, const sf::RenderStates& states=sf::RenderStates::Default);

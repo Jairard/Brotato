@@ -5,7 +5,7 @@
 #include "Shape.hpp"
 
 namespace Graphics
-{	
+{
 	class RectangleShape : public Shape
 	{
 		public:

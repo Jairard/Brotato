@@ -34,8 +34,8 @@ template <typename T> class Vector2
 			x((T)v.x), y((T)v.y)
 		{}
 
-        sf::Vector2f toSFML(void) const;
-        b2Vec2 toBox2D(void) const;
+		sf::Vector2f toSFML(void) const;
+		b2Vec2 toBox2D(void) const;
 
 		bool isNull(void) const;
 		T squareLength(void) const;
