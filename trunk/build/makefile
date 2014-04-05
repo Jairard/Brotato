@@ -70,6 +70,9 @@ SRC += $(wildcard $(SRC_DIR)/$(GAMEOBJECTS_SUBDIR)/*.cpp)
 WINDOWS_SUBDIR = Windows
 SRC += $(wildcard $(SRC_DIR)/$(WINDOWS_SUBDIR)/*.cpp) 
 
+CORE_SUBDIR = CORE
+SRC += $(wildcard $(SRC_DIR)/$(CORE_SUBDIR)/*.cpp) 
+
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 SUBDIRS = $(PHYSICS_SUBDIR) $(GRAPHICS_SUBDIR) $(GAMEOBJECTS_SUBDIR)
 

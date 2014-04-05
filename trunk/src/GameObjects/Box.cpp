@@ -1,5 +1,5 @@
 #include "Box.hpp"
-#include "../Math.hpp"
+#include "../Core/Math.hpp"
 
 namespace GO
 {

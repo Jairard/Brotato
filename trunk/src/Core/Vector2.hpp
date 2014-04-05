@@ -1,5 +1,5 @@
-#ifndef __VECTOR2__
-#define __VECTOR2__
+#ifndef __CORE_VECTOR2__
+#define __CORE_VECTOR2__
 
 #include <iostream>
 #include <cmath>

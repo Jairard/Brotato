@@ -3,7 +3,7 @@
 
 #include <list>
 #include <Box2D/Box2D.h>
-#include "../Vector2.hpp"
+#include "../Core/Vector2.hpp"
 
 namespace Phy
 {

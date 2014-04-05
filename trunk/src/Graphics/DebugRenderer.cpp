@@ -3,7 +3,7 @@
 #include <cstdarg>
 #include <cstring>
 
-#include "../Vector2.hpp"
+#include "../Core/Vector2.hpp"
 #include "../Graphics.hpp"
 #include "_ThickPointShape.hpp"
 

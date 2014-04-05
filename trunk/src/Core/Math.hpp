@@ -1,9 +1,10 @@
-#ifndef MATH_HPP
-#define MATH_HPP
+#ifndef __CORE_MATH__
+#define __CORE_MATH__
 
 #include <cmath>
+#include "NonInstantiable.hpp"
 
-class Math
+class Math: public NonInstantiable
 {
 	public:
 		static const double RAD_2_DEG;

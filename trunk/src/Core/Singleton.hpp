@@ -1,13 +1,14 @@
-#ifndef __SINGLETON__
-#define __SINGLETON__
+#ifndef __CORE_SINGLETON__
+#define __CORE_SINGLETON__
 
+template <typename T>
 class Singleton
 {
     public:
-        static Singleton* instance(void)
+        static T* instance(void)
         {
             if (!m_instance)
-                m_instance = new Singleton();
+                m_instance = new T();
             return m_instance;
         }
         
@@ -20,16 +21,18 @@ class Singleton
             }
         }
     
-    private:
-        static Singleton* m_instance;
-        
+    protected:
         Singleton()
         {}
         
-        ~Singleton()
+        virtual ~Singleton()
         {}
+		
+	private:
+		static T* m_instance;
 };
 
-Singleton* Singleton::m_instance = 0;
+template <typename T>
+T* Singleton<T>::m_instance = 0;
 
 #endif

@@ -3,10 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include "Math.hpp"
-#include "Vector2.hpp"
-#include "Singleton.hpp"
 #include "Windows/FixedFramerateWindow.hpp"
+#include "Core.hpp"
 #include "Graphics.hpp"
 #include "Physics.hpp"
 #include "GameObjects.hpp"
@@ -32,7 +30,7 @@ int main(int argc, char* argv[])
 
     /* Boxes */
 	GO::Box rect(&world, Phy::Dynamic, sf::Vector2f(0., 20.), sf::Vector2f(2., 2.), 1., sf::Color::Red);
-	GO::Box rect2(&world, Phy::Dynamic, sf::Vector2f(0.5, sqrtf(2.)), sf::Vector2f(2., 2.), Math::pi()/4., sf::Color::Blue);
+	GO::Box rect2(&world, Phy::Dynamic, sf::Vector2f(0.5, sqrt(2.)), sf::Vector2f(2., 2.), Math::pi()/4., sf::Color::Blue);
 	
 	Graphics::SegmentShape segment(Vector2f(-20., -20.), Vector2f(20., 20.));
 	segment.setColors(sf::Color::Yellow, sf::Color::Magenta);

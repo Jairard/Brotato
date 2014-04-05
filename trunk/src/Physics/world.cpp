@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../Math.hpp"
+#include "../Core/Math.hpp"
 #include "Entity.hpp"
 #include "World.hpp"
 

@@ -6,7 +6,7 @@ TARGET = ../../bin/test
 INCLUDEPATH += 
 
 SOURCES += \ 
-    src/Math.cpp \
+    src/Core/Math.cpp \
     src/main.cpp \
     src/Physics/World.cpp \
     src/Physics/Rectangle.cpp \
@@ -25,9 +25,9 @@ SOURCES += \
     src/Graphics/DebugRenderer.cpp
 
 HEADERS += \ 
-    src/Vector2.hpp \
-    src/Singleton.hpp \
-    src/Math.hpp \
+    src/Core/Vector2.hpp \
+    src/Core/Singleton.hpp \
+    src/Core/Math.hpp \
     src/Physics/World.hpp \
     src/Physics/Rectangle.hpp \
     src/Physics/Entity.hpp \
@@ -45,4 +45,7 @@ HEADERS += \
     src/Physics.hpp \
     src/GameObjects.hpp \
     src/Graphics/_ThickPointShape.hpp \
-    src/Graphics/DebugRenderer.hpp
+    src/Graphics/DebugRenderer.hpp \
+    src/NonInstantiable.hpp \
+    src/Core/NonInstantiable.hpp \
+    src/Core.hpp

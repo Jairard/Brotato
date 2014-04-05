@@ -1,7 +1,7 @@
 #ifndef __GRAPHICS_RECTANGLE_SHAPE__
 #define __GRAPHICS_RECTANGLE_SHAPE__
 
-#include "../Vector2.hpp"
+#include "../Core/Vector2.hpp"
 #include "Shape.hpp"
 
 namespace Graphics
