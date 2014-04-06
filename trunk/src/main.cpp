@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <iostream>
+#include <fstream>
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
@@ -16,13 +17,26 @@ int main(int argc, char* argv[])
 {
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
+	
+	Logger::enableTag("C variadic log");
+	Logger::enableTag("C++ err log");
+	
+	Logger::Log("C variadic log", "loggy log %d %s", 12, "proute");
+	Logger::Log(std::cerr, "C err log", "LOL !!!!%c!", '1');
+	Logger::Log(std::string("C++ log"), std::string("XD"));
+	Logger::Log(std::cerr, std::string("C++ err log"), std::string("SWAG"));
+	Logger::Log(std::string("Another C++ log"), "XD");
+	Logger::Log("Random log", "XD");
+	Logger::Log(Logger::Warning, "Achtung !");
+	
+	return EXIT_SUCCESS;
 
 	/* World */
 	Vector2f gravity(0.0f, -10.0f);
 	float32 timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
-	Phy::World world(gravity.toBox2D(), timeStep, velocityIterations, positionIterations);
+	Phy::World world(gravity, timeStep, velocityIterations, positionIterations);
 
 	/* Ground */
 	GO::DecorBox ground(&world, Vector2f(0., -5.), Vector2f(25., 10.));

@@ -5,5 +5,6 @@
 #include "Core/Singleton.hpp"
 #include "Core/Vector2.hpp"
 #include "Core/Math.hpp"
+#include "Core/Logger.hpp"
 
 #endif

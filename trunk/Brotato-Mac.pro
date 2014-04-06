@@ -22,7 +22,8 @@ SOURCES += \
     src/GameObjects/DecorBox.cpp \
     src/GameObjects/Box.cpp \
     src/Graphics/_ThickPointShape.cpp \
-    src/Graphics/DebugRenderer.cpp
+    src/Graphics/DebugRenderer.cpp \
+    src/Core/Logger.cpp
 
 HEADERS += \ 
     src/Core/Vector2.hpp \
@@ -48,4 +49,5 @@ HEADERS += \
     src/Graphics/DebugRenderer.hpp \
     src/NonInstantiable.hpp \
     src/Core/NonInstantiable.hpp \
-    src/Core.hpp
+    src/Core.hpp \
+    src/Core/Logger.hpp
