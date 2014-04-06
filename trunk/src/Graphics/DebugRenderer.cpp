@@ -13,6 +13,7 @@ namespace Graphics
 	const char* DebugRenderer::FONT_FILE = "../res/arial.ttf";
 	
 	DebugRenderer::DebugRenderer(sf::RenderWindow& window):
+		b2Draw(),
 		_window(window),
 		_font()
 	{

@@ -10,7 +10,7 @@
 #include "Physics.hpp"
 #include "GameObjects.hpp"
 
-void handleEvents(sf::RenderWindow& window);
+void handleEvents(sf::RenderWindow& window, bool* paused);
 void drawGrid(FixedFramerateWindow& window);
 
 int main(int argc, char* argv[])
@@ -28,8 +28,6 @@ int main(int argc, char* argv[])
 	Logger::log(std::string("Another C++ log"), "XD");
 	Logger::log("Random log", "XD");
 	Logger::log(Logger::Warning, "Achtung !");
-	
-	return EXIT_SUCCESS;
 
 	/* World */
 	Vector2f gravity(0.0f, -10.0f);
@@ -37,6 +35,7 @@ int main(int argc, char* argv[])
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 	Phy::World world(gravity, timeStep, velocityIterations, positionIterations);
+	bool paused = false;
 
 	/* Ground */
 	GO::DecorBox ground(&world, Vector2f(0., -5.), Vector2f(25., 10.));
@@ -61,19 +60,19 @@ int main(int argc, char* argv[])
 	FixedFramerateWindow window(sf::VideoMode(400, 400), "Hello Box2D");
 	Graphics::DebugRenderer renderer(window);
 
-	world.SetDebugDraw(&renderer);
+	//world.setDebugRenderer(&renderer);
 	renderer.SetFlags(b2Draw::e_shapeBit);
 
 	window.setView(view);
 
 	while (window.isOpen())
 	{
-		handleEvents(window);
+		handleEvents(window, &paused);
 		window.clear();
 
-		world.step();
+		if (!paused)
+			world.step();
 		drawGrid(window);
-		//world.DrawDebugData();
 
 		window.render(ground);
 		window.render(rect);
@@ -94,7 +93,7 @@ int main(int argc, char* argv[])
 	}
 }
 
-void handleEvents(sf::RenderWindow& window)
+void handleEvents(sf::RenderWindow& window, bool* paused)
 {
 	sf::Event event;
 	while (window.pollEvent(event))
@@ -107,6 +106,8 @@ void handleEvents(sf::RenderWindow& window)
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Escape)
 					window.close();
+				else if (event.key.code == sf::Keyboard::P)
+					*paused = !(*paused);
 				break;
 			default:
 				break;

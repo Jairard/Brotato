@@ -29,6 +29,8 @@ namespace Phy
 			bool RegisterEntity(Entity* entity, bool secure = false);
 			bool UnregisterEntity(Entity* entity, bool secure = false);
 
+			void setDebugRenderer(b2Draw* renderer);
+			void unsetDebugRenderer(void);
 			void step(void);
 
 			static Vector2f vectorFromPhy(const Vector2f& v);
@@ -41,6 +43,7 @@ namespace Phy
 			std::list<Entity*> m_entities;
 			float m_timeStep;
 			int m_velocityIterations, m_positionIterations;
+			bool m_drawDebug;
 	};
 }
 

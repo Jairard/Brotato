@@ -10,7 +10,8 @@ namespace Phy
 		m_entities(),
 		m_timeStep(timeStep),
 		m_velocityIterations(velocityIterations),
-		m_positionIterations(positionIterations)
+		m_positionIterations(positionIterations),
+		m_drawDebug(false)
 	{
 	}
 
@@ -49,6 +50,17 @@ namespace Phy
 
 		return found;
 	}
+	
+	void World::setDebugRenderer(b2Draw* renderer)
+	{
+		SetDebugDraw(renderer);
+		m_drawDebug = true;
+	}
+	
+	void World::unsetDebugRenderer()
+	{
+		m_drawDebug = false;
+	}
 
 	void World::step()
 	{
@@ -65,6 +77,9 @@ namespace Phy
 
 			entity->update(position, angle);
 		}
+		
+		if (m_drawDebug)
+			DrawDebugData();
 	}
 
 	Vector2f World::vectorFromPhy(const Vector2f& v)
