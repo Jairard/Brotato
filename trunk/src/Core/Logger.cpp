@@ -10,7 +10,12 @@ const std::string Logger::Default = "Default";
 int Logger::m_bufferSize = 4096;
 std::list<std::string> Logger::m_enabledTags = std::list<std::string>();
 const std::string Logger::m_vlogError = "An error occured while reading formatted data";
-const std::string Logger::m_vlogBufferSizeError = Logger::m_vlogError + ": reallocated buffer had insufficient size";
+std::ostream* Logger::m_defaultStream = &std::cout;
+
+void Logger::setDefaultStream(std::ostream& stream)
+{
+	m_defaultStream = &stream;
+}
 
 void Logger::log(const std::string& msg)
 {
@@ -19,7 +24,7 @@ void Logger::log(const std::string& msg)
 
 void Logger::log(const std::string& tag, const std::string& msg)
 {
-	log(std::cout, tag, msg);
+	log(*m_defaultStream, tag, msg);
 }
 
 void Logger::log(std::ostream& stream, const std::string& tag, const std::string& msg)
@@ -77,7 +82,7 @@ void Logger::vLog(const char* fmt, va_list list)
 
 void Logger::vLog(const char* tag, const char* fmt, va_list list)
 {
-	vLog(std::cout, tag, fmt, list);
+	vLog(*m_defaultStream, tag, fmt, list);
 }
 
 void Logger::vLog(std::ostream& stream, const char* tag, const char* fmt, va_list list)

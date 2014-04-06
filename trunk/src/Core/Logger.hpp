@@ -10,6 +10,7 @@ class Logger : public NonInstantiable
 {
 	/* Methods */
 	public:		
+		static void setDefaultStream(std::ostream& stream);
 		/* C++-like logs */
 		static void log(const std::string& msg);
 		static void log(const std::string& tag, const std::string& msg);
@@ -50,7 +51,7 @@ class Logger : public NonInstantiable
 		static int m_bufferSize;
 		static std::list<std::string> m_enabledTags;
 		static const std::string m_vlogError;
-		static const std::string m_vlogBufferSizeError;
+		static std::ostream* m_defaultStream;
 };
 
 #endif
