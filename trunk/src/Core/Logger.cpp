@@ -7,22 +7,22 @@ const std::string Logger::Warning = "Warning";
 const std::string Logger::Error = "Error";
 const std::string Logger::Default = "Default";
 
-const int Logger::BUFFER_SIZE = 4096;
+int Logger::m_bufferSize = 4096;
 std::list<std::string> Logger::m_enabledTags = std::list<std::string>();
 const std::string Logger::m_vlogError = "An error occured while reading formatted data";
 const std::string Logger::m_vlogBufferSizeError = Logger::m_vlogError + ": reallocated buffer had insufficient size";
 
-void Logger::Log(const std::string& msg)
+void Logger::log(const std::string& msg)
 {
-	Log(Default, msg);
+	log(Default, msg);
 }
 
-void Logger::Log(const std::string& tag, const std::string& msg)
+void Logger::log(const std::string& tag, const std::string& msg)
 {
-	Log(std::cout, tag, msg);
+	log(std::cout, tag, msg);
 }
 
-void Logger::Log(std::ostream& stream, const std::string& tag, const std::string& msg)
+void Logger::log(std::ostream& stream, const std::string& tag, const std::string& msg)
 {
 	if (m_enabledTags.empty())
 		initTags();
@@ -38,108 +38,75 @@ void Logger::Log(std::ostream& stream, const std::string& tag, const std::string
 
 // Can't factorise code with Log(std::ostream& stream, const char* tag, const char* fmt, ...)
 // because of variadic arg (can't call Log(std::cout, tag, fmt, ...) )
-void Logger::Log(const char* fmt, ...)
+void Logger::log(const char* fmt, ...)
 {
 	va_list list;
 	
 	va_start(list, fmt);
-	int n = vLog(BUFFER_SIZE, fmt, list);
+	vLog(fmt, list);
 	va_end(list);
-	
-	// An error occured
-	if (n < 0)
-		Log(Error, m_vlogError);
-	// The buffer was not big enough,
-	// give it another try with adapted size
-	else if (n >= BUFFER_SIZE )
-	{
-		const int newSize = n+1; 
-		
-		va_start(list, fmt);
-		int n2 = vLog(newSize, fmt, list);
-		va_end(list);
-		
-		// An error occured
-		if (n2 < 0)
-			Log(Error, m_vlogError);
-		// Buffer still too small (this should not happen)
-		else if(n2 >= newSize)
-			Log(Error, m_vlogBufferSizeError);
-	}
 }
 
-void Logger::Log(const char* tag, const char* fmt, ...)
+void Logger::log(const char* tag, const char* fmt, ...)
 {
 	va_list list;
 	
 	va_start(list, fmt);
-	int n = vLog(tag, BUFFER_SIZE, fmt, list);
+	vLog(tag, fmt, list);
 	va_end(list);
-	
-	if (n < 0)
-		Log(Error, m_vlogError);
-	else if (n >= BUFFER_SIZE )
-	{
-		const int newSize = n+1; 
-		
-		va_start(list, fmt);
-		int n2 = vLog(tag, newSize, fmt, list);
-		va_end(list);
-		
-		if (n2 < 0)
-			Log(Error, m_vlogError);
-		else if(n2 >= newSize)
-			Log(Error, m_vlogBufferSizeError);
-	}
 }
 
-void Logger::Log(std::ostream& stream, const char* tag, const char* fmt, ...)
+void Logger::log(std::ostream& stream, const char* tag, const char* fmt, ...)
 {
 	va_list list;
 	
 	va_start(list, fmt);
-	int n = vLog(stream, tag, BUFFER_SIZE, fmt, list);
+	vLog(stream, tag, fmt, list);
 	va_end(list);
+}
+
+void Logger::setBufferSize(unsigned int size)
+{
+	m_bufferSize = (int)size;
+}
+
+void Logger::vLog(const char* fmt, va_list list)
+{
+	vLog(Default.c_str(), fmt, list);
+}
+
+void Logger::vLog(const char* tag, const char* fmt, va_list list)
+{
+	vLog(std::cout, tag, fmt, list);
+}
+
+void Logger::vLog(std::ostream& stream, const char* tag, const char* fmt, va_list list)
+{
+	if (!isTagEnabled(tag))
+		return;
 	
-	if (n < 0)
-		Log(stream, Error, m_vlogError);
-	else if (n >= BUFFER_SIZE )
+	char* buffer = new char[m_bufferSize];
+	
+	int n = vsnprintf(buffer, m_bufferSize, fmt, list);
+	// No error occured (but the buffer was potentially not big enough)
+	if (n >= 0)
 	{
-		const int newSize = n+1; 
-		
-		va_start(list, fmt);
-		int n2 = vLog(tag, newSize, fmt, list);
-		va_end(list);
-		
-		if (n2 < 0)
-			Log(stream, Error, m_vlogError);
-		else if(n2 >= newSize)
-			Log(stream, Error, m_vlogBufferSizeError);
+		if (n >= m_bufferSize)
+		{
+			logVariadicError(stream);
+			buffer[m_bufferSize-1] = '\0';
+		}
+		log(stream, std::string(tag), std::string(buffer));
 	}
-}
-
-int Logger::vLog(int bufferSize, const char* fmt, va_list list)
-{
-	return vLog(Default.c_str(), bufferSize, fmt, list);
-}
-
-int Logger::vLog(const char* tag, int bufferSize, const char* fmt, va_list list)
-{
-	return vLog(std::cout, tag, bufferSize, fmt, list);
-}
-
-int Logger::vLog(std::ostream& stream, const char* tag, int bufferSize, const char* fmt, va_list list)
-{
-	char* buffer = new char[bufferSize];
-	
-	int n = vsnprintf(buffer, bufferSize, fmt, list);
-	// Everything went OK
-	if (n >= 0 && n < bufferSize)
-		Log(stream, std::string(tag), std::string(buffer));
 	
 	delete buffer;
-	
-	return n;
+}
+
+void Logger::logVariadicError(std::ostream& stream)
+{
+	std::stringstream str;
+	str << m_vlogError << " (current buffer size: " << m_bufferSize << ")";
+	log(stream, Error, str.str());
 }
 
 bool Logger::isTagEnabled(const std::string& tag)

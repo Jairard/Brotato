@@ -19,15 +19,15 @@ int main(int argc, char* argv[])
 	B2_NOT_USED(argv);
 	
 	Logger::enableTag("C variadic log");
-	Logger::enableTag("C++ err log");
+	Logger::enableTag("C err log");
 	
-	Logger::Log("C variadic log", "loggy log %d %s", 12, "proute");
-	Logger::Log(std::cerr, "C err log", "LOL !!!!%c!", '1');
-	Logger::Log(std::string("C++ log"), std::string("XD"));
-	Logger::Log(std::cerr, std::string("C++ err log"), std::string("SWAG"));
-	Logger::Log(std::string("Another C++ log"), "XD");
-	Logger::Log("Random log", "XD");
-	Logger::Log(Logger::Warning, "Achtung !");
+	Logger::log("C variadic log", "loggy log %d %s", 12, "proute");
+	Logger::log(std::cerr, "C err log", "LOL !!!!%c!", '1');
+	Logger::log(std::string("C++ log"), std::string("XD"));
+	Logger::log(std::cerr, std::string("C++ err log"), std::string("SWAG"));
+	Logger::log(std::string("Another C++ log"), "XD");
+	Logger::log("Random log", "XD");
+	Logger::log(Logger::Warning, "Achtung !");
 	
 	return EXIT_SUCCESS;
 
