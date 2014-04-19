@@ -51,3 +51,15 @@ HEADERS += \
     src/Core/NonInstantiable.hpp \
     src/Core.hpp \
     src/Core/Logger.hpp
+
+macx: LIBS += $$PWD/lib/OSX/SFML/libsfml-audio.dylib \
+    $$PWD/lib/OSX/SFML/libsfml-graphics.dylib \
+    $$PWD/lib/OSX/SFML/libsfml-system.dylib \
+    $$PWD/lib/OSX/SFML/libsfml-window.dylib \
+    $$PWD/lib/OSX/Box2D/libBox2D.a
+
+INCLUDEPATH += $$PWD/include/SFML \
+    $$PWD/include/Box2D
+
+DEPENDPATH += $$PWD/include/SFML \
+    $$PWD/include/Box2D

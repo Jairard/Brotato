@@ -64,6 +64,8 @@ int main(int argc, char* argv[])
 	renderer.SetFlags(b2Draw::e_shapeBit);
 
 	window.setView(view);
+	
+	world.Dump();
 
 	while (window.isOpen())
 	{

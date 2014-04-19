@@ -30,3 +30,5 @@ bin/
 *.plist
 
 trunk/bin/test
+
+Brotato-build-desktop-Desktop_Qt_4_8_1_for_GCC__Qt_SDK__Debug/Makefile
