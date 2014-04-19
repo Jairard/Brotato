@@ -7,6 +7,7 @@ INCLUDEPATH += D:/lib/SFML/include
 
 SOURCES += \
     src/Core/Math.cpp \
+    src/Core/Logger.cpp \
     src/main.cpp \
     src/Physics/World.cpp \
     src/Physics/Rectangle.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     src/Core/Vector2.hpp \
     src/Core/Singleton.hpp \
     src/Core/Math.hpp \
+    src/Core/Logger.hpp \
     src/Physics/World.hpp \
     src/Physics/Rectangle.hpp \
     src/Physics/Entity.hpp \

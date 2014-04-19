@@ -1,7 +1,7 @@
 TEMPLATE = app
+CONFIG -= qt
 CONFIG += console 
 CONFIG += object_with_source
-CONFIG -= qt
 
 TARGET = ../../bin/test
 
@@ -52,14 +52,32 @@ HEADERS += \
     src/Core.hpp \
     src/Core/Logger.hpp
 
+# OSX
 macx: LIBS += $$PWD/lib/OSX/SFML/libsfml-audio.dylib \
     $$PWD/lib/OSX/SFML/libsfml-graphics.dylib \
     $$PWD/lib/OSX/SFML/libsfml-system.dylib \
     $$PWD/lib/OSX/SFML/libsfml-window.dylib \
     $$PWD/lib/OSX/Box2D/libBox2D.a
 
-INCLUDEPATH += $$PWD/include/SFML \
-    $$PWD/include/Box2D
+# Windows
+win32: LIBS += -L$$PWD/lib/Windows/Box2D/ -lBox2D
 
-DEPENDPATH += $$PWD/include/SFML \
-    $$PWD/include/Box2D
+win32:CONFIG(release, debug|release): LIBS += $$PWD/lib/Windows/SFML/libsfml-audio.a
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-audio-d
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-graphics
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-graphics-d
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-main
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-main-d
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-system
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-system-d
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-window
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/Windows/SFML/ -lsfml-window-d
+
+# Paths
+INCLUDEPATH += $$PWD/include/ 
+
+DEPENDPATH += $$PWD/include/
