@@ -1,5 +1,21 @@
 // !$*UTF8*$!
 {
+	4390EC1B1903DAD1002A3AFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4390EC1C1903DAD1002A3AFE /* Export.hpp */;
+		name = "Export.hpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 178;
+		vrLoc = 0;
+	};
+	4390EC1C1903DAD1002A3AFE /* Export.hpp */ = {
+		isa = PBXFileReference;
+		name = Export.hpp;
+		path = "/Users/Jairard/Programmation/Library/SFML-2.1/gcc-universal/Frameworks/SFML.framework/Headers/Graphics/Export.hpp";
+		sourceTree = "<absolute>";
+	};
 	43DBF4061903C153001B6367 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 43DBF4071903C153001B6367 /* Export.hpp */;
@@ -12,9 +28,15 @@
 	};
 	43DBF4071903C153001B6367 /* Export.hpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.h;
 		name = Export.hpp;
 		path = "/Users/Jairard/Programmation/Library/SFML-2.1/gcc-universal/Frameworks/SFML.framework/Headers/Graphics/Export.hpp";
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {719, 611}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 178}";
+		};
 	};
 	43E332991902B395003573F5 /* Brotato */ = {
 		isa = PBXExecutable;
@@ -76,28 +98,6 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	43F862381903B57100C83709 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 43F862391903B57100C83709 /* Export.hpp */;
-		name = "Export.hpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 359;
-		vrLoc = 0;
-	};
-	43F862391903B57100C83709 /* Export.hpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.h;
-		name = Export.hpp;
-		path = "/Users/Jairard/Programmation/Library/SFML-2.1/gcc-universal/Frameworks/SFML.framework/Headers/Graphics/Export.hpp";
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {719, 624}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 257}";
-		};
-	};
 	43FB7D611903043A00C266BD /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = A01FB6AC0F07CF6E000AAC7B /* Info.plist */;
@@ -151,7 +151,7 @@
 					16,
 					200,
 					50,
-					157.20849609375,
+					172.20849609375,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXSymbolsDataSource_SymbolTypeIconID,
@@ -182,12 +182,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 419676495;
-			PBXWorkspaceStateSaveDate = 419676495;
+			PBXPerProjectTemplateStateSaveDate = 419683022;
+			PBXWorkspaceStateSaveDate = 419683022;
 		};
 		perUserProjectItems = {
+			4390EC1B1903DAD1002A3AFE /* PBXTextBookmark */ = 4390EC1B1903DAD1002A3AFE /* PBXTextBookmark */;
 			43DBF4061903C153001B6367 /* PBXTextBookmark */ = 43DBF4061903C153001B6367 /* PBXTextBookmark */;
-			43F862381903B57100C83709 /* PBXTextBookmark */ = 43F862381903B57100C83709 /* PBXTextBookmark */;
 			43FB7D611903043A00C266BD /* PlistBookmark */ = 43FB7D611903043A00C266BD /* PlistBookmark */;
 		};
 		sourceControlManager = 43E332A71902B39A003573F5 /* Source Control */;

@@ -4,6 +4,7 @@
 *.o
 *.obj
 trunk/build/OSX/Xcode/Brotato/build
+trunk/build/Brotato.xcodeproj
 
 # Compiled Dynamic libraries
 *.so

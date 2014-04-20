@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.4.1, 2014-04-20T10:50:53. -->
+<!-- Written by Qt Creator 2.4.1, 2014-04-20T12:36:11. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -359,7 +359,7 @@
     <value type="QString" key="ProjectExplorer.BuildCOnfiguration.ToolChain">ProjectExplorer.ToolChain.Clang:/usr/bin/clang++.x86-macos-generic-mach_o-64bit.</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
-      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">OS=OSX RM=rm CREATE_DIR=&quot;mkdir -p&quot; TARGET_EXTENSION=</value>
+      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">OS_DIR=OSX RM=&quot;rm -f&quot; CREATE_DIR=&quot;mkdir -p&quot; TARGET_EXTENSION= SFML_LIB_EXTENSION=dylib BOX2D_LIB_EXTENSION=a ECHO=echo</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.Command">make</value>
       <value type="bool" key="ProjectExplorer.ProcessStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.WorkingDirectory">/Users/Jairard/Programmation/C++/Brotato/trunk/build</value>
