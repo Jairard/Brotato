@@ -1,8 +1,9 @@
 export CC = g++
 export CFLAGS = -W -ansi -g
 export LDFLAGS
-TARGET = Brotato
+TARGET_NAME = Brotato
 TARGET_EXTENSION = 
+LIB_EXTENSION =
 RM = rm
 CREATE_DIR = mkdir -p
 
@@ -14,6 +15,8 @@ INCLUDE_DIR = $(TRUNK_DIR)/include
 
 SFML_LIB_DIR = $(LIB_DIR)/$(OS_DIR)/SFML
 BOX2D_LIB_DIR = $(LIB_DIR)/$(OS_DIR)/Box2D
+OS_LDFLAGS = 
+LDFLAGS = $(OS_LDFLAGS)
 
 # Getting OS
 #ifeq ($(OS),Windows_NT)
@@ -33,17 +36,17 @@ BOX2D_LIB_DIR = $(LIB_DIR)/$(OS_DIR)/Box2D
 #		CREATE_DIR = mkdir -p
 #endif
 
-TARGET += $(TARGET_EXTENSION)
+TARGET = $(TARGET_NAME)$(TARGET_EXTENSION)
 
 # SFML
 SFML_STATIC =
 SFML_DEBUG = 
 
-LSFML_SYSTEM = $(SFML_LIB_DIR)/libsfml-system.dylib
-LSFML_WINDOW = $(SFML_LIB_DIR)/libsfml-window.dylib
-LSFML_GRAPHICS = $(SFML_LIB_DIR)/libsfml-graphics.dylib
-LSFML_AUDIO = $(SFML_LIB_DIR)/libsfml-audio.dylib
-LSFML_NETWORK = $(SFML_LIB_DIR)/libsfml-network.dylib
+LSFML_SYSTEM = $(SFML_LIB_DIR)/libsfml-system.$(LIB_EXTENSION)
+LSFML_WINDOW = $(SFML_LIB_DIR)/libsfml-window.$(LIB_EXTENSION)
+LSFML_GRAPHICS = $(SFML_LIB_DIR)/libsfml-graphics.$(LIB_EXTENSION)
+LSFML_AUDIO = $(SFML_LIB_DIR)/libsfml-audio.$(LIB_EXTENSION)
+LSFML_NETWORK = $(SFML_LIB_DIR)/libsfml-network.$(LIB_EXTENSION)
 LSFML_ALL =  $(LSFML_GRAPHICS) $(LSFML_WINDOW) $(LSFML_SYSTEM)
 LSFML = $(LSFML_ALL:-l%=-l%$(SFML_STATIC)$(SFML_DEBUG))
 LDFLAGS += $(LSFML)
