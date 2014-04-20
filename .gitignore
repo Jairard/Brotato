@@ -3,6 +3,7 @@
 *.lo
 *.o
 *.obj
+trunk/build/OSX/Xcode/Brotato/build
 
 # Compiled Dynamic libraries
 *.so
@@ -20,9 +21,6 @@
 *.out
 *.app
 bin/
-
-# user files
-*.pro.user
 
 *.ttf
 

@@ -1,5 +1,21 @@
 // !$*UTF8*$!
 {
+	43DBF4061903C153001B6367 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43DBF4071903C153001B6367 /* Export.hpp */;
+		name = "Export.hpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 257;
+		vrLoc = 0;
+	};
+	43DBF4071903C153001B6367 /* Export.hpp */ = {
+		isa = PBXFileReference;
+		name = Export.hpp;
+		path = "/Users/Jairard/Programmation/Library/SFML-2.1/gcc-universal/Frameworks/SFML.framework/Headers/Graphics/Export.hpp";
+		sourceTree = "<absolute>";
+	};
 	43E332991902B395003573F5 /* Brotato */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
@@ -72,9 +88,15 @@
 	};
 	43F862391903B57100C83709 /* Export.hpp */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.h;
 		name = Export.hpp;
 		path = "/Users/Jairard/Programmation/Library/SFML-2.1/gcc-universal/Frameworks/SFML.framework/Headers/Graphics/Export.hpp";
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {719, 624}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 257}";
+		};
 	};
 	43FB7D611903043A00C266BD /* PlistBookmark */ = {
 		isa = PlistBookmark;
@@ -87,28 +109,6 @@
 		name = "/Users/Jairard/Programmation/C++/Brotato/trunk/build/OSX/Xcode/Brotato/Info.plist";
 		rLen = 0;
 		rLoc = 9223372036854775808;
-	};
-	43FB7D631903043A00C266BD /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 43FB7D641903043A00C266BD /* Export.hpp */;
-		name = "Export.hpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 435;
-		vrLoc = 0;
-	};
-	43FB7D641903043A00C266BD /* Export.hpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.h;
-		name = Export.hpp;
-		path = "/Users/Jairard/Programmation/Library/SFML-2.1/gcc-universal/Frameworks/SFML.framework/Headers/Graphics/Export.hpp";
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {719, 637}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 359}";
-		};
 	};
 	A01FB69C0F07CF63000AAC7B /* Project object */ = {
 		activeBuildConfigurationName = Debug;
@@ -151,7 +151,7 @@
 					16,
 					200,
 					50,
-					281.20849609375,
+					157.20849609375,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXSymbolsDataSource_SymbolTypeIconID,
@@ -182,13 +182,13 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 419672435;
-			PBXWorkspaceStateSaveDate = 419672435;
+			PBXPerProjectTemplateStateSaveDate = 419676495;
+			PBXWorkspaceStateSaveDate = 419676495;
 		};
 		perUserProjectItems = {
+			43DBF4061903C153001B6367 /* PBXTextBookmark */ = 43DBF4061903C153001B6367 /* PBXTextBookmark */;
 			43F862381903B57100C83709 /* PBXTextBookmark */ = 43F862381903B57100C83709 /* PBXTextBookmark */;
 			43FB7D611903043A00C266BD /* PlistBookmark */ = 43FB7D611903043A00C266BD /* PlistBookmark */;
-			43FB7D631903043A00C266BD /* PBXTextBookmark */ = 43FB7D631903043A00C266BD /* PBXTextBookmark */;
 		};
 		sourceControlManager = 43E332A71902B39A003573F5 /* Source Control */;
 		userBuildSettings = {
