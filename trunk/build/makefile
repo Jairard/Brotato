@@ -4,9 +4,10 @@ export LDFLAGS
 TARGET_NAME = Brotato
 TARGET_EXTENSION = 
 SFML_LIB_EXTENSION =
-BOX2D_LIB_EXTENSION=
+BOX2D_LIB_EXTENSION =
 RM = rm
 CREATE_DIR = mkdir -p
+ECHO = echo
 
 OS_DIR = OSX
 
@@ -73,33 +74,33 @@ OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # Delete targets
 DELETE_TARGETS = $(OBJ:%=delete_%)
-	
+
 all: $(OBJ)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
-	@echo 'Target' $(TARGET) 'successfully compiled !'
+	@$(ECHO) 'Target' $(TARGET) 'successfully compiled !'
 
 link: $(OBJ)
 	$(CC) $(LDFLAGS) -o $(BIN_DIR)/$(TARGET) $^
-	@echo 'Target' $(TARGET) 'successfully compiled !'
-	
+	@$(ECHO) 'Target' $(TARGET) 'successfully compiled !'
+
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
 	@ $(CREATE_DIR) $(@D)
 	$(CC) $(INC) $(CFLAGS) -o $@ -c $<
-	@ echo 'Source file' $< 'compiled with header'
+	@$(ECHO) 'Source file' $< 'compiled with header'
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp
 	@ $(CREATE_DIR) $(@D)
 	$(CC) $(INC) $(CFLAGS) -o $@ -c $<
-	@ echo 'Source file' $< 'compiled'
+	@$(ECHO) 'Source file' $< 'compiled'
 
 delete_$(OBJ_DIR)/%:
 	@if [ -e $(@:delete_%=%) ]; \
 		then $(RM) $(@:delete_%=%); \
-		echo $(@:delete_%=%) "deleted"; \
+		$(ECHO) $(@:delete_%=%) "deleted"; \
 	fi
 
 clean2: $(DELETE_TARGETS)
-	@ echo 'Object files removed'
+	@ $(ECHO) 'Object files removed'
 
 clean: 
 	@ $(RM) $(OBJ_DIR)/*.o
@@ -108,9 +109,9 @@ clean:
 	@ $(RM) $(OBJ_DIR)/$(GAMEOBJECTS_SUBDIR)/*.o
 	@ $(RM) $(OBJ_DIR)/$(WINDOWS_SUBDIR)/*.o
 	@ $(RM) $(OBJ_DIR)/$(CORE_SUBDIR)/*.o
-	@ echo 'Object files removed'
+	@ $(ECHO) 'Object files removed'
 
 mrproper: clean
 	@ $(RM) $(BIN_DIR)/$(TARGET)
-	@ echo 'TARGETcutable file removed'
+	@ $(ECHO) 'TARGETcutable file removed'
 

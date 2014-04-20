@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.0.1, 2014-04-20T11:08:08. -->
+<!-- Written by QtCreator 3.0.1, 2014-04-20T12:10:32. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -168,7 +168,7 @@
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">OS_DIR=Windows RM=&quot;del /s&quot; OS_LDFLAGS=-mwindows TARGET_EXTENSION=.exe CREATE_DIR=&quot;echo 'Creating dir'&quot; LIB_EXTENSION=a</value>
+      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">OS_DIR=Windows RM=&quot;del /s&quot; OS_LDFLAGS=-mwindows TARGET_EXTENSION=.exe CREATE_DIR=&quot;#&quot; ECHO=&quot;#&quot; SFML_LIB_EXTENSION=a BOX2D_LIB_EXTENSION=a</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.Command">C:/Qt/Tools/mingw48_32/bin/mingw32-make</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.WorkingDirectory">%{buildDir}</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Étape personnalisée</value>
