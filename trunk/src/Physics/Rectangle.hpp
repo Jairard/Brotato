@@ -1,5 +1,5 @@
-#ifndef __PHYSICS_RECTANGLE__
-#define __PHYSICS_RECTANGLE__
+#ifndef __PHY_RECTANGLE__
+#define __PHY_RECTANGLE__
 
 #include <Box2D/Box2D.h>
 #include "../Core/Vector2.hpp"
@@ -11,9 +11,9 @@ namespace Phy
 	class Rectangle: public Entity
 	{
 		public:
-			static const float DEFAULT_DENSITY;
-
 			Rectangle(World* world, const Vector2f& center, const Vector2f& size, BodyType type);
+			virtual ~Rectangle() {}
+			
 			virtual b2PolygonShape* shape() const { return (b2PolygonShape*)Entity::shape(); }
 
 			/*

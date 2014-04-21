@@ -1,5 +1,5 @@
-#ifndef __PHYSICS_ENTITY__
-#define __PHYSICS_ENTITY__
+#ifndef __PHY_ENTITY__
+#define __PHY_ENTITY__
 
 #include <Box2D/Box2D.h>
 #include "../Core/Vector2.hpp"
@@ -11,6 +11,8 @@ namespace Phy
 	class Entity
 	{
 		public:
+			static const float DEFAULT_DENSITY;
+			
 			/* Constructors & desctructor */
 			Entity(World* world, bool secure = false);
 			virtual ~Entity();

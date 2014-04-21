@@ -9,13 +9,22 @@ namespace Graphics
 	class SegmentShape: public Shape
 	{
 		public:
-			SegmentShape(const Vector2f& p1=Vector2f(), const Vector2f& p2=Vector2f());
+			SegmentShape();
+			SegmentShape(const Vector2f& p1, const Vector2f& p2);
 			virtual ~SegmentShape() {}
-
+			
 			void setFirstPoint(const Vector2f& p);
 			void setSecondPoint(const Vector2f& p);
 			void setPoints(const Vector2f& p1, const Vector2f& p2);
 			void setColors(const sf::Color& c1, const sf::Color& c2);
+			
+		protected:
+			Vector2f m_center;
+			
+			void toRelativePositions(void);
+			void toAbsolutePositions(void);
+			void updatePoint(const Vector2f& p, int index);
+			void updatePoints(const Vector2f& p1, const Vector2f& p2);
 	};
 }
 

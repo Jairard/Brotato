@@ -16,8 +16,8 @@ namespace GO
 
 		/* Graphics initialization */
 		Vector2f realSize = Vector2f(size) + 2*shape()->m_radius;
-		setScale(Phy::World::vectorToPhy(realSize).toSFML());
-		setPosition(Phy::World::vectorToPhy(center).toSFML());
+		setScale(Phy::World::vectorFromPhy(realSize).toSFML());
+		setPosition(Phy::World::vectorFromPhy(center).toSFML());
 		setColor(color);
 		setRotation(Phy::World::angleFromPhy(angle));
 	}

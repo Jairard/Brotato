@@ -1,5 +1,5 @@
-#ifndef __PHYSICS_WORLD__
-#define __PHYSICS_WORLD__
+#ifndef __PHY_WORLD__
+#define __PHY_WORLD__
 
 #include <list>
 #include <Box2D/Box2D.h>

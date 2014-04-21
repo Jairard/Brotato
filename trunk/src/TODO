@@ -1,0 +1,9 @@
+Graphics:
+- setup an example for setPosition overloading bug
+- primitives (segment, square, circle)
+- add textures
+
+Windows:
+- FixedFramerateWindow
+- interpolation
+

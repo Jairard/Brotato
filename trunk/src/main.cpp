@@ -12,22 +12,14 @@
 
 void handleEvents(sf::RenderWindow& window, bool* paused);
 void drawGrid(FixedFramerateWindow& window);
+void drawAxes(FixedFramerateWindow& window);
 
 int main(int argc, char* argv[])
 {
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
 	
-	Logger::enableTag("C variadic log");
-	Logger::enableTag("C err log");
-	
-	Logger::log("C variadic log", "loggy log %d %s", 12, "proute");
-	Logger::log(std::cerr, "C err log", "LOL !!!!%c!", '1');
-	Logger::log(std::string("C++ log"), std::string("XD"));
-	Logger::log(std::cerr, std::string("C++ err log"), std::string("SWAG"));
-	Logger::log(std::string("Another C++ log"), "XD");
-	Logger::log("Random log", "XD");
-	Logger::log(Logger::Warning, "Achtung !");
+	Logger::enableTag("physics");
 
 	/* World */
 	Vector2f gravity(0.0f, -10.0f);
@@ -38,34 +30,29 @@ int main(int argc, char* argv[])
 	bool paused = false;
 
 	/* Ground */
-	GO::DecorBox ground(&world, Vector2f(0., -5.), Vector2f(25., 10.));
-	ground.setColor(sf::Color::Green);
+	GO::DecorBox ground(&world, Vector2f(0., -5), Vector2f(25., 10.));
+	ground.setColor(sf::Color::Yellow);
 
-	/* Boxes */
+	/* Objects */
 	GO::Box rect(&world, Phy::Dynamic, sf::Vector2f(0., 20.), sf::Vector2f(2., 2.), 1., sf::Color::Red);
 	GO::Box rect2(&world, Phy::Dynamic, sf::Vector2f(0.5, sqrt(2.)), sf::Vector2f(2., 2.), Math::pi()/4., sf::Color::Blue);
 	
-	Graphics::SegmentShape segment(Vector2f(-20., -20.), Vector2f(20., 20.));
-	segment.setColors(sf::Color::Yellow, sf::Color::Magenta);
-	
-	Graphics::PointShape p1(Vector2f(-10., 10.)), p2(Vector2f(10., -10.));
-	p1.setColor(sf::Color::Green);
-	p2.setColor(sf::Color::Cyan);
-	
-	Graphics::RectangleShape rectangle(Vector2f(10., -10.), Vector2f(2., 2.));
-	rectangle.setColor(sf::Color::Yellow);
+	GO::Segment segment(&world, Phy::Static, Vector2f(-20., 20.), Vector2f(20., -20.));
+	GO::Segment segment2(&world, Phy::Dynamic, Vector2f(-2., 0.), Vector2f(-2., 5.));
+	segment.setColors(sf::Color::Cyan, sf::Color::Magenta);
+	segment2.setColors(sf::Color::Cyan, sf::Color::Magenta);
 
+	/* Window */
 	sf::View view(sf::Vector2f(), sf::Vector2f(50., 50.));
 	sf::Clock clock;
 	FixedFramerateWindow window(sf::VideoMode(400, 400), "Hello Box2D");
 	Graphics::DebugRenderer renderer(window);
-
-	//world.setDebugRenderer(&renderer);
 	renderer.SetFlags(b2Draw::e_shapeBit);
 
+	//world.setDebugRenderer(&renderer);
+
 	window.setView(view);
-	
-	world.Dump();
+	paused = true;
 
 	while (window.isOpen())
 	{
@@ -80,10 +67,10 @@ int main(int argc, char* argv[])
 		window.render(rect);
 		window.render(rect2);
 		window.render(segment);
-		window.render(rectangle);
-		window.render(p1);
-		window.render(p2);
+		window.render(segment2);
 
+		drawAxes(window);
+		
 		window.display();
 
 		float elapsed = clock.getElapsedTime().asSeconds();
@@ -133,5 +120,15 @@ void drawGrid(FixedFramerateWindow& window)
 			window.render(point);
 		}
 	}
+}
+
+void drawAxes(FixedFramerateWindow& window)
+{
+	Graphics::SegmentShape xAxis(Vector2f(0., 0.), Vector2f(1., 0.)), yAxis(Vector2f(0., 0.), Vector2f(0., 1.));
+	xAxis.setColor(sf::Color(255, 0, 0));
+	yAxis.setColor(sf::Color(0, 255, 0));
+	
+	window.render(xAxis);
+	window.render(yAxis);
 }
 

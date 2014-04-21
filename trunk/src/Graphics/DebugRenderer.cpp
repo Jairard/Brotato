@@ -119,7 +119,7 @@ namespace Graphics
 		sf::Color xColor(255, 0, 0), yColor(0, 255, 0);
 		const float32 k_axisScale = 0.4f;
 		b2Vec2 p1 = xf.p, p2;
-		Graphics::SegmentShape segment(Vector2f(p1.x, -p1.y));
+		Graphics::SegmentShape segment(Vector2f(p1.x, -p1.y), Vector2f());
 
 		p2 = p1 + k_axisScale * xf.q.GetXAxis();
 		segment.setSecondPoint(Vector2f(p2.x, -p2.y));

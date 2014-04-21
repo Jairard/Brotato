@@ -21,7 +21,7 @@ template <typename T> class Vector2
 		{}
 
 		template <typename U>
-		Vector2(const Vector2<U>& v):	
+		explicit Vector2(const Vector2<U>& v):	
 			x((T)v.x), y((T)v.y)
 		{}
 
@@ -30,7 +30,7 @@ template <typename T> class Vector2
 			x((T)v.x), y((T)v.y)
 		{}
 
-		Vector2(const b2Vec2& v):
+		explicit Vector2(const b2Vec2& v):
 			x((T)v.x), y((T)v.y)
 		{}
 

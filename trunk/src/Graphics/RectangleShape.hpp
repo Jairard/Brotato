@@ -11,6 +11,9 @@ namespace Graphics
 		public:
 			RectangleShape(const Vector2f& pos=Vector2f(), const Vector2f& size=Vector2f(1., 1.));
 			virtual ~RectangleShape() {}
+			
+			void setSize(const Vector2f& scale);
+			//void setScale(const Vector2f& factors);
 	};
 }
 

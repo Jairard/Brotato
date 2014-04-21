@@ -1,6 +1,6 @@
-export CC = g++
-export CFLAGS = -W -ansi -g
-export LDFLAGS
+CC = g++
+CFLAGS = -W -ansi -g
+LDFLAGS =
 TARGET_NAME = Brotato
 TARGET_EXTENSION = 
 SFML_LIB_EXTENSION =
@@ -40,14 +40,14 @@ LBOX2D = $(BOX2D_LIB_DIR)/libBox2D.$(BOX2D_LIB_EXTENSION)
 LDFLAGS += $(LBOX2D)
 
 #INCLUDE
-export INC = -I$(INCLUDE_DIR)
+INC = -I$(INCLUDE_DIR)
 
 # SRC files
-export SRC_DIR = ../src
+SRC_DIR = ../src
 SRC = $(wildcard $(SRC_DIR)/*.cpp) 
 
 # OBJ files
-export OBJ_DIR = ../obj
+OBJ_DIR = ../obj
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # BIN files
@@ -77,21 +77,17 @@ DELETE_TARGETS = $(OBJ:%=delete_%)
 
 all: $(OBJ)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
-	@$(ECHO) 'Target' $(TARGET) 'successfully compiled !'
-
-link: $(OBJ)
-	$(CC) $(LDFLAGS) -o $(BIN_DIR)/$(TARGET) $^
-	@$(ECHO) 'Target' $(TARGET) 'successfully compiled !'
+	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
 	@ $(CREATE_DIR) $(@D)
-	$(CC) $(INC) $(CFLAGS) -o $@ -c $<
-	@$(ECHO) 'Source file' $< 'compiled with header'
+	@ $(CC) $(INC) $(CFLAGS) -o $@ -c $<
+	@ $(ECHO) 'Source file' $< 'compiled with header'
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp
 	@ $(CREATE_DIR) $(@D)
-	$(CC) $(INC) $(CFLAGS) -o $@ -c $<
-	@$(ECHO) 'Source file' $< 'compiled'
+	@ $(CC) $(INC) $(CFLAGS) -o $@ -c $<
+	@ $(ECHO) 'Source file' $< 'compiled'
 
 delete_$(OBJ_DIR)/%:
 	@if [ -e $(@:delete_%=%) ]; \
@@ -99,16 +95,7 @@ delete_$(OBJ_DIR)/%:
 		$(ECHO) $(@:delete_%=%) "deleted"; \
 	fi
 
-clean2: $(DELETE_TARGETS)
-	@ $(ECHO) 'Object files removed'
-
-clean: 
-	@ $(RM) $(OBJ_DIR)/*.o
-	@ $(RM) $(OBJ_DIR)/$(PHYSICS_SUBDIR)/*.o
-	@ $(RM) $(OBJ_DIR)/$(GRAPHICS_SUBDIR)/*.o
-	@ $(RM) $(OBJ_DIR)/$(GAMEOBJECTS_SUBDIR)/*.o
-	@ $(RM) $(OBJ_DIR)/$(WINDOWS_SUBDIR)/*.o
-	@ $(RM) $(OBJ_DIR)/$(CORE_SUBDIR)/*.o
+clean: $(DELETE_TARGETS)
 	@ $(ECHO) 'Object files removed'
 
 mrproper: clean

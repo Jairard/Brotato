@@ -3,6 +3,8 @@
 
 namespace Phy
 {
+	const float Entity::DEFAULT_DENSITY = 1.;
+	
 	Entity::Entity(World* world, bool isSecure):
 		m_isSecure(isSecure),
 		m_world(world),

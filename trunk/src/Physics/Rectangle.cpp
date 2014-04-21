@@ -3,8 +3,6 @@
 
 namespace Phy
 {
-	const float Rectangle::DEFAULT_DENSITY = 1.;
-
 	Rectangle::Rectangle(World* world, const Vector2f& center, const Vector2f& size, BodyType type) :
 		Entity(world)
 	{

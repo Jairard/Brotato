@@ -72,7 +72,7 @@ namespace Phy
 		{
 			Entity* entity = *it;
 			b2Body* body = entity->body();
-			Vector2f position = vectorFromPhy(body->GetPosition());
+			Vector2f position = vectorFromPhy(Vector2f(body->GetPosition()));
 			float32 angle = angleFromPhy(body->GetAngle());
 
 			entity->update(position, angle);
