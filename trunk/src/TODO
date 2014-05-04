@@ -3,10 +3,6 @@ Graphics:
 - shapes (circle, polygon)
 - textures
 
-Windows:
-- FixedFramerateWindow
-- interpolation
-
 Core:
 - JSON parser -> JsonCpp
 - XML parser
