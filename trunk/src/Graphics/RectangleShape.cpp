@@ -17,13 +17,11 @@ namespace Graphics
 	
 	void RectangleShape::setSize(const Vector2f& scale)
 	{
-		setScale(scale.toSFML());
+		setScale(scale);
 	}
 	
-	/*
 	void RectangleShape::setScale(const Vector2f& scale)
 	{
-		setScale(scale.toSFML());
+		sf::Transformable::setScale(scale.toSFML());
 	}
-	//*/
 }

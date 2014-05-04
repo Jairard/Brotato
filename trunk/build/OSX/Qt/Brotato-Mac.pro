@@ -17,6 +17,7 @@ SOURCES += \
     ../../../src/Physics/World.cpp \
     ../../../src/Physics/Rectangle.cpp \
     ../../../src/Physics/Edge.cpp \
+    ../../../src/Graphics/Renderer.cpp \
     ../../../src/Graphics/SegmentShape.cpp \
     ../../../src/Graphics/RectangleShape.cpp \
     ../../../src/Graphics/Shape.cpp \
@@ -29,7 +30,9 @@ SOURCES += \
     ../../../src/GameObjects/DecorBox.cpp \
     ../../../src/GameObjects/Box.cpp \
     ../../../src/GameObjects/Segment.cpp \
-    ../../../src/Windows/FixedFramerateWindow.cpp 
+    ../../../src/Windows/Window.cpp \
+    ../../../src/Windows/InputListener.cpp \
+    ../../../src/Windows/Game.cpp
 
 HEADERS +=  \
     ../../../src/Physics/World.hpp \
@@ -38,6 +41,7 @@ HEADERS +=  \
     ../../../src/Physics/Edge.hpp \
     ../../../src/Graphics/SegmentShape.hpp \
     ../../../src/Graphics.hpp \
+    ../../../src/Graphics/Renderer.hpp \
     ../../../src/Graphics/RectangleShape.hpp \
     ../../../src/Graphics/Shape.hpp \
     ../../../src/Graphics/PointShape.hpp \
@@ -45,7 +49,6 @@ HEADERS +=  \
     ../../../src/Graphics/Entity.hpp \
     ../../../src/Graphics/_ThickPointShape.hpp \
     ../../../src/Graphics/DebugRenderer.hpp \
-    ../../../src/Windows/FixedFramerateWindow.hpp \
     ../../../src/GameObjects/DecorBox.hpp \
     ../../../src/GameObjects/GameObject.hpp \
     ../../../src/GameObjects/Box.hpp \
@@ -57,4 +60,9 @@ HEADERS +=  \
     ../../../src/Core/NonInstantiable.hpp \ 
     ../../../src/Core/Vector2.hpp \
     ../../../src/Core/Singleton.hpp \
-    ../../../src/Core/Math.hpp
+    ../../../src/Core/Tools.hpp \
+    ../../../src/Core/Math.hpp \
+    ../../../src/Window.hpp \
+    ../../../src/Windows/Window.hpp \
+    ../../../src/Windows/InputListener.hpp \
+    ../../../src/Windows/Game.hpp

@@ -13,7 +13,7 @@ namespace Graphics
 			virtual ~RectangleShape() {}
 			
 			void setSize(const Vector2f& scale);
-			//void setScale(const Vector2f& factors);
+			void setScale(const Vector2f& factors);
 	};
 }
 

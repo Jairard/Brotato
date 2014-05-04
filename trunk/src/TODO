@@ -1,9 +1,13 @@
 Graphics:
-- setup an example for setPosition overloading bug
 - primitives (segment, square, circle)
-- add textures
+- shapes (circle, polygon)
+- textures
 
 Windows:
 - FixedFramerateWindow
 - interpolation
+
+Core:
+- JSON parser -> JsonCpp
+- XML parser
 

@@ -25,3 +25,15 @@ float Math::pi()
 {
 	return (float)precisePi();
 }
+
+float Math::lerp(float source, float target, float coef)
+{
+	coef = clamp<float>(0., 1., coef);
+	return (1. - coef) * source + coef * target;
+}
+
+Vector2f Math::lerp(const Vector2f& source, const Vector2f& target, float coef)
+{
+	coef = clamp<float>(0., 1., coef);
+	return (1. - coef) * source + coef * target;
+}

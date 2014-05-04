@@ -21,7 +21,7 @@ template <typename T> class Vector2
 		{}
 
 		template <typename U>
-		explicit Vector2(const Vector2<U>& v):	
+		Vector2(const Vector2<U>& v):	
 			x((T)v.x), y((T)v.y)
 		{}
 

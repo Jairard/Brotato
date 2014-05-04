@@ -169,18 +169,18 @@ std::ostream& Logger::outputTime(std::ostream& stream, tm* time)
 	stream.fill('0');
 	stream << "[";
 	stream.width(2);
-	stream << time->tm_hour << ":";
-	stream.width(2);
-	stream << time->tm_min << ":";
-	stream.width(2);
-	stream << time->tm_sec << " ";
-	
-	stream.width(2);
 	stream << time->tm_mday << "/";
 	stream.width(2);
 	stream << time->tm_mon + 1 << "/";
 	stream.width(2);
-	stream << time->tm_year + 1900;
+	stream << time->tm_year + 1900 << " ";
+	
+	stream.width(2);
+	stream << time->tm_hour << ":";
+	stream.width(2);
+	stream << time->tm_min << ":";
+	stream.width(2);
+	stream << time->tm_sec;
 	stream << "]";
 	
 	stream.fill(fill);

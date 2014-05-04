@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity.hpp"
+#include "../Core/Vector2.hpp"
 
 namespace Graphics
 {
@@ -11,9 +12,13 @@ namespace Graphics
 		public:
 			SFMLEntity();
 			virtual ~SFMLEntity() {}
-
-		protected:
-			virtual void render(sf::RenderTarget& target, sf::RenderStates states) const = 0;
+			
+			virtual void setOrigin(const Vector2f& origin);
+			virtual void setPosition(const Vector2f& position);
+			virtual void setScale(const Vector2f& factors);
+			virtual void setRotation(float angle);
+			
+			virtual void onGameUpdate(const Vector2f& position, float angle);
 	};
 }
 

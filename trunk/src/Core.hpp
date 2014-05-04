@@ -6,5 +6,6 @@
 #include "Core/Vector2.hpp"
 #include "Core/Math.hpp"
 #include "Core/Logger.hpp"
+#include "Core/Tools.hpp"
 
 #endif

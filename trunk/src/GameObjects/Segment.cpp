@@ -18,7 +18,7 @@ namespace GO
 	
 	void Segment::update(const Vector2f& position, float angle)
 	{
-		setPosition(position.toSFML());
-		setRotation(angle);
+		Phy::Edge::update(position, angle);
+		Graphics::SegmentShape::onGameUpdate(position, angle);
 	}
 }

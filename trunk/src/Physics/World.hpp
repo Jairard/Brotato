@@ -24,6 +24,7 @@ namespace Phy
 			~World();
 
 			/* Accessors */
+			float timestep() const  { return m_timeStep; }
 
 			/* Methods */
 			bool RegisterEntity(Entity* entity, bool secure = false);

@@ -1,5 +1,6 @@
 #include "Box.hpp"
 #include "../Core/Math.hpp"
+#include "../Core/Logger.hpp"
 
 namespace GO
 {
@@ -16,8 +17,8 @@ namespace GO
 
 		/* Graphics initialization */
 		Vector2f realSize = Vector2f(size) + 2*shape()->m_radius;
-		setScale(Phy::World::vectorFromPhy(realSize).toSFML());
-		setPosition(Phy::World::vectorFromPhy(center).toSFML());
+		setScale(Phy::World::vectorFromPhy(realSize));
+		setPosition(Phy::World::vectorFromPhy(center));
 		setColor(color);
 		setRotation(Phy::World::angleFromPhy(angle));
 	}
@@ -25,8 +26,6 @@ namespace GO
 	void Box::update(const Vector2f& position, float angle)
 	{
 		Phy::Rectangle::update(position, angle);
-
-		setPosition(position.toSFML());
-		setRotation(angle);
+		Graphics::RectangleShape::onGameUpdate(position, angle);
 	}
 }

@@ -1,4 +1,5 @@
 #include "Shape.hpp"
+#include "../Core/Logger.hpp"
 
 namespace Graphics
 {
@@ -7,31 +8,15 @@ namespace Graphics
 		m_array(type, vertexCount)
 	{}
 
-	/*
-	void Shape::setOrigin(const Vector2f& origin)
-	{
-		setOrigin(origin.toSFML());
-	}
-
-	void Shape::setPosition(const Vector2f& position)
-	{
-		setPosition(position.toSFML());
-	}
-
-	void Shape::setSize(const Vector2f& size)
-	{
-		setSize(size.toSFML());
-	}
-	//*/
-
 	void Shape::setColor(const sf::Color& color)
 	{
 		for (unsigned int i=0; i<m_array.getVertexCount(); i++)
 			m_array[i].color = color;
 	}
 
-	void Shape::render(sf::RenderTarget& target, sf::RenderStates states) const
+	void Shape::render(sf::RenderTarget& target, float coef, sf::RenderStates states)
 	{
+		SFMLEntity::render(target, coef, states);
 		draw(target, states);
 	}
 
