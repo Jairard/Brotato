@@ -1,6 +1,5 @@
 #include <cstdio>
 #include <iostream>
-#include <cstdarg>
 #include <cstring>
 
 #include "../Core/Vector2.hpp"

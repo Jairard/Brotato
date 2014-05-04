@@ -1,6 +1,7 @@
 #ifndef __GRAPHICS_DEBUGRENDERER__
 #define __GRAPHICS_DEBUGRENDERER__
 
+#include <cstdarg>
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <Box2D/Collision/b2Collision.h>
