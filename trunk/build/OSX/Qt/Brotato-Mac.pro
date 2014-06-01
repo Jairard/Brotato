@@ -12,6 +12,7 @@ TARGET = BIN_DIR/Brotato
 SOURCES += \ 
     ../../../src/Core/Math.cpp \
     ../../../src/Core/Logger.cpp \
+    ../../../src/Core/Component.cpp \
     ../../../src/main.cpp \
     ../../../src/Physics/Entity.cpp \
     ../../../src/Physics/World.cpp \
@@ -26,13 +27,15 @@ SOURCES += \
     ../../../src/Graphics/PointShape.cpp \
     ../../../src/Graphics/_ThickPointShape.cpp \
     ../../../src/Graphics/DebugRenderer.cpp \
+    ../../../src/Graphics/RenderComponent.cpp \
     ../../../src/GameObjects/GameObject.cpp \
     ../../../src/GameObjects/DecorBox.cpp \
     ../../../src/GameObjects/Box.cpp \
     ../../../src/GameObjects/Segment.cpp \
     ../../../src/Windows/Window.cpp \
     ../../../src/Windows/InputListener.cpp \
-    ../../../src/Windows/Game.cpp
+    ../../../src/Windows/Game.cpp \
+    ../../../src/Debug/CallStack.cpp
 
 HEADERS +=  \
     ../../../src/Physics/World.hpp \
@@ -49,6 +52,7 @@ HEADERS +=  \
     ../../../src/Graphics/Entity.hpp \
     ../../../src/Graphics/_ThickPointShape.hpp \
     ../../../src/Graphics/DebugRenderer.hpp \
+    ../../../src/Graphics/RenderComponent.hpp \
     ../../../src/GameObjects/DecorBox.hpp \
     ../../../src/GameObjects/GameObject.hpp \
     ../../../src/GameObjects/Box.hpp \
@@ -62,7 +66,9 @@ HEADERS +=  \
     ../../../src/Core/Singleton.hpp \
     ../../../src/Core/Tools.hpp \
     ../../../src/Core/Math.hpp \
+    ../../../src/Core/Component.hpp \
     ../../../src/Window.hpp \
     ../../../src/Windows/Window.hpp \
     ../../../src/Windows/InputListener.hpp \
-    ../../../src/Windows/Game.hpp
+    ../../../src/Windows/Game.hpp \
+    ../../../src/Debug/CallStack.hpp

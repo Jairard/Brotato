@@ -16,7 +16,8 @@ int main(int argc, char* argv[])
 	
 	Logger::enableTag("window");
 	
-	sf::View view(sf::Vector2f(), sf::Vector2f(50., 50.));
+	/* Window */
+	sf::View view(sf::Vector2f(), sf::Vector2f(50., -50.));
 	Window window(sf::VideoMode(400, 400), "Window test");
 	
 	/* World */

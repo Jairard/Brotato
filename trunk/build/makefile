@@ -69,6 +69,9 @@ SRC += $(wildcard $(SRC_DIR)/$(WINDOWS_SUBDIR)/*.cpp)
 CORE_SUBDIR = Core
 SRC += $(wildcard $(SRC_DIR)/$(CORE_SUBDIR)/*.cpp) 
 
+DEBUG_SUBDIR = Debug
+SRC += $(wildcard $(SRC_DIR)/$(DEBUG_SUBDIR)/*.cpp) 
+
 # OBJ files
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 

@@ -6,4 +6,5 @@ Graphics:
 Core:
 - JSON parser -> JsonCpp
 - XML parser
+- Stack trace debugger
 

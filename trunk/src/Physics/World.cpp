@@ -30,6 +30,8 @@ namespace Phy
 			found = UnregisterEntity(entity, secure);
 
 		m_entities.push_back(entity);
+		//m_entities.sort(compareEntities);
+		//m_entities.unique(areEntitiesEqual);
 		return !found;
 	}
 
@@ -48,9 +50,23 @@ namespace Phy
 					break;
 			}
 		}
+		
+		//m_entities.remove(entity);
 
 		return found;
 	}
+	
+	/*
+	bool World::compareEntities(const Entity* first, const Entity* second)
+	{
+		return (int)first < (int)second;
+	}
+	
+	bool World::areEntitiesEqual(const Entity* first, const Entity* second)
+	{
+		return first == second;
+	}
+	*/
 	
 	void World::setDebugRenderer(b2Draw* renderer)
 	{
@@ -85,12 +101,12 @@ namespace Phy
 
 	Vector2f World::vectorFromPhy(const Vector2f& v)
 	{
-		return Vector2f(v.x, -v.y);
+		return Vector2f(v.x, v.y);
 	}
 
 	Vector2f World::vectorToPhy(const Vector2f v)
 	{
-		return Vector2f(v.x, -v.y);
+		return Vector2f(v.x, v.y);
 	}
 
 	float World::angleFromPhy(float angle)
