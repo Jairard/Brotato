@@ -7,7 +7,5 @@
 #include "Core/Math.hpp"
 #include "Core/Logger.hpp"
 #include "Core/Tools.hpp"
-#include "Core/Component.hpp"
-#include "Core/Scene.hpp"
 
 #endif

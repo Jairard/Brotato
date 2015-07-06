@@ -2,79 +2,195 @@
 #include <iostream>
 #include <cstring>
 
-#include "../Core/LibsHelpers.inl"
+#include "../Core/Vector2.hpp"
 #include "../Graphics.hpp"
 #include "_ThickPointShape.hpp"
 
 namespace Graphics
 {
 	const sf::Color DebugRenderer::TRANSPARENT_COLOR = sf::Color(0, 0, 0, 0);
-	const char* DebugRenderer::DEFAULT_FONT_FILE = "../res/arial.ttf";
+	const char* DebugRenderer::FONT_FILE = "../res/arial.ttf";
 	
-	DebugRenderer::DebugRenderer(sf::RenderTarget& window, const char* fontFile):
+	DebugRenderer::DebugRenderer(sf::RenderWindow& window):
 		b2Draw(),
-		m_window(window),
-		m_font()
+		_window(window),
+		_font()
 	{
-		m_isFontLoaded = m_font.loadFromFile(fontFile);
+		_isFontLoaded = _font.loadFromFile(FONT_FILE);
 	}
 
-	// Box2D Manipulators
-	void DebugRenderer::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
-	{
-		DrawPoint(b2v_2_sfv(p), size, b2c_2_sfc(color));
-	}
-	
-	void DebugRenderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
-	{
-		DrawSegment(b2v_2_sfv(p1), b2v_2_sfv(p2), b2c_2_sfc(color));
-	}
-	
-	void DebugRenderer::DrawTransform(const b2Transform& t)
-	{
-		// TODO: b2Transform -> sf::Transform conversion ?
-		sf::Color xColor(255, 0, 0), yColor(0, 255, 0);
-		const float32 k_axisScale = 0.4f;
-		b2Vec2 p1 = t.p, p2;
-		Graphics::SegmentShape segment(b2v_2_sfv(p1), Vector2f());
-
-		p2 = p1 + k_axisScale * t.q.GetXAxis();
-		segment.setSecondPoint(b2v_2_sfv(p2));
-		segment.setColor(xColor);
-
-		m_window.draw(segment);
-
-		p2 = p1 + k_axisScale * t.q.GetYAxis();
-		segment.setSecondPoint(b2v_2_sfv(p2));
-		segment.setColor(yColor);
-
-		m_window.draw(segment);
-	}
-	
 	void DebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 	{
-		sf::Vector2f* sfVertices = b2va_2_sfva(vertices, vertexCount);
-		DrawPolygon(sfVertices, vertexCount, b2c_2_sfc(color));
-		delete[] sfVertices;
+		sf::Color c(color.r*255., color.g*255., color.b*255.);
+
+		for (int32 i=0; i<vertexCount; i++)
+		{
+			int32 j = (i == 0) ? vertexCount-1 : i-1;
+			b2Vec2 p1(vertices[i]), p2(vertices[j]);
+			Graphics::SegmentShape segment(Vector2f(p1.x, -p1.y), Vector2f(p2.x, -p2.y));
+			segment.setColor(c);
+			_window.draw(segment);
+		}
 	}
 	
 	void DebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 	{
-		sf::Vector2f* sfVertices = b2va_2_sfva(vertices, vertexCount);
-		DrawPolygon(sfVertices, vertexCount, b2c_2_sfc(color));
-		delete[] sfVertices;
+		sf::Color outlineColor(   color.r*255.,    color.g*255.,    color.b*255.),
+		          fillColor(color.r*255./2., color.g*255./2., color.b*255./2., 255./2.);
+		sf::ConvexShape poly(vertexCount);
+
+		poly.setFillColor(fillColor);
+
+		for (int32 i=0; i<vertexCount; i++)
+			poly.setPoint(i, Vector2f(vertices[i].x, -vertices[i].y).toSFML());
+
+		_window.draw(poly);
+
+		for (int32 i=0; i<vertexCount; i++)
+		{
+			int32 j = (i == 0) ? vertexCount-1 : i-1;
+			b2Vec2 p1(vertices[i]), p2(vertices[j]);
+			Graphics::SegmentShape segment(Vector2f(p1.x, -p1.y), Vector2f(p2.x, -p2.y));
+			segment.setColor(outlineColor);
+			_window.draw(segment);
+		}
 	}
-	
+
 	void DebugRenderer::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 	{
-		DrawCircle(b2v_2_sfv(center), radius, b2c_2_sfc(color));
+		const int32 vertexCount = 32;
+		b2Vec2* vertices = new b2Vec2[vertexCount];
+		float32 theta = 0.0f;
+		const float32 inc = 2.0f * b2_pi/(float32)vertexCount;
+
+		for (int32 i=0; i<vertexCount; ++i)
+		{
+			vertices[i] = center + radius * b2Vec2(cosf(theta), sinf(theta));
+			theta += inc;
+		}
+
+		DrawPolygon(vertices, vertexCount, color);
+
+		delete vertices;
 	}
-	
+
 	void DebugRenderer::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 	{
-		DrawSolidCircle(b2v_2_sfv(center), radius, b2v_2_sfv(axis), b2c_2_sfc(color));
-	}
+		/* circle */
+		sf::Color outlineColor(   color.r*255.,    color.g*255.,    color.b*255.),
+		          fillColor(color.r*255./2., color.g*255./2., color.b*255./2., 255./2.);
+		const int32 vertexCount = 32;
+		b2Vec2* vertices = new b2Vec2[vertexCount];
+		float32 theta = 0.0f;
+		const float32 inc = 2.0f * b2_pi/(float32)vertexCount;
+
+		for (int32 i=0; i<vertexCount; ++i)
+		{
+			vertices[i] = center + radius * b2Vec2(cosf(theta), sinf(theta));
+			theta += inc;
+		}
+
+		/* axis */
+		b2Vec2 p2 = center + radius * axis;
+		Graphics::SegmentShape segment(Vector2f(center.x, -center.y), Vector2f(p2.x, -p2.y));
 	
+		segment.setColor(outlineColor);
+
+		/* rendering */
+		DrawSolidPolygon(vertices, vertexCount, color);
+		_window.draw(segment);
+
+		delete vertices;
+	}
+
+	void DebugRenderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
+	{
+		sf::Color c(color.r*255., color.g*255., color.b*255.);
+		Vector2f v1(p1.x, -p1.y), v2(p2.x, -p2.y);
+		Graphics::SegmentShape segment(v1, v2);
+
+		segment.setColor(c);
+		_window.draw(segment);
+	}
+
+	void DebugRenderer::DrawTransform(const b2Transform& xf)
+	{
+		sf::Color xColor(255, 0, 0), yColor(0, 255, 0);
+		const float32 k_axisScale = 0.4f;
+		b2Vec2 p1 = xf.p, p2;
+		Graphics::SegmentShape segment(Vector2f(p1.x, -p1.y), Vector2f());
+
+		p2 = p1 + k_axisScale * xf.q.GetXAxis();
+		segment.setSecondPoint(Vector2f(p2.x, -p2.y));
+		segment.setColor(xColor);
+
+		_window.draw(segment);
+
+		p2 = p1 + k_axisScale * xf.q.GetYAxis();
+		segment.setSecondPoint(Vector2f(p2.x, -p2.y));
+		segment.setColor(yColor);
+
+		_window.draw(segment);
+	}
+
+	void DebugRenderer::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
+	{
+		B2_NOT_USED(size);
+
+		sf::Color c(color.r*255., color.g*255., color.b*255.);
+		ThickPointShape point(&_window, Vector2f(p.x, -p.y).toSFML());
+
+		point.setColor(c);
+		point.setThickness(size);
+
+		_window.draw(point);
+	}
+
+	void DebugRenderer::DrawString(int x, int y, const char* string, ...)
+	{
+		va_list arg;
+		va_start(arg, string);
+		vDrawString(x, y, string, arg);
+		va_end(arg);
+	}
+
+	void DebugRenderer::DrawString(int x, int y, const b2Color& color, const char* string, ...)
+	{
+		va_list arg;
+		va_start(arg, string);
+		vDrawString(x, y, string, arg, color);
+		va_end(arg);
+	}
+
+	void DebugRenderer::vDrawString(int x, int y, const char* string, va_list arg, const b2Color& color)
+	{
+		char buffer[512];
+		vsprintf(buffer, string, arg);
+	
+		if (!_isFontLoaded)
+			return;
+
+		sf::Color c(color.r*255., color.g*255., color.b*255.);
+
+		sf::FloatRect viewport = _window.getView().getViewport();
+		Vector2f windowSize(_window.getSize());
+		float realX = viewport.left*windowSize.x + x*viewport.width,
+		      realY = viewport.top*windowSize.y + y*viewport.height;
+
+		float xRatio = 0.5 * _window.getView().getSize().x / (float)_window.getSize().x;
+		float yRatio = 0.5 * _window.getView().getSize().y / (float)_window.getSize().y;
+		sf::Text text;
+
+		text.setFont(_font);
+		text.setString(buffer);
+		text.setPosition(_window.mapPixelToCoords(sf::Vector2i(realX, realY)));
+		text.setCharacterSize(30);
+		text.setScale(Vector2f(yRatio, yRatio).toSFML());
+		text.setColor(c);
+
+		_window.draw(text);
+	}
+
 	void DebugRenderer::DrawAABB(b2AABB* aabb, const b2Color& color)
 	{
 		sf::Color c(color.r*255., color.g*255., color.b*255.);
@@ -90,178 +206,9 @@ namespace Graphics
 		s3.setColor(c);
 		s4.setColor(c);
 
-		m_window.draw(s1);
-		m_window.draw(s2);
-		m_window.draw(s3);
-		m_window.draw(s4);
-	}
-	
-	void DebugRenderer::DrawString(int x, int y, const b2Color& color, const char* string, ...)
-	{
-		va_list arg;
-		va_start(arg, string);
-		vDrawString(x, y, string, arg, b2c_2_sfc(color));
-		va_end(arg);
-	}
-	
-	sf::Vector2f* DebugRenderer::b2va_2_sfva(const b2Vec2* points, int32 pointCount) const
-	{
-		sf::Vector2f* res = new sf::Vector2f[pointCount];
-		
-		for (int32 i = 0; i < pointCount; ++i)
-			res[i] = b2v_2_sfv(points[i]);
-		
-		return res;
-	}
-	
-	// SFML manipulators
-	void DebugRenderer::DrawPoint(const sf::Vector2f& p, float32 size, const sf::Color& color)
-	{
-		ThickPointShape point(&m_window, p);
-
-		point.setColor(color);
-		point.setThickness(size);
-
-		m_window.draw(point);
-	}
-	
-	void DebugRenderer::DrawSegment(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Color& color)
-	{
-		Graphics::SegmentShape segment(p1, p2);
-		segment.setColor(color);
-		m_window.draw(segment);
-	}
-	
-	void DebugRenderer::DrawTransform(const sf::Transform& t)
-	{
-		sf::Color xColor(255, 0, 0), yColor(0, 255, 0);
-		const float32 k_axisScale = 0.4f;
-		sf::Vector2f center(0.f, 0.f), xPoint(1.f, 0.f), yPoint(0.f, 1.f);
-		sf::Vector2f xAxis = t.transformPoint(xPoint), yAxis = t.transformPoint(yPoint);
-		
-		DrawSegment(center, center + k_axisScale * xAxis, xColor);
-		DrawSegment(center, center + k_axisScale * yAxis, yColor);
-	}
-	
-	void DebugRenderer::DrawPolygon(const sf::Vector2f* vertices, int32 vertexCount, const sf::Color& color)
-	{
-		for (int32 i = 0; i < vertexCount; ++i)
-		{
-			int32 j = (i == 0) ? vertexCount-1 : i-1;
-			DrawSegment(vertices[i], vertices[j], color);
-		}
-	}
-	
-	void DebugRenderer::DrawSolidPolygon(const sf::Vector2f* vertices, int32 vertexCount, const sf::Color& color)
-	{
-		sf::Color fillColor(color.r * 0.5f, color.g * 0.5f, color.b * 0.5f, 255.f * 0.5f);
-		sf::ConvexShape poly(vertexCount);
-
-		// Inside
-		poly.setFillColor(fillColor);
-
-		for (int32 i=0; i<vertexCount; i++)
-			poly.setPoint(i, vertices[i]);
-
-		m_window.draw(poly);
-
-		// Contour
-		DrawPolygon(vertices, vertexCount, color);
-	}
-	
-	void DebugRenderer::DrawCircle(const sf::Vector2f& center, float32 radius, const sf::Color& color)
-	{
-		const int32 vertexCount = 32;
-		sf::Vector2f* vertices = new sf::Vector2f[vertexCount];
-		float32 theta = 0.0f;
-		const float32 inc = 2.0f * b2_pi/(float32)vertexCount;
-
-		for (int32 i = 0; i < vertexCount; ++i)
-		{
-			vertices[i] = center + radius * sf::Vector2f(cosf(theta), sinf(theta));
-			theta += inc;
-		}
-
-		DrawPolygon(vertices, vertexCount, color);
-
-		delete[] vertices;
-	}
-	
-	void DebugRenderer::DrawSolidCircle(const sf::Vector2f& center, float32 radius, const sf::Vector2f& axis, const sf::Color& color)
-	{
-		/* circle */
-		const int32 vertexCount = 32;
-		sf::Vector2f* vertices = new sf::Vector2f[vertexCount];
-		float32 theta = 0.0f;
-		const float32 inc = 2.0f * b2_pi/(float32)vertexCount;
-
-		for (int32 i = 0; i < vertexCount; ++i)
-		{
-			vertices[i] = center + radius * sf::Vector2f(cosf(theta), sinf(theta));
-			theta += inc;
-		}
-
-		/* axis */
-		sf::Vector2f p2 = center + radius * axis;
-
-		/* rendering */
-		DrawSolidPolygon(vertices, vertexCount, color);
-		DrawSegment(center, p2, color);
-		
-		delete[] vertices;
-	}
-	
-	void DebugRenderer::DrawAABB(const sf::FloatRect& aabb, const sf::Color& color)
-	{
-		const int32 vertexCount = 4;
-		sf::Vector2f vertices[vertexCount];
-				
-		vertices[0] = sf::Vector2f(aabb.left             , aabb.top              ),
-		vertices[1] = sf::Vector2f(aabb.left + aabb.width, aabb.top              ),
-		vertices[2] = sf::Vector2f(aabb.left + aabb.width, aabb.top + aabb.height),
-		vertices[3] = sf::Vector2f(aabb.left             , aabb.top + aabb.height);
-		
-		DrawPolygon(vertices, vertexCount, color);
-	}
-	
-	void DebugRenderer::DrawString(int x, int y, const sf::Color& color, const char* string, ...)
-	{
-		va_list arg;
-		va_start(arg, string);
-		vDrawString(x, y, string, arg, color);
-		va_end(arg);
-	}
-	
-	void DebugRenderer::vDrawString(int x, int y, const char* string, va_list arg, const sf::Color& color)
-	{
-		if (!m_isFontLoaded)
-			return;
-		
-		char buffer[512];
-		vsprintf(buffer, string, arg);
-
-		sf::FloatRect viewport = m_window.getView().getViewport();
-		Vector2f windowSize(m_window.getSize());
-		const float realX = viewport.left*windowSize.x + x*viewport.width;
-		const float realY = viewport.top*windowSize.y + y*viewport.height;
-		const float yRatio = 0.5 * m_window.getView().getSize().y / (float)m_window.getSize().y;
-		sf::Text text;
-
-		text.setFont(m_font);
-		text.setString(buffer);
-		text.setPosition(m_window.mapPixelToCoords(sf::Vector2i(realX, realY)));
-		text.setCharacterSize(30);
-		text.setScale(sf::Vector2f(yRatio, yRatio));
-		text.setColor(color);
-
-		m_window.draw(text);
-	}
-	
-	void DebugRenderer::DrawString(int x, int y, const char* string, ...)
-	{
-		va_list arg;
-		va_start(arg, string);
-		vDrawString(x, y, string, arg);
-		va_end(arg);
+		_window.draw(s1);
+		_window.draw(s2);
+		_window.draw(s3);
+		_window.draw(s4);
 	}
 }

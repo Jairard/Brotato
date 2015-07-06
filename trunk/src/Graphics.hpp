@@ -8,7 +8,6 @@
 #include "Graphics/SegmentShape.hpp"
 #include "Graphics/RectangleShape.hpp"
 #include "Graphics/PointShape.hpp"
-#include "Graphics/RenderComponent.hpp"
 #include "Graphics/DebugRenderer.hpp"
 
 #endif 

@@ -10,7 +10,7 @@ class Window;
 class InputListener
 {
 	public:
-		InputListener(sf::RenderWindow& window);
+		InputListener(Window& window);
 		virtual ~InputListener() {}
 		
 		virtual void onEvent(const sf::Event& event);
@@ -42,7 +42,7 @@ class InputListener
 		virtual void onJoystickMoved(const sf::Event::JoystickMoveEvent& joystickMove) { UNUSED(joystickMove); }
 		
 	protected:
-		sf::RenderWindow& m_window;
+		Window& m_window;
 };
 
 #endif

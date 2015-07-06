@@ -3,7 +3,6 @@
 #include "../GameObjects.hpp"
 #include "../Core/Math.hpp"
 #include "../Core/Logger.hpp"
-#include "../Graphics/DebugRenderer.hpp"
 
 Game::Game(Window& window, Phy::World* world):
 	m_world(world),
@@ -12,9 +11,6 @@ Game::Game(Window& window, Phy::World* world):
 {
 	m_inputListener = new InputListener(window);
 	m_renderer = new Graphics::Renderer(window);
-	
-	Graphics::DebugRenderer* debugRenderer = new Graphics::DebugRenderer(window);
-	m_world->setDebugRenderer(debugRenderer);
 	
 	initScene1();
 }
@@ -58,20 +54,6 @@ void Game::initScene2()
 	Logger::enableTag("graphics");
 }
 
-void Game::initScene3()
-{
-	GameObject go("test");
-	Graphics::GeometryComponent* geometry = new Graphics::GeometryComponent(sf::Quads, 4);
-	DummyComponent* dummy = new DummyComponent();
-	Graphics::DummyGeo* dummyGeo = new Graphics::DummyGeo(sf::Quads, 4);
-	//Graphics::RenderComponent* renderer = new Graphics::RenderComponent(window);
-	
-	go.addComponent(geometry);
-	go.addComponent(dummy);
-	go.addComponent(dummyGeo);
-	//go.addComponent(renderer);
-}
-
 void Game::handleInput(const sf::Event& event)
 {
 	if (m_inputListener != 0)
@@ -80,17 +62,12 @@ void Game::handleInput(const sf::Event& event)
 
 void Game::updateLogics()
 {
-	m_renderer->m_window.clear();
 	m_world->step();
-	m_renderer->m_window.display();
 }
 
 void Game::render(float coef)
 {
-	UNUSED(coef);
-	/*
 	if (m_renderer != 0)
 		m_renderer->render(coef);
-	//*/
 }
 

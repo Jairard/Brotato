@@ -2,7 +2,7 @@
 #include "InputListener.hpp"
 #include "../Core/Logger.hpp"
 
-InputListener::InputListener(sf::RenderWindow& window):
+InputListener::InputListener(Window& window):
 	m_window(window)
 {}
 
