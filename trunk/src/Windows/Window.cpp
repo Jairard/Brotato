@@ -4,7 +4,7 @@
 
 #include "../Core/Logger.hpp"
 
-Window::Window(sf::VideoMode mode, const sf::String& title, 
+Window::Window(sf::VideoMode mode, const sf::String& title,
                sf::Uint32 style, const sf::ContextSettings& settings) :
 	sf::RenderWindow(mode, title, style, settings),
 	m_game(0),

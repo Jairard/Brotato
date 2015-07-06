@@ -1,6 +1,6 @@
 #include "_ThickPointShape.hpp"
 
-ThickPointShape::ThickPointShape(const sf::RenderWindow* window, const sf::Vector2f center):
+ThickPointShape::ThickPointShape(const sf::RenderTarget* window, const sf::Vector2f center):
 	sf::RectangleShape(),
 	_thickness(1.),
 	_window(window)

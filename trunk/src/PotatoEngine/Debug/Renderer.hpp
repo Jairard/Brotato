@@ -5,14 +5,16 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <Box2D/Collision/b2Collision.h>
-#include "../Core/NonCopyable.hpp"
+#include "../../Core/NonCopyable.hpp"
 
-namespace Graphics
+namespace Pot
 {
-	class DebugRenderer: public b2Draw, public NonCopyable
+namespace Debug
+{
+	class Renderer: public b2Draw, public NonCopyable
 	{
 		public:
-			DebugRenderer(sf::RenderTarget& window, const char* fontFile = DEFAULT_FONT_FILE);
+			Renderer(sf::RenderTarget& window, const char* fontFile = DEFAULT_FONT_FILE);
 
 		// Box2D manipulators
 		public:
@@ -44,7 +46,9 @@ namespace Graphics
 		
 		// Common:
 		public:
-			void DrawString(int x, int y, const char* string, ...); 
+			void DrawString(int x, int y, const char* string, ...);
+			void lock();
+			void unlock();
 
 		protected:
 			static const sf::Color TRANSPARENT_COLOR;
@@ -52,8 +56,9 @@ namespace Graphics
 
 			sf::RenderTarget& m_window;
 			sf::Font m_font;
-			bool m_isFontLoaded;
+			bool m_isFontLoaded, m_isLocked;
 	};
+}
 }
 
 #endif

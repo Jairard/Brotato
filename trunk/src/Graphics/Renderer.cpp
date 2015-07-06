@@ -27,8 +27,6 @@ namespace Graphics
 	
 	void Renderer::render(float coef)
 	{
-		UNUSED(coef);
-		
 		std::list<Graphics::Entity*>::iterator it;
 		
 		m_window.clear();

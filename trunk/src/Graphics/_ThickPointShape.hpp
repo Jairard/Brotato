@@ -6,7 +6,7 @@
 class ThickPointShape: public sf::RectangleShape
 {
 	public:
-		ThickPointShape(const sf::RenderWindow* window, const sf::Vector2f center=sf::Vector2f());
+		ThickPointShape(const sf::RenderTarget* window, const sf::Vector2f center=sf::Vector2f());
 		~ThickPointShape() {}
 
 		void setThickness(float thickness);
@@ -14,7 +14,7 @@ class ThickPointShape: public sf::RectangleShape
 
 	protected:
 		float _thickness;
-		const sf::RenderWindow* _window;
+		const sf::RenderTarget* _window;
 
 	private:
 		void update(void);
