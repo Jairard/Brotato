@@ -71,6 +71,7 @@ namespace Phy
 	void World::setDebugRenderer(b2Draw* renderer)
 	{
 		SetDebugDraw(renderer);
+		renderer->SetFlags(b2Draw::e_shapeBit);
 		m_drawDebug = true;
 	}
 	

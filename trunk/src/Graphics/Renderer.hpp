@@ -22,6 +22,7 @@ namespace Graphics
 			
 		protected:
 			std::list<Entity*> m_entities;
+		public:
 			Window& m_window;
 	};
 }

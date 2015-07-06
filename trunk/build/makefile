@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -W -ansi -g
+CFLAGS = -std=c++11 -W -Wall -g
 LDFLAGS =
 TARGET_NAME = Brotato
 TARGET_EXTENSION = 
@@ -54,6 +54,12 @@ OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 BIN_DIR = ../bin
 
 # Subdirectories
+POTATO_ENGINE_SUBDIR = PotatoEngine
+SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_SUBDIR)/*.cpp) 
+
+POTATO_ENGINE_DEBUG_SUBDIR = PotatoEngine/Debug
+SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_DEBUG_SUBDIR)/*.cpp) 
+
 PHYSICS_SUBDIR = Physics
 SRC += $(wildcard $(SRC_DIR)/$(PHYSICS_SUBDIR)/*.cpp) 
 
@@ -81,6 +87,11 @@ DELETE_TARGETS = $(OBJ:%=delete_%)
 all: $(OBJ)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
 	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
+
+c++11: OSX/Qt/main_11.cpp
+	g++ -std=c++11 -W -Wall -g -o c++11 OSX/Qt/main_11.cpp
+	@#/opt/local/bin/g++-mp-4.9 -std=c++11 -o c++11 OSX/Qt/main_11.cpp
+	@#-W -Wall -ansi -g
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
 	@ $(CREATE_DIR) $(@D)

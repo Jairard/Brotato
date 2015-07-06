@@ -28,6 +28,7 @@ class Game
 		
 		void initScene1(void);
 		void initScene2(void);
+		void initScene3(void);
 };
 
 #endif

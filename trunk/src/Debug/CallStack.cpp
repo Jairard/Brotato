@@ -57,7 +57,7 @@ namespace Debug
 		void** buffer = new void*[s_maxFrameCount];
 		
 		int frameCount = backtrace(buffer, s_maxFrameCount);
-		stream << frameCount << " frame(s):";
+		stream << frameCount << " frame" << (frameCount > 1 ? "s" : "") << ":";
 		
 		char** symbols = backtrace_symbols(buffer, frameCount);
 		if (symbols == 0)
