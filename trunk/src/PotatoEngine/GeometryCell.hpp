@@ -2,12 +2,19 @@
 #define __GEOMETRYCELL__
 
 #include <SFML/Graphics.hpp>
+#include "Core/AARect.hpp"
+#include "Core/Rect.hpp"
+#include "Core/ClassHelpers.hpp"
 #include "Cell.hpp"
 
 namespace Pot
 {
 
 class Potato;
+namespace Debug
+{
+	class Renderer;
+}
 
 class GeometryCell: public Cell
 {
@@ -15,22 +22,34 @@ class GeometryCell: public Cell
 	
 	protected:
 		GeometryCell(Potato* potato);
+		
 	public:
-		virtual ~GeometryCell() {}
+		IMPL_VIRTUAL_DESTRUCTOR(GeometryCell);
 	
 	public:
 		virtual void update() {}
-	
-		const sf::VertexArray& vertices() const { return m_array; }
-		const sf::FloatRect& aabb() const       { return m_aabb; }
+		virtual void debugRender(Debug::Renderer& renderer) const;
+		void updateAABBs();
+		
 		void setColor(const sf::Color& color);
+		CONST_REF_ACCESSOR_WITH_NAME(sf::VertexArray, array, vertices);
+		CONST_REF_ACCESSOR(AARect, worldAABB);
+		CONST_REF_ACCESSOR(AARect, localAABB);
+		CONST_REF_ACCESSOR(Rect, localAABBInWorldSpace);
+	public:
 		
 	protected:
-		virtual void updateAABB();
+		virtual void updateLocalAABB();
+		virtual void updateWorldAABB();
+		
+	private:
+		void updateLocalAABBInWorldSpace();
 	
 	protected:
 		sf::VertexArray m_array;
-		sf::FloatRect m_aabb;
+		AARect m_worldAABB;
+		AARect m_localAABB;
+		Rect m_localAABBInWorldSpace;
 };
 
 }

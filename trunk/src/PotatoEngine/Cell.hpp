@@ -2,9 +2,9 @@
 #define __CELL__
 
 #include "../Core/NonCopyable.hpp"
-#include "Potato.hpp"
-
+#include "Core/ClassHelpers.hpp"
 #include "Debug/Logger.hpp"
+#include "Potato.hpp"
 
 namespace Pot
 {
@@ -26,15 +26,15 @@ class Cell: NonCopyable
 		Cell(Potato* potato): m_potato(potato)
 		{}
 		
-		virtual ~Cell() {}
+		IMPL_VIRTUAL_DESTRUCTOR(Cell);
 		
 		virtual void update() = 0;
 		
-		Potato* sPotato(void)              { assert(m_potato != nullptr); return m_potato; }
-		const Potato* sPotato(void) const  { assert(m_potato != nullptr); return m_potato; }
+		SAFE_ACCESSOR_WITH_NAME(Potato*, potato, sPotato);
+		SAFE_CONST_ACCESSOR_WITH_NAME(Potato*, potato, sPotato);
 		
-	private:
-		void debugRender(Debug::Renderer& renderer) const { UNUSED(renderer); }
+	protected:
+		virtual void debugRender(Debug::Renderer& renderer) const;
 	//private
 	/*
 	public:

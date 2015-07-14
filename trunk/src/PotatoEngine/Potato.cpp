@@ -4,12 +4,15 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "../Core/Tools.hpp"
 #include "Debug/Renderer.hpp"
+#include "Debug/Logger.hpp"
 #include "Stem.hpp"
 #include "Cell.hpp"
 #include "RenderCell.hpp"
 
 namespace Pot
 {
+
+using Debug::Logger;
 
 Potato::Potato()
 {
@@ -88,7 +91,7 @@ sf::Transform& Potato::worldTransform()
 
 const sf::Transform& Potato::worldTransform_const()
 {
-	m_stem-> ensureIntegrityAsc(this);
+	m_stem->ensureIntegrityAsc(this);
 	return m_worldTransform.const_object();
 }
 
@@ -170,49 +173,8 @@ void Potato::render(float elapsedTime)
 	
 	// Render potato using render / geometry / interpolation cells
 	RenderCell* renderer = fetchCellIFP<RenderCell>();
-	if (renderer == nullptr)
-		return;
-	
-	sf::RectangleShape rectangle;
-	
-	if (m_name == "red rectangle")
-	{
-		rectangle.setSize(sf::Vector2f(100, 50));
-		rectangle.setFillColor(sf::Color::Red);
-		//localTransformable().rotate(0.5f * elapsedTime);
-	}
-	else if (m_name == "green rectangle")
-	{
-		rectangle.setSize(sf::Vector2f(100, 50));
-		rectangle.setFillColor(sf::Color::Green);
-		//localTransformable().move(0.1f * elapsedTime, 0.1f * elapsedTime);
-	}
-	else if (m_name == "potato 1.1.2" || m_name == "potato 1.1")
-	{
-		rectangle.setSize(sf::Vector2f(100, 50));
-		rectangle.setOutlineColor(sf::Color::Blue);
-		rectangle.setOutlineThickness(5);
-		
-		sf::FloatRect aabb = rectangle.getGlobalBounds();
-		// transformRect returns the aabb of the transformed rect \o/
-		aabb = m_worldTransform.const_object().transformRect(aabb);
-		Debug::Renderer debugRenderer(*renderer->sTarget());
-		//debugRenderer.DrawAABB(aabb, sf::Color::Red);
-	}
-	else
-	{
-		rectangle.setSize(sf::Vector2f(100, 50));
-		rectangle.setOutlineColor(sf::Color::Blue);
-		rectangle.setOutlineThickness(5);
-		//rectangle.setPosition(150, 150);
-	}
-	
-	/*
-	sf::RenderStates states;
-	states.transform = m_worldTransform.const_object();
-	renderer->sTarget()->draw(rectangle, states);
-	//*/
-	renderer->render();
+	if (renderer != nullptr)
+		renderer->render();
 }
 
 void Potato::debugRender(Debug::Renderer& renderer) const

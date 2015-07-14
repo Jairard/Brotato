@@ -5,12 +5,14 @@
 #include "PotatoPlant.hpp"
 
 #include "../Core/Tools.hpp"
+#include "../Core/Vector2.hpp"
 #include "Debug/Renderer.hpp"
 #include "Debug/Logger.hpp"
 #include "Stem.hpp"
 #include "Potato.hpp"
 #include "RenderCell.hpp"
 #include "RectangleGeometry.hpp"
+#include "LineGeometry.hpp"
 
 namespace Pot
 {
@@ -41,7 +43,7 @@ void PotatoPlant::initialize()
 	Logger::enableTag("Debug");
 	Logger::enableTag(Logger::Warning);
 	Logger::enableTag(Logger::Error);
-	Logger::enableTag(Stem::c_tag);
+	//Logger::enableTag(Stem::c_tag);
 	
 	Logger::log(Logger::CWarning, "");
 	
@@ -64,7 +66,7 @@ void PotatoPlant::initialize()
 	m_stem->setParent(p1111, p111);
 	
 	setupPotato(p1);
-	//*
+	/*
 	setupPotato(p11);
 	setupPotato(p12);
 	setupPotato(p111);
@@ -73,25 +75,41 @@ void PotatoPlant::initialize()
 	setupPotato(p1111);
 	//*/
 	
-	/*
-	p1->addCell(new RenderCell(p1));
-	p11->addCell(new RenderCell(p11));
-	p12->addCell(new RenderCell(p12));
-	p111->addCell(new RenderCell(p111));
-	p112->addCell(new RenderCell(p112));
-	p121->addCell(new RenderCell(p121));
-	p1111->addCell(new RenderCell(p1111));
+	//*
+	Potato* line = m_stem->instantiatePotato("line !");
+	line->addCell<RenderCell>();
+	LineGeometry* geometry = line->addCell<LineGeometry>();
+	geometry->setPoint1(Vector2f(-50.f, -25.f));
+	geometry->setPoint2(Vector2f(50.f, 50.f));
+	geometry->setColor(sf::Color::Green);
+	
+	line->localTransformable().setPosition(200.f, 200.f);
+	line->localTransformable().rotate(70.f);
+	line->fetchCellIFP<GeometryCell>()->updateAABBs();
 	//*/
 	
-	p1->localTransformable().setPosition(92.f, 67.f);
+	p1->localTransformable().setPosition(100.f, 75.f);
 	p11->localTransformable().setPosition(200.f, 200.f);
 	p121->localTransformable().setRotation(45.f);
 	p112->localTransformable().setRotation(-45.f);
+	//TODO: check world transformations
+	
+	p1->fetchCellIFP<RectangleGeometry>()->updateAABBs();
+	/*
+	p11->fetchCellIFP<RectangleGeometry>()->updateAABBs();
+	p12->fetchCellIFP<RectangleGeometry>()->updateAABBs();
+	p111->fetchCellIFP<RectangleGeometry>()->updateAABBs();
+	p112->fetchCellIFP<RectangleGeometry>()->updateAABBs();
+	p121->fetchCellIFP<RectangleGeometry>()->updateAABBs();
+	p1111->fetchCellIFP<RectangleGeometry>()->updateAABBs();
+	//*/
 	
 	//m_stem->ensureIntegrityAsc(p121);
 	
 	sf::View view(sf::Vector2f(195.f, 195.f), sf::Vector2f(400.f, -400.f));
 	m_window.setView(view);
+	
+	setCellsDebugStatus(true);
 }
 
 void PotatoPlant::setupPotato(Potato* potato)
@@ -168,12 +186,15 @@ void PotatoPlant::render(float elapsedTime)
 	m_window.clear();
 	m_stem->render(elapsedTime);
 	
-	m_debugRenderer->unlock();
 	if (m_debugCells)
+	{
+		m_debugRenderer->unlock();
 		m_stem->debugRender(*m_debugRenderer);
+		m_debugRenderer->lock();
+	}
+	
 	if (m_debugPhysics)
 		;// TODO: physics debug render
-	m_debugRenderer->lock();
 	
 	m_window.display();
 }

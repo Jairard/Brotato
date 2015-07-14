@@ -9,6 +9,7 @@
 #include "../Core/Tools.hpp"
 #include "../Core/Stainable.hpp"
 #include "../Core/Pool.hpp"
+#include "Core/ClassHelpers.hpp"
 #include "Stem.hpp"
 
 #include "Cell.hpp"
@@ -30,14 +31,15 @@ class Potato
 	template <typename T> friend class Pool;
 		
 	public:
-		std::string& name()                     { return m_name; }
-		const std::string& name() const         { return m_name; }
-		Stem* sStem()                           { assert(m_stem != nullptr); return m_stem; }
-		const Stem* sStem() const               { assert(m_stem != nullptr); return m_stem; }
+		REF_ACCESSOR(std::string, name);
+		CONST_REF_ACCESSOR(std::string, name);
+		SAFE_ACCESSOR_WITH_NAME(Stem*, stem, sStem);
+		SAFE_CONST_ACCESSOR_WITH_NAME(Stem*, stem, sStem);
 		
 		// Hierarchy manipulators
-		const Potato* sParent() const                   { assert(m_parent != nullptr); return m_parent; }
-		const std::vector<Potato*>& children() const    { return m_children; }
+		SAFE_CONST_ACCESSOR_WITH_NAME(Potato*, parent, sParent);
+		CONST_REF_ACCESSOR(std::vector<Potato*>, children);
+	public:
 		unsigned int childCount() const                 { return m_children.size(); }
 		Potato* child(unsigned int i);
 		const Potato* child(unsigned int i) const;
@@ -68,7 +70,7 @@ class Potato
 			cell->initialize(args...);
 			m_cells.push_back(cell);
 			return cell;
-		}
+		} 
 		//*/
 		
 		template <typename T> T* fetchCellIFP()
@@ -105,6 +107,7 @@ class Potato
 		
 		Potato();
 	private:
+		// TODO: inherit from NonCopyable ?
 		Potato(const Potato& toCopy) { UNUSED(toCopy); assert(false); }
 		
 		void initialize(const std::string& name = "__unnamed__", Stem* stem = nullptr, Potato* parent = nullptr);
@@ -116,7 +119,7 @@ class Potato
 		void render(float elapsedTime);
 		void debugRender(Debug::Renderer& renderer) const;
 		
-		Potato* sParent()                                         { assert(m_parent != nullptr); return m_parent; }
+		SAFE_ACCESSOR_WITH_NAME_WITH_DOMAIN(Potato*, parent, sParent, private);
 		sf::Transform& worldTransform_noCheck()                   { return m_worldTransform.object(); }
 		const sf::Transform& worldTransform_const_noCheck() const { return m_worldTransform.const_object(); }
 		

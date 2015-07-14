@@ -13,10 +13,14 @@ SOURCES += \
     ../../../src/PotatoEngine/PotatoPlant.cpp \
     ../../../src/PotatoEngine/Stem.cpp \
     ../../../src/PotatoEngine/Potato.cpp \
+    ../../../src/PotatoEngine/Cell.cpp \
     ../../../src/PotatoEngine/RenderCell.cpp \
     ../../../src/PotatoEngine/GeometryCell.cpp \
+    ../../../src/PotatoEngine/RectangleGeometry.cpp \
+    ../../../src/PotatoEngine/LineGeometry.cpp \
     ../../../src/PotatoEngine/Debug/Renderer.cpp \
     ../../../src/PotatoEngine/Debug/Logger.cpp \
+    ../../../src/PotatoEngine/Core/LibsHelpers.cpp \
     ../../../src/Core/Math.cpp \
     ../../../src/Core/Logger.cpp \
     ../../../src/Core/Component.cpp \
@@ -54,8 +58,14 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Cell.hpp \
     ../../../src/PotatoEngine/RenderCell.hpp \
     ../../../src/PotatoEngine/GeometryCell.hpp \
+    ../../../src/PotatoEngine/RectangleGeometry.hpp \
+    ../../../src/PotatoEngine/LineGeometry.hpp \
     ../../../src/PotatoEngine/Debug/Renderer.hpp \
     ../../../src/PotatoEngine/Debug/Logger.hpp \
+    ../../../src/PotatoEngine/Core/AARect.hpp \
+    ../../../src/PotatoEngine/Core/Rect.hpp \
+    ../../../src/PotatoEngine/Core/ClassHelpers.hpp \
+    ../../../src/PotatoEngine/Core/LibsHelpers.hpp \
     ../../../src/Physics/World.hpp \
     ../../../src/Physics/Entity.hpp \
     ../../../src/Physics/Rectangle.hpp \ 
@@ -90,7 +100,6 @@ HEADERS +=  \
     ../../../src/Core/Scene.hpp \
     ../../../src/Core/Pool.hpp \
     ../../../src/Core/Stainable.hpp \
-    ../../../src/Core/LibsHelpers.inl \
     ../../../src/Window.hpp \
     ../../../src/Windows/Window.hpp \
     ../../../src/Windows/InputListener.hpp \

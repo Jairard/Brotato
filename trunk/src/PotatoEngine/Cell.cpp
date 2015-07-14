@@ -14,5 +14,10 @@ void initializeCell(Args... args)
 }
 //*/
 
+void Cell::debugRender(Debug::Renderer& renderer) const
+{
+	UNUSED(renderer);
+}
+
 }
 

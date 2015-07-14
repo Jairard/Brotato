@@ -3,7 +3,7 @@
 #include <cstring>
 
 #include "Renderer.hpp"
-#include "../../Core/LibsHelpers.inl"
+#include "../Core/LibsHelpers.hpp"
 #include "../../Graphics.hpp"
 #include "../../Graphics/_ThickPointShape.hpp"
 
@@ -113,12 +113,79 @@ void Renderer::DrawString(int x, int y, const b2Color& color, const char* string
 	va_end(arg);
 }
 
-sf::Vector2f* Renderer::b2va_2_sfva(const b2Vec2* points, int32 pointCount) const
+sf::Vector2f* Renderer::b2va_2_sfva(const b2Vec2* vertices, int32 vertexCount) const
 {
-	sf::Vector2f* res = new sf::Vector2f[pointCount];
+	sf::Vector2f* res = new sf::Vector2f[vertexCount];
 	
-	for (int32 i = 0; i < pointCount; ++i)
-		res[i] = b2v_2_sfv(points[i]);
+	for (int32 i = 0; i < vertexCount; ++i)
+		res[i] = b2v_2_sfv(vertices[i]);
+	
+	return res;
+}
+
+// Potato manipulators
+void Renderer::DrawPoint(const Vector2f& p, float32 size, const sf::Color& color)
+{
+	DrawPoint(pv_2_sfv(p), size, color);
+}
+
+void Renderer::DrawSegment(const Vector2f& p1, const Vector2f& p2, const sf::Color& color)
+{
+	DrawSegment(pv_2_sfv(p1), pv_2_sfv(p2), color);
+}
+
+void Renderer::DrawRect(const AARect& aabb, const sf::Color& color)
+{
+	DrawAABB(pr_2_sfr(aabb), color);
+}
+
+void Renderer::DrawRect(const Rect& rect, const sf::Color& color)
+{
+	DrawRect(rect.points, color);
+}
+
+void Renderer::DrawRect(const Vector2f& p1, const Vector2f& p2, const Vector2f& p3, const Vector2f& p4, const sf::Color& color)
+{
+	DrawRect(pv_2_sfv(p1), pv_2_sfv(p2), pv_2_sfv(p3), pv_2_sfv(p4), color);
+}
+
+void Renderer::DrawRect(const Vector2f* vertices, const sf::Color& color)
+{
+	sf::Vector2f* sfVertices = pva_2_sfva(vertices, 4);
+	DrawRect(sfVertices, color);
+	delete[] sfVertices;
+}
+
+void Renderer::DrawPolygon(const Vector2f* vertices, int32 vertexCount, const sf::Color& color)
+{
+	sf::Vector2f* sfVertices = pva_2_sfva(vertices, vertexCount);
+	DrawPolygon(sfVertices, vertexCount, color);
+	delete[] sfVertices;
+}
+
+void Renderer::DrawSolidPolygon(const Vector2f* vertices, int32 vertexCount, const sf::Color& color)
+{
+	sf::Vector2f* sfVertices = pva_2_sfva(vertices, vertexCount);
+	DrawSolidPolygon(sfVertices, vertexCount, color);
+	delete[] sfVertices;
+}
+
+void Renderer::DrawCircle(const Vector2f& center, float32 radius, const sf::Color& color)
+{
+	DrawCircle(pv_2_sfv(center), radius, color);
+}
+
+void Renderer::DrawSolidCircle(const Vector2f& center, float32 radius, const sf::Vector2f& axis, const sf::Color& color)
+{
+	DrawSolidCircle(pv_2_sfv(center), radius, pv_2_sfv(axis), color);
+}
+
+sf::Vector2f* Renderer::pva_2_sfva(const Vector2f* vertices, int32 vertexCount) const
+{
+	sf::Vector2f* res = new sf::Vector2f[vertexCount];
+	
+	for (int32 i = 0; i < vertexCount; ++i)
+		res[i] = pv_2_sfv(vertices[i]);
 	
 	return res;
 }
@@ -145,15 +212,37 @@ void Renderer::DrawSegment(const sf::Vector2f& p1, const sf::Vector2f& p2, const
 	m_window.draw(segment);
 }
 
+void Renderer::DrawTransform(const sf::Transformable& t)
+{
+	DrawTransform(t.getTransform());
+}
+
 void Renderer::DrawTransform(const sf::Transform& t)
 {
-	sf::Color xColor(255, 0, 0), yColor(0, 255, 0);
-	const float32 k_axisScale = 0.4f;
+	sf::Color xColor = sf::Color::Red, yColor = sf::Color::Green;
 	sf::Vector2f center(0.f, 0.f), xPoint(1.f, 0.f), yPoint(0.f, 1.f);
 	sf::Vector2f xAxis = t.transformPoint(xPoint), yAxis = t.transformPoint(yPoint);
 	
-	DrawSegment(center, center + k_axisScale * xAxis, xColor);
-	DrawSegment(center, center + k_axisScale * yAxis, yColor);
+	DrawSegment(center, center + xAxis, xColor);
+	DrawSegment(center, center + yAxis, yColor);
+}
+
+void Renderer::DrawRect(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Vector2f& p3, const sf::Vector2f& p4, const sf::Color& color)
+{
+	sf::Vector2f* vertices = new sf::Vector2f[4];
+	vertices[0] = p1;
+	vertices[1] = p2;
+	vertices[2] = p3;
+	vertices[3] = p4;
+	
+	DrawRect(vertices, color);
+	
+	delete[] vertices;
+}
+
+void Renderer::DrawRect(const sf::Vector2f* vertices, const sf::Color& color)
+{
+	DrawPolygon(vertices, 4, color);
 }
 
 void Renderer::DrawPolygon(const sf::Vector2f* vertices, int32 vertexCount, const sf::Color& color)
@@ -233,8 +322,8 @@ void Renderer::DrawAABB(const sf::FloatRect& aabb, const sf::Color& color)
 
 	vertices[0] = sf::Vector2f(aabb.left             , aabb.top              ),
 	vertices[1] = sf::Vector2f(aabb.left + aabb.width, aabb.top              ),
-	vertices[2] = sf::Vector2f(aabb.left + aabb.width, aabb.top - aabb.height),
-	vertices[3] = sf::Vector2f(aabb.left             , aabb.top - aabb.height);
+	vertices[2] = sf::Vector2f(aabb.left + aabb.width, aabb.top + aabb.height),
+	vertices[3] = sf::Vector2f(aabb.left             , aabb.top + aabb.height);
 
 	DrawPolygon(vertices, vertexCount, color);
 	delete[] vertices;

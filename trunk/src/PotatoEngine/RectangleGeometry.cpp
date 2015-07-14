@@ -26,24 +26,15 @@ void RectangleGeometry::setSize(const Vector2f& size)
 	m_array[2].position = sf::Vector2f( halfWidth,  halfHeight);
 	m_array[3].position = sf::Vector2f(-halfWidth,  halfHeight);
 	
-	updateAABB();
+	updateAABBs();
 }
 
-void RectangleGeometry::updateAABB()
+void RectangleGeometry::updateLocalAABB()
 {
-	//*
-	m_aabb.left = -m_size.x * 0.5f;
-	m_aabb.top = m_size.y * 0.5f;
-	m_aabb.width = m_size.x;
-	m_aabb.height = m_size.y;
-	
-	Logger::log(Logger::CWarning, "size: %f, %f", m_size.x, m_size.y);
-	Logger::log("Warning", "aabb: %f, %f, %F, %f", m_aabb.left, m_aabb.top, m_aabb.width, m_aabb.height);
-	/*/
-	GeometryCell::updateAABB();
-	Logger::log(Logger::CWarning, "size: %f, %f", m_size.x, m_size.y);
-	Logger::log("Warning", "aabb: %f, %f, %F, %f", m_aabb.left, m_aabb.top, m_aabb.width, m_aabb.height);
-	//*/
+	m_localAABB.left = -m_size.x * 0.5f;
+	m_localAABB.bottom = -m_size.y * 0.5f;
+	m_localAABB.width = m_size.x;
+	m_localAABB.height = m_size.y;
 }
 
 }

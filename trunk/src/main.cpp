@@ -17,6 +17,8 @@
 #include "PotatoEngine/PotatoPlant.hpp"
 #include "PotatoEngine/Potato.hpp"
 #include "Core/Pool.hpp"
+#include "PotatoEngine/Core/ClassHelpers.hpp"
+#include "PotatoEngine/Core/LibsHelpers.hpp"
 
 /*
 Does not work :( (see Potato)
@@ -39,60 +41,8 @@ int main(int argc, char* argv[])
 }
 //*/
 
-/*
-void print(const char *s)
-{
-    while (*s) {
-        if (*s == '%') {
-            if (*(s + 1) == '%') {
-                ++s;
-            }
-            else {
-                throw std::runtime_error("invalid format string: missing arguments");
-            }
-        }
-        std::cout << *s++;
-    }
-}
-
-template<typename T, typename... Args>
-void print(const char *s, T value, Args... args)
-{
-    while (*s) {
-        if (*s == '%') {
-            if (*(s + 1) == '%') {
-                ++s;
-            }
-            else {
-                std::cout << value;
-                s += 2;
-                print(s, args...); // call even when *s == 0 to detect extra arguments
-                return;
-            }
-        }
-        std::cout << *s++;
-    }
-}
-
-int main(int argc, char* argv[])
-{
-	print("Yay ! %d, %f, '%s'\n", 42, 13.37f, "testout");
-	return EXIT_SUCCESS;
-}
-//*/
-
-void scene1(void);
 void scene2(void);
 void scene3(void);
-
-void dummy()
-{
-	FUNC_ENTRY;
-	LOG_STACK;
-	FUNC_EXIT;
-	
-	Debug::CallStack::logBacktrace();
-}
 
 //*
 #include "PotatoEngine/RenderCell.hpp"
@@ -119,40 +69,10 @@ int main(int argc, char* argv[])
 	UNUSED(argc);
 	UNUSED(argv);
 	
-	//Pot::Potato* pot = new Pot::Potato();
-	//Pot::RenderCell* cell = pot->addCell<Pot::RenderCell>();
-	//Pot::RenderCell* cell = pot->addCell<Pot::RenderCell, sf::RenderTarget*>(nullptr);
-	//Pot::RenderCell* cell = new Pot::RenderCell(nullptr);
-	//sf::RenderTarget* target = nullptr;
-	//initialize<Pot::RenderCell*, sf::RenderTarget*>(cell, nullptr);
-	
-	//UNUSED(cell);
-	//UNUSED(target);
-	
-	//Pot::initializeCell<Pot::RenderCell*, sf::RenderTarget*>(cell, nullptr);
-	//return EXIT_SUCCESS;
-	
-	//scene2();
-	//return EXIT_SUCCESS;
-	
 	Pot::PotatoPlant plant("First plant !", sf::VideoMode(400, 400));
 	return plant.loop();
 }
 //*/
-
-void scene1()
-{	
-	Logger::enableTag(Debug::CallStack::tag());
-	
-	LOG_STACK;
-	FUNC_ENTRY;
-	dummy();
-	FUNC_EXIT;
-	LOG_STACK;
-	Debug::CallStack::logBacktrace();
-	
-	exit(EXIT_SUCCESS);
-}
 
 void scene2()
 {

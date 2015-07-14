@@ -3,6 +3,8 @@
 #include <list>
 #include "Debug/Logger.hpp"
 #include "Debug/Renderer.hpp"
+#include "Core/Rect.hpp"
+#include "Core/LibsHelpers.hpp"
 #include "GeometryCell.hpp"
 
 namespace Pot
@@ -15,10 +17,6 @@ RenderCell::RenderCell(Potato* potato):
 	// Default render target is the window
 	if (m_target == nullptr)
 		m_target = sPotato()->sStem()->sPlant()->window();
-}
-
-RenderCell::~RenderCell()
-{
 }
 
 void RenderCell::render()
@@ -36,14 +34,6 @@ void RenderCell::render()
 	sf::RenderStates states;
 	states.transform = sPotato()->worldTransform_const();
 	m_target->draw(gc->vertices(), states);
-	
-	//*
-	sf::FloatRect aabb = states.transform.transformRect(gc->aabb());
-	Debug::Renderer renderer(*m_target);
-	renderer.DrawAABB(aabb, sf::Color::Red);
-	renderer.DrawSegment(sf::Vector2f(20.f, 0.f), sf::Vector2f(), sf::Color::Red);
-	renderer.DrawSegment(sf::Vector2f(0.f, 20.f), sf::Vector2f(), sf::Color::Green);
-	//*/
 }
 
 /*

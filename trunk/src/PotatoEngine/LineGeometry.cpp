@@ -1,0 +1,68 @@
+#include "LineGeometry.hpp"
+#include "Debug/Logger.hpp"
+
+namespace Pot
+{
+
+using Debug::Logger;
+
+LineGeometry::LineGeometry(Potato* potato):
+	GeometryCell(potato)
+{
+	m_array.setPrimitiveType(sf::Lines);
+	m_array.resize(2);
+}
+
+void LineGeometry::update()
+{
+	GeometryCell::update();
+	sPotato()->localTransformable().rotate(1.f);
+	updateAABBs();
+}
+
+void LineGeometry::setPoint1(const Vector2f& coords)
+{
+	setPoint1(pv_2_sfv(coords));
+}
+
+void LineGeometry::setPoint1(const sf::Vector2f& coords)
+{
+	m_array[0].position = coords;
+	updateAABBs();
+}
+
+void LineGeometry::setPoint2(const Vector2f& coords)
+{
+	setPoint2(pv_2_sfv(coords));
+}
+
+void LineGeometry::setPoint2(const sf::Vector2f& coords)
+{
+	m_array[1].position = coords;
+	updateAABBs();
+}
+
+void LineGeometry::setPoints(const Vector2f& p1, const Vector2f& p2)
+{
+	setPoints(pv_2_sfv(p1), pv_2_sfv(p2));
+}
+
+void LineGeometry::setPoints(const sf::Vector2f& p1, const sf::Vector2f& p2)
+{
+	m_array[0].position = p1;
+	m_array[1].position = p2;
+	updateAABBs();
+}
+
+void LineGeometry::updateLocalAABB()
+{
+	const sf::Vector2f& p1 = m_array[0].position;
+	const sf::Vector2f& p2 = m_array[1].position;
+	
+	m_localAABB.left = std::min(p1.x, p2.x);
+	m_localAABB.bottom = std::min(p1.y, p2.y);
+	m_localAABB.width = fabsf(p1.x - p2.x);
+	m_localAABB.height = fabsf(p1.y - p2.y);
+}
+
+}

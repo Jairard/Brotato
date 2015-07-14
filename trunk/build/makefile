@@ -58,7 +58,10 @@ POTATO_ENGINE_SUBDIR = PotatoEngine
 SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_SUBDIR)/*.cpp) 
 
 POTATO_ENGINE_DEBUG_SUBDIR = PotatoEngine/Debug
-SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_DEBUG_SUBDIR)/*.cpp) 
+SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_DEBUG_SUBDIR)/*.cpp)
+
+POTATO_ENGINE_CORE_SUBDIR = PotatoEngine/Core
+SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_CORE_SUBDIR)/*.cpp)
 
 PHYSICS_SUBDIR = Physics
 SRC += $(wildcard $(SRC_DIR)/$(PHYSICS_SUBDIR)/*.cpp) 

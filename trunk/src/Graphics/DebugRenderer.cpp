@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstring>
 
-#include "../Core/LibsHelpers.inl"
+#include "../PotatoEngine/Core/LibsHelpers.hpp"
 #include "../Graphics.hpp"
 #include "_ThickPointShape.hpp"
 

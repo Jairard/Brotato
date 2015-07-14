@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Debug/Renderer.hpp"
+#include "Core/ClassHelpers.hpp"
 #include "../Windows/InputListener.hpp"
 
 namespace Pot
@@ -30,11 +31,11 @@ class PotatoPlant// : Singleton<PotatoPlant>
 		void shutdown();
 		int loop();
 		
-		bool cellsDebugStatus() const           { return m_debugCells; }
-		void SetCellsDebugStatus(bool status)   { m_debugCells = status; }
-		bool physicsDebugStatus() const         { return m_debugPhysics; }
-		void SetPhysicsDebugStatus(bool status) { m_debugPhysics = status; }
-		sf::RenderTarget* window()              { return &m_window; }
+		SIMPLE_CONST_ACCESSOR_WITH_NAME(bool, debugCells, cellsDebugStatus);
+		MUTATOR_WITH_NAME(bool, debugCells, setCellsDebugStatus);
+		SIMPLE_CONST_ACCESSOR_WITH_NAME(bool, debugPhysics, physicsDebugStatus);
+		MUTATOR_WITH_NAME(bool, debugPhysics, setPhysicsDebugStatus);
+		PTR_ACCESSOR(sf::RenderTarget, window);
 		
 	private:
 		void handleInput();

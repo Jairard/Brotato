@@ -3,6 +3,7 @@
 
 #include "GeometryCell.hpp"
 #include "../Core/Vector2.hpp"
+#include "Core/ClassHelpers.hpp"
 
 namespace Pot
 {
@@ -15,14 +16,15 @@ class RectangleGeometry: public GeometryCell
 	
 	protected:
 		RectangleGeometry(Potato* potato);
-	public:
-		virtual ~RectangleGeometry() {}
+		IMPL_VIRTUAL_DESTRUCTOR(RectangleGeometry);
 		
+		CONST_REF_ACCESSOR(Vector2f, size);
+		
+	public:
 		void setSize(const Vector2f& size);
-		const Vector2f& size() const { return m_size; }
 		
 	protected:
-		virtual void updateAABB();
+		virtual void updateLocalAABB();
 		
 	protected:
 		Vector2f m_size;

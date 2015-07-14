@@ -2,8 +2,9 @@
 #define __RENDERCELL__
 
 #include <SFML/Graphics.hpp>
-#include "Cell.hpp"
+#include "Core/ClassHelpers.hpp"
 #include "Debug/Logger.hpp"
+#include "Cell.hpp"
 
 namespace Pot
 {
@@ -17,11 +18,11 @@ class RenderCell: public Cell
 	protected:
 		RenderCell(Potato* potato);
 	public:
-		virtual ~RenderCell();
+		IMPL_VIRTUAL_DESTRUCTOR(RenderCell);
 
 		virtual void update() {}
-		sf::RenderTarget* sTarget()               { assert(m_target != nullptr); return m_target; }
-		void setTarget(sf::RenderTarget* target)  { m_target = target; }
+		SAFE_ACCESSOR_WITH_NAME(sf::RenderTarget*, target, sTarget);
+		MUTATOR_WITH_NAME(sf::RenderTarget*, target, setTarget);
 		
 	protected:
 		virtual void render();

@@ -49,7 +49,7 @@ void Stem::renderRec(Potato* potato, float elapsedTime, bool isRotten) const
 		assert(!isMotherPotato(potato));
 		// We don't want to check matrix's state, it's ensured by the recursive call
 		updateTransform_noCheck(potato);
-		Logger::log(c_tag, "render: updating transform for %s", potato->name().c_str());
+		Logger::log(c_tag, "render: updating transform for '%s'", potato->name().c_str());
 		s_transformComputationCount++;
 	}
 	
@@ -62,6 +62,11 @@ void Stem::renderRec(Potato* potato, float elapsedTime, bool isRotten) const
 void Stem::debugRender(Debug::Renderer& renderer) const
 {
 	debugRenderRec(m_motherPotato, renderer);
+	
+	// Draw world transform
+	sf::Transform t;
+	t.scale(20.f, 20.f);
+	renderer.DrawTransform(t);
 }
 
 void Stem::debugRenderRec(const Potato* potato, Debug::Renderer& renderer) const
@@ -75,6 +80,7 @@ void Stem::debugRenderRec(const Potato* potato, Debug::Renderer& renderer) const
 
 void Stem::update()
 {
+	updatePotatoRec(m_motherPotato);
 }
 
 Potato* Stem::instantiatePotato(const char* name)
@@ -139,7 +145,7 @@ void Stem::ensureIntegrityAsc(Potato* potato) const
 	{
 		// We don't want to check matrix's state, it's ensured by the recursive call
 		updateTransform_noCheck(*it);
-		Logger::log(c_tag, "ensureIntegrityAsc: updating transform for %s", (*it)->name().c_str());
+		Logger::log(c_tag, "ensureIntegrityAsc: updating transform for '%s'", (*it)->name().c_str());
 		s_transformComputationCount++;
 	}
 	
