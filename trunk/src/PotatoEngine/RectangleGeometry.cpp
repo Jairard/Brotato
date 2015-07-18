@@ -7,11 +7,9 @@ namespace Pot
 using Debug::Logger;
 
 RectangleGeometry::RectangleGeometry(Potato* potato):
-	GeometryCell(potato),
+	GeometryCell(potato, sf::Quads, 4),
 	m_size(1.f, 1.f)
 {
-	m_array.setPrimitiveType(sf::Quads);
-	m_array.resize(4);
 	setSize(m_size);
 }
 

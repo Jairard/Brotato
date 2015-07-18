@@ -31,7 +31,7 @@ class Stem
 		bool isMotherPotato(const Potato* potato) const;
 		void setParent(Potato* potato, Potato* parent) const;
 		void destroyPotato(Potato* potato, bool deleteRecursively = false);
-		void ensureIntegrityAsc(Potato* potato) const;
+		void ensureIntegrityIFN(Potato* potato) const;
 		
 		PotatoPlant* sPlant(void)              { assert(m_plant != nullptr); return m_plant; }
 		
@@ -41,7 +41,6 @@ class Stem
 		void updatePotatoRec(Potato* potato);
 		void destroyPotatoRec(Potato* potato);
 		void updateTransform(Potato* potato) const;
-		void updateTransform_noCheck(Potato* potato) const;
 		void getRottenAncestorsIFP(Potato* potato, std::list<Potato*>& outRottenAncestors) const;
 		Potato* getClosestRottenAncestorIFP(Potato* potato, std::list<Potato*>& outRottenAncestors) const;
 		

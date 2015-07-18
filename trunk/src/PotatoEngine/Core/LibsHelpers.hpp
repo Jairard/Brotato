@@ -8,6 +8,7 @@
 #include <Box2D/Box2D.h>
 #include "../../Core/Vector2.hpp"
 #include "AARect.hpp"
+#include "Rect.hpp"
 
 // Vector2 helpers
 inline sf::Vector2f b2v_2_sfv(const b2Vec2& b2v)
@@ -54,16 +55,27 @@ inline b2Color sfc_2_b2c(const sf::Color& sfc)
 }
 
 // Rect helpers
-inline Pot::AARect sfr_2_pr(const sf::FloatRect& sfr)
+inline Pot::AARect sfr_2_paar(const sf::FloatRect& sfr)
 {
 	// sf::FloatRect's top is the min Y of the rect, so it is Pot::Rect's bottom
 	return Pot::AARect(sfr.left, sfr.top, sfr.width, sfr.height);
 }
 
-inline sf::FloatRect pr_2_sfr(const Pot::AARect& pr)
+inline sf::FloatRect paar_2_sfr(const Pot::AARect& paar)
 {
-	return sf::FloatRect(pr.left, pr.bottom, pr.width, pr.height);
+	return sf::FloatRect(paar.left, paar.bottom, paar.width, paar.height);
 }
 
+inline Pot::Rect paar_2_pr(const Pot::AARect& paar)
+{
+	Pot::Rect res;
+	
+	res.points[0] = Vector2f(paar.left             , paar.bottom              );
+	res.points[1] = Vector2f(paar.left + paar.width, paar.bottom              );
+	res.points[2] = Vector2f(paar.left + paar.width, paar.bottom + paar.height);
+	res.points[3] = Vector2f(paar.left             , paar.bottom + paar.height);
+	
+	return res;
+}
 
 #endif

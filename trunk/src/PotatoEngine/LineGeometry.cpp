@@ -7,16 +7,14 @@ namespace Pot
 using Debug::Logger;
 
 LineGeometry::LineGeometry(Potato* potato):
-	GeometryCell(potato)
+	GeometryCell(potato, sf::Lines, 2)
 {
-	m_array.setPrimitiveType(sf::Lines);
-	m_array.resize(2);
 }
 
 void LineGeometry::update()
 {
 	GeometryCell::update();
-	sPotato()->localTransformable().rotate(1.f);
+	sPotato()->localTransform().rotate(1.f);
 	updateAABBs();
 }
 

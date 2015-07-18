@@ -21,7 +21,7 @@ class GeometryCell: public Cell
 	friend class Potato;
 	
 	protected:
-		GeometryCell(Potato* potato);
+		GeometryCell(Potato* potato, sf::PrimitiveType primitiveType = sf::Points, unsigned int vertexCount = 1);
 		
 	public:
 		IMPL_VIRTUAL_DESTRUCTOR(GeometryCell);

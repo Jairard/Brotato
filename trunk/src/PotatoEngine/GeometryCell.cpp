@@ -8,9 +8,9 @@ namespace Pot
 
 using Debug::Logger;
 
-GeometryCell::GeometryCell(Potato* potato):
+GeometryCell::GeometryCell(Potato* potato, sf::PrimitiveType primitiveType, unsigned int vertexCount):
 	Cell(potato),
-	m_array()
+	m_array(primitiveType, vertexCount)
 {
 }
 
@@ -38,6 +38,7 @@ void GeometryCell::updateAABBs()
 
 void GeometryCell::updateLocalAABB()
 {
+	assert(m_array.getVertexCount() > 0);
 	const unsigned int vertexCount = m_array.getVertexCount();
 	float right = 0.f, top = 0.f;
 	m_localAABB.left = right = m_array[0].position.x;
@@ -58,9 +59,10 @@ void GeometryCell::updateLocalAABB()
 
 void GeometryCell::updateWorldAABB()
 {
+	assert(m_array.getVertexCount() > 0);
 	const unsigned int vertexCount = m_array.getVertexCount();
-	const sf::Transform& localToWorld = sPotato()->worldTransform_const();
-	sf::Vector2f transformedPoint = localToWorld.transformPoint(m_array[0].position);
+	const Transform& localToWorld = sPotato()->localToWorldTransform();
+	Vector2f transformedPoint = localToWorld.transformPoint(sfv_2_pv(m_array[0].position));
 	float right = 0.f, top = 0.f;
 	
 	m_worldAABB.left = right = transformedPoint.x;
@@ -68,7 +70,7 @@ void GeometryCell::updateWorldAABB()
 	
 	for (unsigned int i = 1; i < vertexCount; ++i)
 	{
-		transformedPoint = localToWorld.transformPoint(m_array[i].position);
+		transformedPoint = localToWorld.transformPoint(sfv_2_pv(m_array[i].position));
 		m_worldAABB.left = std::min(m_worldAABB.left, transformedPoint.x);
 		right = std::max(right, transformedPoint.x);
 		m_worldAABB.bottom = std::min(m_worldAABB.bottom, transformedPoint.y);
@@ -81,23 +83,14 @@ void GeometryCell::updateWorldAABB()
 
 void GeometryCell::updateLocalAABBInWorldSpace()
 {
-	const sf::Transform& localToWorld = sPotato()->worldTransform_const();
-	sf::Vector2f p1(m_localAABB.left                    , m_localAABB.bottom                     );
-	sf::Vector2f p2(m_localAABB.left + m_localAABB.width, m_localAABB.bottom                     );
-	sf::Vector2f p3(m_localAABB.left + m_localAABB.width, m_localAABB.bottom + m_localAABB.height);
-	sf::Vector2f p4(m_localAABB.left                    , m_localAABB.bottom + m_localAABB.height);
-	
-	m_localAABBInWorldSpace.points[0] = localToWorld.transformPoint(p1);
-	m_localAABBInWorldSpace.points[1] = localToWorld.transformPoint(p2);
-	m_localAABBInWorldSpace.points[2] = localToWorld.transformPoint(p3);
-	m_localAABBInWorldSpace.points[3] = localToWorld.transformPoint(p4);
+	m_localAABBInWorldSpace = sPotato()->localToWorldTransform().transformRect(m_localAABB);
 }
 
 void GeometryCell::debugRender(Debug::Renderer& renderer) const
 {
 	Cell::debugRender(renderer);
-	renderer.DrawRect(m_worldAABB, sf::Color::Red);
 	renderer.DrawRect(m_localAABBInWorldSpace, sf::Color::Blue);
+	renderer.DrawRect(m_worldAABB, sf::Color::Red);
 }
 
 }

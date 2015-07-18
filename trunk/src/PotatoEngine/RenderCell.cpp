@@ -32,7 +32,7 @@ void RenderCell::render()
 		return;
 	
 	sf::RenderStates states;
-	states.transform = sPotato()->worldTransform_const();
+	states.transform = sPotato()->worldTransform().SFMLTransform();
 	m_target->draw(gc->vertices(), states);
 }
 

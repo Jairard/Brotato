@@ -20,7 +20,7 @@ SOURCES += \
     ../../../src/PotatoEngine/LineGeometry.cpp \
     ../../../src/PotatoEngine/Debug/Renderer.cpp \
     ../../../src/PotatoEngine/Debug/Logger.cpp \
-    ../../../src/PotatoEngine/Core/LibsHelpers.cpp \
+    ../../../src/PotatoEngine/Core/Transform.cpp \
     ../../../src/Core/Math.cpp \
     ../../../src/Core/Logger.cpp \
     ../../../src/Core/Component.cpp \
@@ -66,6 +66,7 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Core/Rect.hpp \
     ../../../src/PotatoEngine/Core/ClassHelpers.hpp \
     ../../../src/PotatoEngine/Core/LibsHelpers.hpp \
+    ../../../src/PotatoEngine/Core/Transform.hpp \
     ../../../src/Physics/World.hpp \
     ../../../src/Physics/Entity.hpp \
     ../../../src/Physics/Rectangle.hpp \ 

@@ -38,6 +38,61 @@ PotatoPlant::PotatoPlant(const sf::String& title, sf::VideoMode mode, unsigned i
 {
 }
 
+void transformTest()
+{
+	Logger::enableTag(Logger::Warning);
+	Logger::log(Logger::CWarning, "");
+	
+	Stem* stem = new Stem(nullptr);
+	Potato* p1 = stem->instantiatePotato("potato 1");
+	Potato* p11 = stem->instantiatePotato("potato 1.1");
+	stem->setParent(p11, p1);
+	
+	//*
+	p1->localTransform().setPosition(5.f, 10.f);
+	p1->localTransform().setRotation(42.f);
+	p1->localTransform().setScale(2.f, 1.5f);
+	/*/
+	p1->worldTransform().setPosition(5.f, 10.f);
+	p1->worldTransform().setRotation(42.f);
+	p1->worldTransform().setScale(2.f, 1.5f);
+	//*/
+	
+	/*
+	p11->worldTransform().setPosition(10.f, 5.f);
+	p11->worldTransform().setRotation(100.f);
+	p11->worldTransform().setScale(0.5f, 4.f);
+	/*/
+	p11->localTransform().setPosition(10.f, 5.f);
+	p11->localTransform().setRotation(100.f);
+	p11->localTransform().setScale(0.5f, 4.f);
+	//*/
+	
+	Logger::log(Logger::CWarning, "p1 local transform");
+	p1->localTransform_const().log(Logger::CWarning);
+	Logger::log(Logger::CWarning, "p1 world transform");
+	p1->worldTransform_const().log(Logger::CWarning);
+	Logger::log(Logger::CWarning, "p2 local transform");
+	p11->localTransform_const().log(Logger::CWarning);
+	Logger::log(Logger::CWarning, "p2 inv local transform");
+	p11->localTransform_const().inverse().log(Logger::CWarning);
+	p11->parentToLocalTransform().log(Logger::CWarning);
+	Logger::log(Logger::CWarning, "p2 world transform");
+	p11->worldTransform_const().log(Logger::CWarning);
+	Logger::log(Logger::CWarning, "p2 inv world transform");
+	p11->worldTransform_const().inverse().log(Logger::CWarning);
+	p11->worldToLocalTransform().log(Logger::CWarning);
+	
+	Vector2f p(3.456f, 7.89f);
+	Vector2f r3 = p11->localToWorldTransform().transformPoint(p11->worldToLocalTransform().transformPoint(p));
+	Vector2f r4 = p11->localToParentTransform().transformPoint(p11->parentToLocalTransform().transformPoint(p));
+	
+	Logger::log(Logger::CWarning, "World id transformation: %f, %f", r3.x, r3.y);
+	Logger::log(Logger::CWarning, "Local id transformation: %f, %f", r4.x, r4.y);
+	
+	delete stem;
+}
+
 void PotatoPlant::initialize()
 {
 	Logger::enableTag("Debug");
@@ -65,8 +120,8 @@ void PotatoPlant::initialize()
 	Potato* p1111 = m_stem->instantiatePotato("potato 1.1.1.1");
 	m_stem->setParent(p1111, p111);
 	
+	//*
 	setupPotato(p1);
-	/*
 	setupPotato(p11);
 	setupPotato(p12);
 	setupPotato(p111);
@@ -79,23 +134,25 @@ void PotatoPlant::initialize()
 	Potato* line = m_stem->instantiatePotato("line !");
 	line->addCell<RenderCell>();
 	LineGeometry* geometry = line->addCell<LineGeometry>();
-	geometry->setPoint1(Vector2f(-50.f, -25.f));
+	geometry->setPoint1(Vector2f(-50.f, -50.f));
 	geometry->setPoint2(Vector2f(50.f, 50.f));
 	geometry->setColor(sf::Color::Green);
 	
-	line->localTransformable().setPosition(200.f, 200.f);
-	line->localTransformable().rotate(70.f);
+	line->localTransform().setPosition(100.f, 250.f);
+	line->localTransform().rotate(70.f);
 	line->fetchCellIFP<GeometryCell>()->updateAABBs();
 	//*/
 	
-	p1->localTransformable().setPosition(100.f, 75.f);
-	p11->localTransformable().setPosition(200.f, 200.f);
-	p121->localTransformable().setRotation(45.f);
-	p112->localTransformable().setRotation(-45.f);
-	//TODO: check world transformations
+	p1->localTransform().setPosition(100.f, 75.f);
 	
+	//*
+	p11->localTransform().setPosition(150.f, 150.f);
+	p121->localTransform().setRotation(45.f);
+	p112->localTransform().setRotation(-45.f);
+	//*/
+	
+	//*
 	p1->fetchCellIFP<RectangleGeometry>()->updateAABBs();
-	/*
 	p11->fetchCellIFP<RectangleGeometry>()->updateAABBs();
 	p12->fetchCellIFP<RectangleGeometry>()->updateAABBs();
 	p111->fetchCellIFP<RectangleGeometry>()->updateAABBs();

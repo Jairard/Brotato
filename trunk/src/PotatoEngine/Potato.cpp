@@ -25,8 +25,10 @@ void Potato::initialize(const std::string& name, Stem* stem, Potato* parent)
 	m_name = name;
 	m_parent = parent;
 	m_children.clear();
-	m_worldTransform = sf::Transform();
-	m_localTransform = sf::Transformable();
+	m_worldTransform = Transform();
+	m_worldTransform.recomputeIFN();
+	m_localTransform = Transform();
+	m_localTransform.recomputeIFN();
 	m_cells.clear();
 }
 
@@ -83,16 +85,54 @@ const Potato* Potato::child(unsigned int i) const
 	return m_children[i];
 }
 
-sf::Transform& Potato::worldTransform()
+Transform& Potato::localTransform()
 {
-	m_stem->ensureIntegrityAsc(this);
-	return m_worldTransform.object();
+	m_stem->ensureIntegrityIFN(this);
+	return m_localTransform;
 }
 
-const sf::Transform& Potato::worldTransform_const()
+const Transform& Potato::localTransform_const()
 {
-	m_stem->ensureIntegrityAsc(this);
-	return m_worldTransform.const_object();
+	m_stem->ensureIntegrityIFN(this);
+	assert(!m_localTransform.isRotten());
+	return m_localTransform;
+}
+
+Transform& Potato::worldTransform()
+{
+	m_stem->ensureIntegrityIFN(this);
+	return m_worldTransform;
+}
+
+const Transform& Potato::worldTransform_const()
+{
+	m_stem->ensureIntegrityIFN(this);
+	assert(!m_worldTransform.isRotten());
+	return m_worldTransform;
+}
+
+const Transform& Potato::localToWorldTransform()
+{
+	return worldTransform_const();
+}
+
+const Transform& Potato::worldToLocalTransform()
+{
+	m_stem->ensureIntegrityIFN(this);
+	assert(!m_invWorldTransform.isRotten());
+	return m_invWorldTransform;
+}
+
+const Transform& Potato::localToParentTransform()
+{
+	return localTransform_const();
+}
+
+const Transform& Potato::parentToLocalTransform()
+{
+	m_stem->ensureIntegrityIFN(this);
+	assert(!m_invLocalTransform.isRotten());
+	return m_invLocalTransform;
 }
 
 /*
@@ -171,7 +211,6 @@ void Potato::render(float elapsedTime)
 {
 	UNUSED(elapsedTime);
 	
-	// Render potato using render / geometry / interpolation cells
 	RenderCell* renderer = fetchCellIFP<RenderCell>();
 	if (renderer != nullptr)
 		renderer->render();

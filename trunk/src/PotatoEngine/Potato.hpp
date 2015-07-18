@@ -6,6 +6,7 @@
 #include <vector>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "Core/Transform.hpp"
 #include "../Core/Tools.hpp"
 #include "../Core/Stainable.hpp"
 #include "../Core/Pool.hpp"
@@ -45,11 +46,15 @@ class Potato
 		const Potato* child(unsigned int i) const;
 		
 		// Transform manipulators
-		sf::Transformable& localTransformable()             { return m_localTransform.object(); }
-		const sf::Transformable& localTransformable() const { return m_localTransform.const_object(); }
-		const sf::Transform& localTransform() const         { return m_localTransform.const_object().getTransform(); }
-		sf::Transform& worldTransform();
-		const sf::Transform& worldTransform_const();
+		Transform& localTransform();
+		const Transform& localTransform_const();
+		Transform& worldTransform();
+		const Transform& worldTransform_const();
+		
+		const Transform& localToWorldTransform();
+		const Transform& worldToLocalTransform();
+		const Transform& localToParentTransform();
+		const Transform& parentToLocalTransform();
 		
 		// Cells manipulators
 		//void addCell(Cell* cell);
@@ -108,7 +113,7 @@ class Potato
 		Potato();
 	private:
 		// TODO: inherit from NonCopyable ?
-		Potato(const Potato& toCopy) { UNUSED(toCopy); assert(false); }
+		Potato(const Potato& other) { UNUSED(other); assert(false); }
 		
 		void initialize(const std::string& name = "__unnamed__", Stem* stem = nullptr, Potato* parent = nullptr);
 		void shutdown();
@@ -119,17 +124,13 @@ class Potato
 		void render(float elapsedTime);
 		void debugRender(Debug::Renderer& renderer) const;
 		
-		SAFE_ACCESSOR_WITH_NAME_WITH_DOMAIN(Potato*, parent, sParent, private);
-		sf::Transform& worldTransform_noCheck()                   { return m_worldTransform.object(); }
-		const sf::Transform& worldTransform_const_noCheck() const { return m_worldTransform.const_object(); }
-		
 	private:
 		Stem* m_stem;
 		std::string m_name;
 		Potato* m_parent;
 		std::vector<Potato*> m_children;
-		Stainable<sf::Transform> m_worldTransform;
-		Stainable<sf::Transformable> m_localTransform;
+		Transform m_worldTransform, m_invWorldTransform;   // local -> world, world -> local
+		Transform m_localTransform, m_invLocalTransform;   // local -> parent, parent -> local
 		std::list<Cell*> m_cells;
 };
 

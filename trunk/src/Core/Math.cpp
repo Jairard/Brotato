@@ -1,6 +1,7 @@
 #include "Math.hpp"
 
-const double Math::RAD_2_DEG = 180./Math::precisePi();
+const double Math::RAD_2_DEG = 180. / Math::precisePi();
+const double Math::DEG_2_RAD = Math::precisePi() / 180.;
 
 float Math::rad2deg(float angle)
 {
@@ -9,7 +10,7 @@ float Math::rad2deg(float angle)
 
 float Math::deg2rad(float angle)
 {
-	return angle / RAD_2_DEG;
+	return angle * DEG_2_RAD;
 }
 
 double Math::precisePi()

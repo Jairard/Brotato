@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include "../Core/Tools.hpp"
+#include "Core/LibsHelpers.hpp"
 #include "Debug/Logger.hpp"
 #include "Debug/Renderer.hpp"
 #include "PotatoPlant.hpp"
@@ -48,7 +49,7 @@ void Stem::renderRec(Potato* potato, float elapsedTime, bool isRotten) const
 	{
 		assert(!isMotherPotato(potato));
 		// We don't want to check matrix's state, it's ensured by the recursive call
-		updateTransform_noCheck(potato);
+		updateTransform(potato);
 		Logger::log(c_tag, "render: updating transform for '%s'", potato->name().c_str());
 		s_transformComputationCount++;
 	}
@@ -108,9 +109,12 @@ void Stem::setParent(Potato* potato, Potato* parent) const
 	assert(!isMotherPotato(potato));
 	assert(parent != nullptr);
 	
-	potato->sParent()->removeChild(potato);
+	potato->m_parent->removeChild(potato);
 	potato->m_parent = parent;
 	parent->m_children.push_back(potato);
+	
+	// To preserve local transform and recompute world transform
+	potato->m_localTransform.soil();
 }
 
 void Stem::destroyPotato(Potato* potato, bool deleteRecursively)
@@ -118,7 +122,7 @@ void Stem::destroyPotato(Potato* potato, bool deleteRecursively)
 	assert(potato != nullptr);
 	assert(!isMotherPotato(potato));
 	
-	Potato* parent = potato->sParent();
+	Potato* parent = potato->m_parent;
 	parent->removeChild(potato);
 	
 	if (deleteRecursively)
@@ -133,19 +137,18 @@ void Stem::destroyPotato(Potato* potato, bool deleteRecursively)
 	}
 }
 
-void Stem::ensureIntegrityAsc(Potato* potato) const
+void Stem::ensureIntegrityIFN(Potato* potato) const
 {
+	assert(potato != nullptr);
 	s_transformComputationCount = 0;
-	std::list<Potato*>rottenAancestors;
+	std::list<Potato*> rottenAancestors;
 	
 	getRottenAncestorsIFP(potato, rottenAancestors);
 	
 	// Recomputing world transform for the rotten ancestors
 	for (std::list<Potato*>::iterator it = rottenAancestors.begin(); it != rottenAancestors.end(); ++it)
 	{
-		// We don't want to check matrix's state, it's ensured by the recursive call
-		updateTransform_noCheck(*it);
-		Logger::log(c_tag, "ensureIntegrityAsc: updating transform for '%s'", (*it)->name().c_str());
+		updateTransform(*it);
 		s_transformComputationCount++;
 	}
 	
@@ -177,34 +180,30 @@ void Stem::updateTransform(Potato* potato) const
 {
 	assert(potato != nullptr);
 	assert(!isMotherPotato(potato));
+	assert( potato->m_worldTransform.isRotten() ||  potato->m_localTransform.isRotten());
+	assert(!potato->m_worldTransform.isRotten() || !potato->m_localTransform.isRotten());
 	
-	// Recomputing world transform
-	potato->worldTransform() = potato->sParent()->worldTransform_const() * potato->localTransform();
+	// Recomputing the transforms who need it
+	if (potato->m_worldTransform.isRotten())
+		potato->m_localTransform = potato->m_parent->m_invWorldTransform * potato->m_worldTransform;
+	else
+		potato->m_worldTransform = potato->m_parent->m_worldTransform * potato->m_localTransform;
 	
-	// Updating flag
-	potato->m_worldTransform.wash();
-	potato->m_localTransform.wash();
+	// We have to recompute both inverse transform because both transform changed
+	potato->m_invWorldTransform = potato->m_worldTransform.inverse();
+	potato->m_invLocalTransform = potato->m_localTransform.inverse();
 	
-	// Soil all the children
+	potato->m_worldTransform.recomputeIFN();
+	potato->m_invWorldTransform.recomputeIFN();
+	potato->m_localTransform.recomputeIFN();
+	potato->m_invLocalTransform.recomputeIFN();
+	
+	// Soil children's local transform so that their world transforms will be recomputed
 	for (unsigned int i = 0; i < potato->childCount(); ++i)
-		potato->child(i)->m_worldTransform.soil();
-}
-
-void Stem::updateTransform_noCheck(Potato* potato) const
-{
-	assert(potato != nullptr);
-	assert(!isMotherPotato(potato));
+		potato->child(i)->m_localTransform.soil();
 	
-	// Recomputing world transform
-	potato->worldTransform_noCheck() = potato->sParent()->worldTransform_const_noCheck() * potato->localTransform();
-	
-	// Updating flag
-	potato->m_worldTransform.wash();
-	potato->m_localTransform.wash();
-	
-	// Soil all the children
-	for (unsigned int i = 0; i < potato->childCount(); ++i)
-		potato->child(i)->m_worldTransform.soil();
+	assert(!potato->m_worldTransform.isRotten() && !potato->m_invWorldTransform.isRotten() &&
+		   !potato->m_localTransform.isRotten() && !potato->m_invLocalTransform.isRotten());
 }
 
 void Stem::getRottenAncestorsIFP(Potato* potato, std::list<Potato*>& outRottenAncestors) const
@@ -220,7 +219,7 @@ void Stem::getRottenAncestorsIFP(Potato* potato, std::list<Potato*>& outRottenAn
 	if (closest != nullptr)
 	{
 		outRottenAncestors.insert(outRottenAncestors.begin(), ancestors.begin(), ancestors.end());
-		getRottenAncestorsIFP((*ancestors.begin())->sParent(), outRottenAncestors);
+		getRottenAncestorsIFP((*ancestors.begin())->m_parent, outRottenAncestors);
 	}
 }
 
@@ -242,7 +241,7 @@ Potato* Stem::getClosestRottenAncestorIFP(Potato* potato, std::list<Potato*>& ou
 		return potato;
 	
 	// Else look into its ancestors
-	return getClosestRottenAncestorIFP(potato->sParent(), outRottenAncestors);
+	return getClosestRottenAncestorIFP(potato->m_parent, outRottenAncestors);
 }
 
 }

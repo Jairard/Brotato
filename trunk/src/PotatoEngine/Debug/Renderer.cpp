@@ -136,7 +136,7 @@ void Renderer::DrawSegment(const Vector2f& p1, const Vector2f& p2, const sf::Col
 
 void Renderer::DrawRect(const AARect& aabb, const sf::Color& color)
 {
-	DrawAABB(pr_2_sfr(aabb), color);
+	DrawAABB(paar_2_sfr(aabb), color);
 }
 
 void Renderer::DrawRect(const Rect& rect, const sf::Color& color)
