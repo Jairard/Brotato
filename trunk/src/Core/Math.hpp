@@ -4,7 +4,7 @@
 #include <cmath>
 #include <SFML/Graphics/Transformable.hpp>
 #include "NonInstantiable.hpp"
-#include "Vector2.hpp"
+#include "Vector2_.hpp"
 
 class Math: public NonInstantiable
 {

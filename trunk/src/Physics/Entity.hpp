@@ -2,7 +2,7 @@
 #define __PHY_ENTITY__
 
 #include <Box2D/Box2D.h>
-#include "../Core/Vector2.hpp"
+#include "../Core/Vector2_.hpp"
 
 namespace Phy
 {

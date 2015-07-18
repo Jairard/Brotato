@@ -4,7 +4,7 @@
 
 #include "Renderer.hpp"
 #include "../Core/LibsHelpers.hpp"
-#include "../../Graphics.hpp"
+// TODO: refacto -> get rid of ThickPointShape dependence
 #include "../../Graphics/_ThickPointShape.hpp"
 
 namespace Pot 
@@ -40,22 +40,14 @@ void Renderer::DrawTransform(const b2Transform& t)
 	assert(!m_isLocked);
 	
 	// TODO: b2Transform -> sf::Transform conversion ?
-	sf::Color xColor(255, 0, 0), yColor(0, 255, 0);
+	b2Color xColor(1.f, 0.f, 0.f), yColor(0.f, 1.f, 0.f);
 	const float32 k_axisScale = 0.4f;
-	b2Vec2 p1 = t.p, p2;
-	Graphics::SegmentShape segment(b2v_2_sfv(p1), Vector2f());
+	b2Vec2 p1 = t.p;
+	b2Vec2 px = p1 + k_axisScale * t.q.GetXAxis();
+	b2Vec2 py = p1 + k_axisScale * t.q.GetYAxis();
 
-	p2 = p1 + k_axisScale * t.q.GetXAxis();
-	segment.setSecondPoint(b2v_2_sfv(p2));
-	segment.setColor(xColor);
-
-	m_window.draw(segment);
-
-	p2 = p1 + k_axisScale * t.q.GetYAxis();
-	segment.setSecondPoint(b2v_2_sfv(p2));
-	segment.setColor(yColor);
-
-	m_window.draw(segment);
+	DrawSegment(p1, px, xColor);
+	DrawSegment(p1, py, yColor);
 }
 
 void Renderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
@@ -85,24 +77,27 @@ void Renderer::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec
 void Renderer::DrawAABB(b2AABB* aabb, const b2Color& color)
 {
 	assert(!m_isLocked);
-	
-	sf::Color c(color.r*255., color.g*255., color.b*255.);
 
+	// TODO: test with rect
+	/*
+	AARect rect(aabb->lowerBound.x,
+	            aabb->lowerBound.y,
+	            aabb->upperBound.x - aabb->lowerBound.x,
+	            aabb->upperBound.y - aabb->lowerBound.y);
+	
+	DrawRect(rect, b2c_2_sfc(color));
+	/*/
+	sf::Color c = b2c_2_sfc(color);
 	Vector2f p1(aabb->lowerBound.x, -aabb->lowerBound.y),
 	         p2(aabb->upperBound.x, -aabb->lowerBound.y),
 	         p3(aabb->upperBound.x, -aabb->upperBound.y),
 	         p4(aabb->lowerBound.x, -aabb->upperBound.y);
-	Graphics::SegmentShape s1(p1, p2), s2(p2, p3), s3(p3, p4), s4(p4, p1);
-
-	s1.setColor(c);
-	s2.setColor(c);
-	s3.setColor(c);
-	s4.setColor(c);
-
-	m_window.draw(s1);
-	m_window.draw(s2);
-	m_window.draw(s3);
-	m_window.draw(s4);
+	
+	DrawSegment(p1, p2, c);
+	DrawSegment(p2, p3, c);
+	DrawSegment(p3, p4, c);
+	DrawSegment(p4, p1, c);
+	//*/
 }
 
 void Renderer::DrawString(int x, int y, const b2Color& color, const char* string, ...)
@@ -207,9 +202,13 @@ void Renderer::DrawSegment(const sf::Vector2f& p1, const sf::Vector2f& p2, const
 {
 	assert(!m_isLocked);
 	
-	Graphics::SegmentShape segment(p1, p2);
-	segment.setColor(color);
-	m_window.draw(segment);
+	sf::VertexArray array(sf::Lines, 2);
+	array[0].position = p1;
+	array[0].color = color;
+	array[1].position = p2;
+	array[1].color = color;
+	
+	m_window.draw(array);
 }
 
 void Renderer::DrawTransform(const sf::Transformable& t)

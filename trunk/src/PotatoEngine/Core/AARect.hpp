@@ -1,7 +1,7 @@
 #ifndef __AARECT__
 #define __AARECT__
 
-#include "../../Core/Vector2.hpp"
+#include "Vector2.hpp"
 
 namespace Pot
 {

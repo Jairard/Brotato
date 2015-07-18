@@ -15,6 +15,22 @@ namespace Graphics
 		setPoints(p1, p2);
 	}
 
+	SegmentShape::SegmentShape(const sf::Vector2f& p1, const sf::Vector2f& p2):
+		Shape(sf::Lines, 2),
+		m_center()
+	{
+		setFirstPoint(Vector2f(p1.x, p1.y));
+		setSecondPoint(Vector2f(p2.x, p2.y));
+	}
+
+	SegmentShape::SegmentShape(const Pot::Vector2f& p1, const Pot::Vector2f& p2):
+		Shape(sf::Lines, 2),
+		m_center()
+	{
+		setFirstPoint(Vector2f(p1.x, p1.y));
+		setSecondPoint(Vector2f(p2.x, p2.y));
+	}
+
 	void SegmentShape::setFirstPoint(const Vector2f& p)
 	{
 		updatePoint(p, 0);

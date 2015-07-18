@@ -1,7 +1,7 @@
 #ifndef __GAMEOBJECTS_BASEBOX__
 #define __GAMEOBJECTS_BASEBOX__
 
-#include "../Core/Vector2.hpp"
+#include "../Core/Vector2_.hpp"
 #include "GameObject.hpp"
 #include "../Physics/World.hpp"
 #include "../Physics/Rectangle.hpp"

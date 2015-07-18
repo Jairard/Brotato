@@ -1,7 +1,7 @@
 #ifndef __RECT__
 #define __RECT__
 
-#include "../../Core/Vector2.hpp"
+#include "Vector2.hpp"
 
 namespace Pot
 {

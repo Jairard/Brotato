@@ -6,7 +6,7 @@
 #include <Box2D/Box2D.h>
 #include <Box2D/Collision/b2Collision.h>
 #include "../../Core/NonCopyable.hpp"
-#include "../../Core/Vector2.hpp"
+#include "../Core/Vector2.hpp"
 #include "../Core/AARect.hpp"
 #include "../Core/Rect.hpp"
 

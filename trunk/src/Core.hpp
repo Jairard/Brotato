@@ -3,7 +3,7 @@
 
 #include "Core/NonInstantiable.hpp"
 #include "Core/Singleton.hpp"
-#include "Core/Vector2.hpp"
+#include "Core/Vector2_.hpp"
 #include "Core/Math.hpp"
 #include "Core/Logger.hpp"
 #include "Core/Tools.hpp"

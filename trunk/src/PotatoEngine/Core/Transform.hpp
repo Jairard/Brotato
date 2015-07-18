@@ -2,8 +2,8 @@
 #define __TRANSFORM__
 
 #include <SFML/Graphics/Transform.hpp>
-#include "../../Core/Vector2.hpp"
 #include "../../Core/Stainable.hpp"
+#include "Vector2.hpp"
 #include "ClassHelpers.hpp"
 #include "AARect.hpp"
 #include "Rect.hpp"

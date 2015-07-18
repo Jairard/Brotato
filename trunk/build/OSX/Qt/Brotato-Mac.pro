@@ -67,6 +67,7 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Core/ClassHelpers.hpp \
     ../../../src/PotatoEngine/Core/LibsHelpers.hpp \
     ../../../src/PotatoEngine/Core/Transform.hpp \
+    ../../../src/PotatoEngine/Core/Vector2.hpp \
     ../../../src/Physics/World.hpp \
     ../../../src/Physics/Entity.hpp \
     ../../../src/Physics/Rectangle.hpp \ 
@@ -93,7 +94,6 @@ HEADERS +=  \
     ../../../src/Core/Logger.hpp \
     ../../../src/Core/NonInstantiable.hpp \
     ../../../src/Core/NonCopyable.hpp \
-    ../../../src/Core/Vector2.hpp \
     ../../../src/Core/Singleton.hpp \
     ../../../src/Core/Tools.hpp \
     ../../../src/Core/Math.hpp \
@@ -105,4 +105,5 @@ HEADERS +=  \
     ../../../src/Windows/Window.hpp \
     ../../../src/Windows/InputListener.hpp \
     ../../../src/Windows/Game.hpp \
-    ../../../src/Debug/CallStack.hpp
+    ../../../src/Debug/CallStack.hpp \
+    ../../../src/Core/Vector2_.hpp

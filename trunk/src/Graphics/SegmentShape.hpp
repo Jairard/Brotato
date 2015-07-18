@@ -1,7 +1,8 @@
 #ifndef __GRAPHICS_SEGMENT_SHAPE__
 #define __GRAPHICS_SEGMENT_SHAPE__
 
-#include "../Core/Vector2.hpp"
+#include "../Core/Vector2_.hpp"
+#include "../PotatoEngine/Core/Vector2.hpp"
 #include "Shape.hpp"
 
 namespace Graphics
@@ -11,6 +12,8 @@ namespace Graphics
 		public:
 			SegmentShape();
 			SegmentShape(const Vector2f& p1, const Vector2f& p2);
+			SegmentShape(const sf::Vector2f& p1, const sf::Vector2f& p2);
+			SegmentShape(const Pot::Vector2f& p1, const Pot::Vector2f& p2);
 			virtual ~SegmentShape() {}
 			
 			void setFirstPoint(const Vector2f& p);

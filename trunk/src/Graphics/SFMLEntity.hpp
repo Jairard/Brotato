@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity.hpp"
-#include "../Core/Vector2.hpp"
+#include "../Core/Vector2_.hpp"
 
 namespace Graphics
 {

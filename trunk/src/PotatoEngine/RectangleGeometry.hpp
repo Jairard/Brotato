@@ -2,7 +2,7 @@
 #define __RECTANGLEGEOMETRY__
 
 #include "GeometryCell.hpp"
-#include "../Core/Vector2.hpp"
+#include "Core/Vector2.hpp"
 #include "Core/ClassHelpers.hpp"
 
 namespace Pot

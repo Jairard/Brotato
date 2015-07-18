@@ -6,9 +6,9 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <Box2D/Box2D.h>
-#include "../../Core/Vector2.hpp"
 #include "AARect.hpp"
 #include "Rect.hpp"
+#include "Vector2.hpp"
 
 // Vector2 helpers
 inline sf::Vector2f b2v_2_sfv(const b2Vec2& b2v)
@@ -21,9 +21,9 @@ inline b2Vec2 sfv_2_b2v(const sf::Vector2f& sfv)
 	return b2Vec2(sfv.x, -sfv.y);
 }
 
-inline Vector2f b2v_2_pv(const b2Vec2& b2v)
+inline Pot::Vector2f b2v_2_pv(const b2Vec2& b2v)
 {
-	return Vector2f(b2v.x, b2v.y);
+	return Pot::Vector2f(b2v.x, b2v.y);
 }
 
 inline b2Vec2 pv_2_b2v(const sf::Vector2f& v)
@@ -31,12 +31,12 @@ inline b2Vec2 pv_2_b2v(const sf::Vector2f& v)
 	return b2Vec2(v.x, v.y);
 }
 
-inline Vector2f sfv_2_pv(const sf::Vector2f& sfv)
+inline Pot::Vector2f sfv_2_pv(const sf::Vector2f& sfv)
 {
-	return Vector2f(sfv.x, sfv.y);
+	return Pot::Vector2f(sfv.x, sfv.y);
 }
 
-inline sf::Vector2f pv_2_sfv(const Vector2f& v)
+inline sf::Vector2f pv_2_sfv(const Pot::Vector2f& v)
 {
 	return sf::Vector2f(v.x, v.y);
 }
@@ -70,10 +70,10 @@ inline Pot::Rect paar_2_pr(const Pot::AARect& paar)
 {
 	Pot::Rect res;
 	
-	res.points[0] = Vector2f(paar.left             , paar.bottom              );
-	res.points[1] = Vector2f(paar.left + paar.width, paar.bottom              );
-	res.points[2] = Vector2f(paar.left + paar.width, paar.bottom + paar.height);
-	res.points[3] = Vector2f(paar.left             , paar.bottom + paar.height);
+	res.points[0] = Pot::Vector2f(paar.left             , paar.bottom              );
+	res.points[1] = Pot::Vector2f(paar.left + paar.width, paar.bottom              );
+	res.points[2] = Pot::Vector2f(paar.left + paar.width, paar.bottom + paar.height);
+	res.points[3] = Pot::Vector2f(paar.left             , paar.bottom + paar.height);
 	
 	return res;
 }

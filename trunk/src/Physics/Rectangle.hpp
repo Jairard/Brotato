@@ -2,7 +2,7 @@
 #define __PHY_RECTANGLE__
 
 #include <Box2D/Box2D.h>
-#include "../Core/Vector2.hpp"
+#include "../Core/Vector2_.hpp"
 #include "World.hpp"
 #include "Entity.hpp"
 

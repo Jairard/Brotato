@@ -4,7 +4,7 @@
 #include <list>
 #include <string>
 #include <SFML/Graphics/Transformable.hpp>
-#include "../Core/Vector2.hpp"
+#include "../Core/Vector2_.hpp"
 #include "../Core/Stainable.hpp"
 #include "../Graphics/GeometryComponent.hpp"
 #include "../Graphics/RenderComponent.hpp"

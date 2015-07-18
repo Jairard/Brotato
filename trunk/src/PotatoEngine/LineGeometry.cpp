@@ -20,35 +20,20 @@ void LineGeometry::update()
 
 void LineGeometry::setPoint1(const Vector2f& coords)
 {
-	setPoint1(pv_2_sfv(coords));
-}
-
-void LineGeometry::setPoint1(const sf::Vector2f& coords)
-{
-	m_array[0].position = coords;
+	m_array[0].position = pv_2_sfv(coords);
 	updateAABBs();
 }
 
 void LineGeometry::setPoint2(const Vector2f& coords)
 {
-	setPoint2(pv_2_sfv(coords));
-}
-
-void LineGeometry::setPoint2(const sf::Vector2f& coords)
-{
-	m_array[1].position = coords;
+	m_array[1].position = pv_2_sfv(coords);
 	updateAABBs();
 }
 
 void LineGeometry::setPoints(const Vector2f& p1, const Vector2f& p2)
 {
-	setPoints(pv_2_sfv(p1), pv_2_sfv(p2));
-}
-
-void LineGeometry::setPoints(const sf::Vector2f& p1, const sf::Vector2f& p2)
-{
-	m_array[0].position = p1;
-	m_array[1].position = p2;
+	m_array[0].position = pv_2_sfv(p1);
+	m_array[1].position = pv_2_sfv(p2);
 	updateAABBs();
 }
 

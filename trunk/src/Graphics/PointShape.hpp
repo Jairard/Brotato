@@ -1,7 +1,7 @@
 #ifndef __GRAPHICS_POINT_SHAPE__
 #define __GRAPHICS_POINT_SHAPE__
 
-#include "../Core/Vector2.hpp"
+#include "../Core/Vector2_.hpp"
 #include "Shape.hpp"
 
 namespace Graphics
