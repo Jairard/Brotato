@@ -1,9 +1,9 @@
 #include "Transform.hpp"
 
 #include <iostream>
-#include "../../Core/Math.hpp"
 #include "../Debug/Logger.hpp"
 #include "LibsHelpers.hpp"
+#include "Math.hpp"
 
 namespace Pot
 {
@@ -125,7 +125,7 @@ const sf::Transform& Transform::SFMLTransform()
 
 Vector2f Transform::transformPoint(float x, float y)
 {
-	return SFMLTransform().transformPoint(x, y);
+	return sfv_2_pv(SFMLTransform().transformPoint(x, y));
 }
 
 Vector2f Transform::transformPoint(const Vector2f& p)
@@ -157,7 +157,7 @@ const sf::Transform& Transform::SFMLTransform() const
 
 Vector2f Transform::transformPoint(float x, float y) const
 {
-	return SFMLTransform().transformPoint(x, y);
+	return sfv_2_pv(SFMLTransform().transformPoint(x, y));
 }
 
 Vector2f Transform::transformPoint(const Vector2f& point) const

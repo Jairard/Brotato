@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity.hpp"
-#include "../Core/Vector2_.hpp"
 
 namespace Graphics
 {
@@ -13,12 +12,12 @@ namespace Graphics
 			SFMLEntity();
 			virtual ~SFMLEntity() {}
 			
-			virtual void setOrigin(const Vector2f& origin);
-			virtual void setPosition(const Vector2f& position);
-			virtual void setScale(const Vector2f& factors);
+			virtual void setOrigin(const Pot::Vector2f& origin);
+			virtual void setPosition(const Pot::Vector2f& position);
+			virtual void setScale(const Pot::Vector2f& factors);
 			virtual void setRotation(float angle);
 			
-			virtual void onGameUpdate(const Vector2f& position, float angle);
+			virtual void onGameUpdate(const Pot::Vector2f& position, float angle);
 	};
 }
 

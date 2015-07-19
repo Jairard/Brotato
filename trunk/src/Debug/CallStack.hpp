@@ -3,7 +3,7 @@
 
 #include <execinfo.h>
 #include <list>
-#include "../Core/NonInstantiable.hpp"
+#include "../PotatoEngine/Core/NonInstantiable.hpp"
 
 namespace Debug
 {
@@ -12,7 +12,7 @@ namespace Debug
 # define LOG_STACK         Debug::CallStack::log(__FILE__, __LINE__)
 # define FUNC_EXIT         Debug::CallStack::popFrame()
 	
-	class CallStack: public NonInstantiable
+	class CallStack: public Pot::NonInstantiable
 	{
 		public:
 			static void pushFrame(const char* file, int line, const char* function);

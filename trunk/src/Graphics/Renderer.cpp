@@ -1,7 +1,9 @@
 #include "../Windows/Window.hpp"
 #include "Renderer.hpp"
 
-#include "../Core/Tools.hpp"
+#include "../PotatoEngine/Core/Vector2.hpp"
+#include "../PotatoEngine/Core/LibsHelpers.hpp"
+#include "../PotatoEngine/Core/Tools.hpp"
 #include "../Graphics.hpp"
 
 namespace Graphics
@@ -42,7 +44,7 @@ namespace Graphics
 	void Renderer::drawGrid()
 	{
 		sf::View view = m_window.getView();
-		Vector2f center = view.getCenter(), size = view.getSize();
+		Pot::Vector2f center = sfv_2_pv(view.getCenter()), size = sfv_2_pv(view.getSize());
 		int minX = (int)ceil(center.x - size.x/2.), maxX = (int)floor(center.x + size.x/2.);
 		int minY = (int)ceil(center.y - size.y/2.), maxY = (int)floor(center.y + size.y/2.);
 		
@@ -50,7 +52,7 @@ namespace Graphics
 		{
 			for (int y=minY; y<maxY; y++)
 			{
-				Graphics::PointShape point(Vector2f(x, y));
+				Graphics::PointShape point(Pot::Vector2f(x, y));
 				point.setColor(sf::Color::White);
 				m_window.render(point);
 			}
@@ -59,7 +61,7 @@ namespace Graphics
 	
 	void Renderer::drawAxes()
 	{
-		Graphics::SegmentShape xAxis(Vector2f(0., 0.), Vector2f(1., 0.)), yAxis(Vector2f(0., 0.), Vector2f(0., 1.));
+		Graphics::SegmentShape xAxis(Pot::Vector2f(0., 0.), Pot::Vector2f(1., 0.)), yAxis(Pot::Vector2f(0., 0.), Pot::Vector2f(0., 1.));
 		xAxis.setColor(sf::Color(255, 0, 0));
 		yAxis.setColor(sf::Color(0, 255, 0));
 		

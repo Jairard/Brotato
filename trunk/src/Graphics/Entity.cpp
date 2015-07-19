@@ -1,6 +1,6 @@
 #include "Entity.hpp"
 #include "../Core.hpp"
-
+#include "../PotatoEngine/Core/Math.hpp"
 namespace Graphics
 {
 	Entity::Entity():
@@ -12,7 +12,7 @@ namespace Graphics
 		m_currentRotation(0.)
 	{}
 	
-	void Entity::setPosition(const Vector2f& position)
+	void Entity::setPosition(const Pot::Vector2f& position)
 	{
 		m_currentPosition = position;
 	}
@@ -22,7 +22,7 @@ namespace Graphics
 		m_currentRotation = angle;
 	}
 	
-	void Entity::onGameUpdate(const Vector2f& position, float angle)
+	void Entity::onGameUpdate(const Pot::Vector2f& position, float angle)
 	{
 		m_velocity = position - m_lastPosition;
 		
@@ -33,8 +33,8 @@ namespace Graphics
 	
 	void Entity::extrapolate(float coef)
 	{
-		setPosition(Math::lerp(m_lastPosition, m_lastPosition + m_velocity, coef));
-		setRotation(Math::lerp(m_lastRotation, m_lastRotation + m_angularVelocity, coef));
+		setPosition(Pot::Math::lerp(m_lastPosition, m_lastPosition + m_velocity, coef));
+		setRotation(Pot::Math::lerp(m_lastRotation, m_lastRotation + m_angularVelocity, coef));
 	}
 	
 	void Entity::render(sf::RenderTarget& target, float coef, sf::RenderStates states)

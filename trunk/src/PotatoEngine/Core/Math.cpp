@@ -1,4 +1,8 @@
 #include "Math.hpp"
+#include "LibsHelpers.hpp"
+
+namespace Pot
+{
 
 const double Math::RAD_2_DEG = 180. / Math::precisePi();
 const double Math::DEG_2_RAD = Math::precisePi() / 180.;
@@ -42,16 +46,18 @@ Vector2f Math::lerp(const Vector2f& source, const Vector2f& target, float coef)
 sf::Transformable Math::lerp(const sf::Transformable& source, const sf::Transformable& delta, float coef)
 {
 	sf::Transformable res;
-	const sf::Vector2f& srcPos = source.getPosition(),
-	                    srcScale = source.getScale();
+	const Vector2f& srcPos = sfv_2_pv(source.getPosition()),
+	                srcScale = sfv_2_pv(source.getScale());
 	float srcRot = source.getRotation();
 	
-	Vector2f resPos = Math::lerp(srcPos, srcPos + delta.getPosition(), coef),
-	         resScale = Math::lerp(srcScale, srcScale + delta.getScale(), coef);
+	Vector2f resPos = Math::lerp(srcPos, srcPos + sfv_2_pv(delta.getPosition()), coef),
+	         resScale = Math::lerp(srcScale, srcScale + sfv_2_pv(delta.getScale()), coef);
 	
 	res.setPosition(resPos.x, resPos.y);
 	res.setScale(resScale.x, resScale.y);
 	res.setRotation(Math::lerp(srcRot, srcRot + delta.getRotation(), coef));
 	
 	return res;
+}
+
 }

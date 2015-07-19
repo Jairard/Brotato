@@ -1,7 +1,7 @@
 #ifndef __GAMEUPDATER__
 #define __GAMEUPDATER__
 
-#include "InputListener.hpp"
+#include "../PotatoEngine/InputListener.hpp"
 #include "../Physics/World.hpp"
 #include "../Graphics/Renderer.hpp"
 
@@ -14,7 +14,7 @@ class Game
 		virtual ~Game();
 		
 		float framerate(void) const  { return m_world->timestep(); }
-		void setInputListener(InputListener* listener);
+		void setInputListener(Pot::InputListener* listener);
 		void setRenderer(Graphics::Renderer* renderer);
 		
 		void handleInput(const sf::Event& event);
@@ -23,7 +23,7 @@ class Game
 		
 	protected:
 		Phy::World* m_world;
-		InputListener* m_inputListener;
+		Pot::SimpleInputListener* m_inputListener;
 		Graphics::Renderer* m_renderer;
 		
 		void initScene1(void);

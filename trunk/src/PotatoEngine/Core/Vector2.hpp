@@ -25,11 +25,6 @@ template <typename T> class Vector2
 			x((T)v.x), y((T)v.y)
 		{}
 
-		template <typename U>
-		Vector2(const sf::Vector2<U>& v):
-			x((T)v.x), y((T)v.y)
-		{}
-
 		bool isNull(void) const;
 		T squareLength(void) const;
 		double length(void) const;

@@ -2,7 +2,7 @@
 #define __TRANSFORM__
 
 #include <SFML/Graphics/Transform.hpp>
-#include "../../Core/Stainable.hpp"
+#include "Stainable.hpp"
 #include "Vector2.hpp"
 #include "ClassHelpers.hpp"
 #include "AARect.hpp"

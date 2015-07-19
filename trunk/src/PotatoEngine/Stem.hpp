@@ -4,7 +4,7 @@
 #include <string>
 #include <list>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "../Core/Pool.hpp"
+#include "Core/Pool.hpp"
 #include "PotatoPlant.hpp"
 
 namespace Pot

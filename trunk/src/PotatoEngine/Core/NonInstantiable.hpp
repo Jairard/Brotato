@@ -1,5 +1,8 @@
-#ifndef __CORE_NON_INSTANTIABLE__
-#define __CORE_NON_INSTANTIABLE__
+#ifndef __NONINSTANTIABLE__
+#define __NONINSTANTIABLE__
+
+namespace Pot
+{
 
 class NonInstantiable
 {
@@ -7,5 +10,7 @@ class NonInstantiable
 		NonInstantiable();
 		virtual ~NonInstantiable();
 };
+
+}
 
 #endif 

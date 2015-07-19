@@ -1,6 +1,8 @@
 #include <sstream>
-#include "../Core/Logger.hpp"
+#include "../PotatoEngine/Debug/Logger.hpp"
 #include "CallStack.hpp"
+
+using Pot::Debug::Logger;
 
 namespace Debug
 {

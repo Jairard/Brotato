@@ -34,7 +34,7 @@ namespace Phy
 		m_isSetup = true;
 	}
 
-	void Entity::update(const Vector2f &position, float angle)
+	void Entity::update(const Pot::Vector2f &position, float angle)
 	{
 		m_position = position;
 		m_angle = angle;

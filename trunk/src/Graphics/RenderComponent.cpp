@@ -1,4 +1,4 @@
-#include "../Core/Math.hpp"
+#include "../PotatoEngine/Core/Math.hpp"
 #include "../GameObjects/GameObject.hpp"
 #include "GeometryComponent.hpp"
 #include "RenderComponent.hpp"
@@ -27,7 +27,7 @@ namespace Graphics
 			return;
 		
 		sf::VertexArray array = m_geometry->vertices();
-		m_states.transform = Math::lerp(m_lastTransform, m_delta, interpolationCoef).getTransform();
+		m_states.transform = Pot::Math::lerp(m_lastTransform, m_delta, interpolationCoef).getTransform();
 		m_target.draw(&array[0], array.getVertexCount(), array.getPrimitiveType(), m_states);
 	}
 	

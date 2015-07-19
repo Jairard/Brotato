@@ -1,13 +1,13 @@
 #include <iostream>
-#include "../Core/Math.hpp"
-#include "../Core/Logger.hpp"
+#include "../PotatoEngine/Core/Math.hpp"
+#include "../PotatoEngine/Core/LibsHelpers.hpp"
 #include "Entity.hpp"
 #include "World.hpp"
 
 namespace Phy
 {
-	World::World(const Vector2f& gravity, float timeStep, int velocityIterations, int positionIterations):
-	             b2World(gravity.toBox2D()),
+	World::World(const Pot::Vector2f& gravity, float timeStep, int velocityIterations, int positionIterations):
+	             b2World(pv_2_b2v(gravity)),
 		m_entities(),
 		m_timeStep(timeStep),
 		m_velocityIterations(velocityIterations),
@@ -90,7 +90,7 @@ namespace Phy
 		{
 			Entity* entity = *it;
 			b2Body* body = entity->body();
-			Vector2f position = vectorFromPhy(Vector2f(body->GetPosition()));
+			Pot::Vector2f position = vectorFromPhy(b2v_2_pv(body->GetPosition()));
 			float32 angle = angleFromPhy(body->GetAngle());
 
 			entity->update(position, angle);
@@ -100,24 +100,24 @@ namespace Phy
 			DrawDebugData();
 	}
 
-	Vector2f World::vectorFromPhy(const Vector2f& v)
+	Pot::Vector2f World::vectorFromPhy(const Pot::Vector2f& v)
 	{
-		return Vector2f(v.x, v.y);
+		return Pot::Vector2f(v.x, v.y);
 	}
 
-	Vector2f World::vectorToPhy(const Vector2f v)
+	Pot::Vector2f World::vectorToPhy(const Pot::Vector2f v)
 	{
-		return Vector2f(v.x, v.y);
+		return Pot::Vector2f(v.x, v.y);
 	}
 
 	float World::angleFromPhy(float angle)
 	{
-		return -Math::rad2deg(angle);
+		return -Pot::Math::rad2deg(angle);
 	}
 
 	float World::angleToPhy(float angle)
 	{
-		return -Math::deg2rad(angle);
+		return -Pot::Math::deg2rad(angle);
 	}
 
 	b2BodyType World::toBox2DType(BodyType type)

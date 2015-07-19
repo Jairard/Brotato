@@ -1,8 +1,9 @@
 #include "GameObject.hpp"
+#include "../PotatoEngine/Debug/Logger.hpp"
+#include "../PotatoEngine/Core/Tools.hpp"
 #include "../Core/Component.hpp"
-#include "../Core/Tools.hpp"
-#include "../Core/Logger.hpp"
 
+using Pot::Debug::Logger;
 
 	int GameObject::s_objectCount = 0;
 	
@@ -45,8 +46,8 @@
 		component->setGameObject(this);
 		m_components.push_back(component);
 		
-		setGeometry(Tools::as<Graphics::GeometryComponent>(component));
-		setRenderer(Tools::as<Graphics::RenderComponent>(component));
+		setGeometry(Pot::Tools::as<Graphics::GeometryComponent>(component));
+		setRenderer(Pot::Tools::as<Graphics::RenderComponent>(component));
 	}
 	
 	template <typename T>
@@ -55,7 +56,7 @@
 		std::list<Component*>::iterator it;
 		
 		for (it=m_components.begin(); it!=m_components.end(); it++)
-			if (Tools::is<T>(*it))
+			if (Pot::Tools::is<T>(*it))
 				return (T*)*it;
 		
 		return 0;
@@ -68,7 +69,7 @@
 		std::list<T*>* components = new std::list<T*>();
 		
 		for (it=m_components.begin(); it!=m_components.end(); it++)
-			if (Tools::is<T>(*it))
+			if (Pot::Tools::is<T>(*it))
 				components->push_back((T*)*it);
 		
 		return components;

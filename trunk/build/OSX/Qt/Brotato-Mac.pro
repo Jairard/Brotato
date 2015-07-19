@@ -18,11 +18,12 @@ SOURCES += \
     ../../../src/PotatoEngine/GeometryCell.cpp \
     ../../../src/PotatoEngine/RectangleGeometry.cpp \
     ../../../src/PotatoEngine/LineGeometry.cpp \
+    ../../../src/PotatoEngine/InputListener.cpp \
     ../../../src/PotatoEngine/Debug/Renderer.cpp \
     ../../../src/PotatoEngine/Debug/Logger.cpp \
     ../../../src/PotatoEngine/Core/Transform.cpp \
-    ../../../src/Core/Math.cpp \
-    ../../../src/Core/Logger.cpp \
+    ../../../src/PotatoEngine/Core/Math.cpp \
+\
     ../../../src/Core/Component.cpp \
     ../../../src/Core/Scene.cpp \
     ../../../src/main.cpp \
@@ -46,7 +47,6 @@ SOURCES += \
     ../../../src/GameObjects/Box.cpp \
     ../../../src/GameObjects/Segment.cpp \
     ../../../src/Windows/Window.cpp \
-    ../../../src/Windows/InputListener.cpp \
     ../../../src/Windows/Game.cpp \
     ../../../src/Debug/CallStack.cpp \
     main_11.cpp
@@ -60,6 +60,7 @@ HEADERS +=  \
     ../../../src/PotatoEngine/GeometryCell.hpp \
     ../../../src/PotatoEngine/RectangleGeometry.hpp \
     ../../../src/PotatoEngine/LineGeometry.hpp \
+    ../../../src/PotatoEngine/InputListener.hpp \
     ../../../src/PotatoEngine/Debug/Renderer.hpp \
     ../../../src/PotatoEngine/Debug/Logger.hpp \
     ../../../src/PotatoEngine/Core/AARect.hpp \
@@ -68,6 +69,14 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Core/LibsHelpers.hpp \
     ../../../src/PotatoEngine/Core/Transform.hpp \
     ../../../src/PotatoEngine/Core/Vector2.hpp \
+    ../../../src/PotatoEngine/Core/Math.hpp \
+    ../../../src/PotatoEngine/Core/Pool.hpp \
+    ../../../src/PotatoEngine/Core/Tools.hpp \
+    ../../../src/PotatoEngine/Core/NonInstantiable.hpp \
+    ../../../src/PotatoEngine/Core/NonCopyable.hpp \
+    ../../../src/PotatoEngine/Core/Stainable.hpp \
+    ../../../src/PotatoEngine/Core/Singleton.hpp \
+\
     ../../../src/Physics/World.hpp \
     ../../../src/Physics/Entity.hpp \
     ../../../src/Physics/Rectangle.hpp \ 
@@ -91,19 +100,9 @@ HEADERS +=  \
     ../../../src/Physics.hpp \
     ../../../src/GameObjects.hpp \
     ../../../src/Core.hpp \
-    ../../../src/Core/Logger.hpp \
-    ../../../src/Core/NonInstantiable.hpp \
-    ../../../src/Core/NonCopyable.hpp \
-    ../../../src/Core/Singleton.hpp \
-    ../../../src/Core/Tools.hpp \
-    ../../../src/Core/Math.hpp \
     ../../../src/Core/Component.hpp \
     ../../../src/Core/Scene.hpp \
-    ../../../src/Core/Pool.hpp \
-    ../../../src/Core/Stainable.hpp \
     ../../../src/Window.hpp \
     ../../../src/Windows/Window.hpp \
-    ../../../src/Windows/InputListener.hpp \
     ../../../src/Windows/Game.hpp \
-    ../../../src/Debug/CallStack.hpp \
-    ../../../src/Core/Vector2_.hpp
+    ../../../src/Debug/CallStack.hpp

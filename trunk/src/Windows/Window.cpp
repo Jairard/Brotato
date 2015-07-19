@@ -1,8 +1,9 @@
-#include "InputListener.hpp"
 #include "Game.hpp"
 #include "Window.hpp"
 
-#include "../Core/Logger.hpp"
+#include "../PotatoEngine/Debug/Logger.hpp"
+
+using Pot::Debug::Logger;
 
 Window::Window(sf::VideoMode mode, const sf::String& title,
                sf::Uint32 style, const sf::ContextSettings& settings) :

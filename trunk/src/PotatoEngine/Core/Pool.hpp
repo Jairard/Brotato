@@ -6,6 +6,9 @@
 #include <assert.h>
 #include <list>
 
+namespace Pot
+{
+
 template <typename T>
 class Pool
 {
@@ -19,12 +22,12 @@ class Pool
 			for (std::size_t i = 0; i < m_capacity; ++i)
 				m_avaibleChunks.push_back(i);
 		}
-		
-		~Pool()
+
+		virtual ~Pool()
 		{
 			delete[] m_data;
 		}
-		
+
 		T* create()
 		{
 			assert(!isFull());
@@ -34,32 +37,32 @@ class Pool
 			
 			return chunk;
 		}
-		
+
 		void destroy(T* chunk)
 		{
 			destroy(chunk - m_data);
 		}
-		
+
 		bool isFull(void) const
 		{
 			return m_avaibleChunks.empty();
 		}
-		
+
 		size_t capacity() const
 		{
 			return m_capacity;
 		}
-		
+
 		size_t availableChunkCount() const
 		{
 			return m_avaibleChunks.size();
 		}
-		
+
 		size_t usedChunkCount() const
 		{
 			return capacity() - availableChunkCount();
 		}
-		
+
 	private:
 		void destroy(size_t i)
 		{
@@ -71,7 +74,7 @@ class Pool
 			
 			m_avaibleChunks.push_front(i);
 		}
-		
+
 		bool isAvailable(size_t i)
 		{
 			for (std::list<size_t>::iterator it = m_avaibleChunks.begin(); it != m_avaibleChunks.end(); ++it)
@@ -80,13 +83,16 @@ class Pool
 			
 			return false;
 		}
-		
+
 	private:
 		static const size_t c_defaultCapacity = 256;
-		
+
 		T* m_data;
 		bool m_allowSafetyChecks;
 		std::list<size_t> m_avaibleChunks;
 		std::size_t m_capacity;
 };
+
+}
+
 #endif

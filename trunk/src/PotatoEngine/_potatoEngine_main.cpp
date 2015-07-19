@@ -8,14 +8,14 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include "PotatoEngine/Core/Pool.hpp"
-#include "PotatoEngine/Core/ClassHelpers.hpp"
-#include "PotatoEngine/Core/LibsHelpers.hpp"
-#include "PotatoEngine/Core/Transform.hpp"
-#include "PotatoEngine/Debug/Logger.hpp"
-#include "PotatoEngine/PotatoPlant.hpp"
-#include "PotatoEngine/Potato.hpp"
-#include "PotatoEngine/RenderCell.hpp"
+#include "Core/Pool.hpp"
+#include "Core/ClassHelpers.hpp"
+#include "Core/LibsHelpers.hpp"
+#include "Core/Transform.hpp"
+#include "Debug/Logger.hpp"
+#include "PotatoPlant.hpp"
+#include "Potato.hpp"
+#include "RenderCell.hpp"
 
 /*
 Does not work :( (see Potato)

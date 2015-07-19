@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <Box2D/Collision/b2Collision.h>
-#include "../../Core/NonCopyable.hpp"
+#include "../Core/NonCopyable.hpp"
 #include "../Core/Vector2.hpp"
 #include "../Core/AARect.hpp"
 #include "../Core/Rect.hpp"
@@ -45,7 +45,7 @@ namespace Debug
 			void DrawPolygon(const Vector2f* vertices, int32 vertexCount, const sf::Color& color);
 			void DrawSolidPolygon(const Vector2f* vertices, int32 vertexCount, const sf::Color& color);
 			void DrawCircle(const Vector2f& center, float32 radius, const sf::Color& color);
-			void DrawSolidCircle(const Vector2f& center, float32 radius, const sf::Vector2f& axis, const sf::Color& color);
+			void DrawSolidCircle(const Vector2f& center, float32 radius, const Vector2f& axis, const sf::Color& color);
 			
 		private:
 			sf::Vector2f* pva_2_sfva(const Vector2f* vertices, int32 vertexCount) const;

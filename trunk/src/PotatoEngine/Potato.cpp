@@ -2,7 +2,7 @@
 
 #include <assert.h>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "../Core/Tools.hpp"
+#include "Core/Tools.hpp"
 #include "Debug/Renderer.hpp"
 #include "Debug/Logger.hpp"
 #include "Stem.hpp"

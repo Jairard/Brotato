@@ -1,6 +1,9 @@
 #ifndef __STAINABLE__
 #define __STAINABLE__
 
+namespace Pot
+{
+
 template <typename T>
 class Stainable
 {
@@ -23,13 +26,14 @@ class Stainable
 		Stainable<T>& operator=(const Stainable<T>& other)
 		{
 			m_object = other.m_object;
-			m_isRotten = other.m_isRotten;
+			m_isRotten = true;
 			return *this;
 		}
 		
 		Stainable<T>& operator=(const T& other)
 		{
 			m_object = other;
+			m_isRotten = true;
 			return *this;
 		}
 		
@@ -37,5 +41,7 @@ class Stainable
 		T m_object;
 		bool m_isRotten;
 };
+
+}
 
 #endif 

@@ -4,7 +4,6 @@
 #include <list>
 #include <SFML/Graphics.hpp>
 #include "../Core/Component.hpp"
-#include "../Core/Vector2_.hpp"
 
 namespace Graphics
 {

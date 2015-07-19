@@ -2,7 +2,6 @@
 #define __SHAPE__
 
 #include <SFML/Graphics.hpp>
-#include "../Core/Vector2_.hpp"
 #include "SFMLEntity.hpp"
 
 namespace Graphics

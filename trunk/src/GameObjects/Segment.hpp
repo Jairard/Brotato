@@ -11,10 +11,10 @@ namespace GO
 	{
 		public:
 			Segment(Phy::World* world, Phy::BodyType type,
-					const Vector2f& p1, const Vector2f& p2);
+					const Pot::Vector2f& p1, const Pot::Vector2f& p2);
 			virtual ~Segment() {}
 			
-			virtual void update(const Vector2f& position, float angle);
+			virtual void update(const Pot::Vector2f& position, float angle);
 	};
 }
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 
+#include "../PotatoEngine/Core/Vector2.hpp"
 #include "../PotatoEngine/Core/LibsHelpers.hpp"
 #include "../Graphics.hpp"
 #include "_ThickPointShape.hpp"
@@ -36,16 +37,16 @@ namespace Graphics
 		sf::Color xColor(255, 0, 0), yColor(0, 255, 0);
 		const float32 k_axisScale = 0.4f;
 		b2Vec2 p1 = t.p, p2;
-		Graphics::SegmentShape segment(b2v_2_sfv(p1), Vector2f());
+		Graphics::SegmentShape segment(b2v_2_pv(p1), Pot::Vector2f());
 
 		p2 = p1 + k_axisScale * t.q.GetXAxis();
-		segment.setSecondPoint(b2v_2_sfv(p2));
+		segment.setSecondPoint(b2v_2_pv(p2));
 		segment.setColor(xColor);
 
 		m_window.draw(segment);
 
 		p2 = p1 + k_axisScale * t.q.GetYAxis();
-		segment.setSecondPoint(b2v_2_sfv(p2));
+		segment.setSecondPoint(b2v_2_pv(p2));
 		segment.setColor(yColor);
 
 		m_window.draw(segment);
@@ -79,10 +80,10 @@ namespace Graphics
 	{
 		sf::Color c(color.r*255., color.g*255., color.b*255.);
 
-		Vector2f p1(aabb->lowerBound.x, -aabb->lowerBound.y),
-		         p2(aabb->upperBound.x, -aabb->lowerBound.y),
-		         p3(aabb->upperBound.x, -aabb->upperBound.y),
-		         p4(aabb->lowerBound.x, -aabb->upperBound.y);
+		Pot::Vector2f p1(aabb->lowerBound.x, -aabb->lowerBound.y),
+		              p2(aabb->upperBound.x, -aabb->lowerBound.y),
+		              p3(aabb->upperBound.x, -aabb->upperBound.y),
+		              p4(aabb->lowerBound.x, -aabb->upperBound.y);
 		Graphics::SegmentShape s1(p1, p2), s2(p2, p3), s3(p3, p4), s4(p4, p1);
 
 		s1.setColor(c);
@@ -241,7 +242,8 @@ namespace Graphics
 		vsprintf(buffer, string, arg);
 
 		sf::FloatRect viewport = m_window.getView().getViewport();
-		Vector2f windowSize(m_window.getSize());
+		sf::Vector2u sfWindowSize = m_window.getSize();
+		Pot::Vector2f windowSize(sfWindowSize.x, sfWindowSize.y);
 		const float realX = viewport.left*windowSize.x + x*viewport.width;
 		const float realY = viewport.top*windowSize.y + y*viewport.height;
 		const float yRatio = 0.5 * m_window.getView().getSize().y / (float)m_window.getSize().y;

@@ -2,9 +2,9 @@
 
 namespace Graphics
 {
-	PointShape::PointShape(const Vector2f& p):
+	PointShape::PointShape(const Pot::Vector2f& p):
 		Shape(sf::Points, 1)
 	{
-		setPosition(p.toSFML());
+		setPosition(p);
 	}
 }

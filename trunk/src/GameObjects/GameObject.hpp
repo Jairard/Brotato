@@ -4,8 +4,7 @@
 #include <list>
 #include <string>
 #include <SFML/Graphics/Transformable.hpp>
-#include "../Core/Vector2_.hpp"
-#include "../Core/Stainable.hpp"
+#include "../PotatoEngine/Core/Stainable.hpp"
 #include "../Graphics/GeometryComponent.hpp"
 #include "../Graphics/RenderComponent.hpp"
 
@@ -63,7 +62,7 @@ class Component;
 			GameObject* m_parent;
 			Graphics::GeometryComponent* m_geometry;
 			Graphics::RenderComponent* m_renderer;
-			Stainable<sf::Transformable> m_worldTransform;
+			Pot::Stainable<sf::Transformable> m_worldTransform;
 			
 		private:
 			static int s_objectCount;

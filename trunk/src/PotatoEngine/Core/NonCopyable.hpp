@@ -1,6 +1,9 @@
 #ifndef __NONCOPYABLE__
 #define __NONCOPYABLE__
 
+namespace Pot
+{
+
 class NonCopyable
 {
 	protected:
@@ -10,5 +13,7 @@ class NonCopyable
 		NonCopyable(const NonCopyable&);
 		NonCopyable& operator=(const NonCopyable&);
 };
+
+}
 
 #endif

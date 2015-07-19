@@ -1,7 +1,7 @@
 #ifndef __CORE_COMPONENT__
 #define __CORE_COMPONENT__
 
-#include "Tools.hpp"
+#include "../PotatoEngine/Core/Tools.hpp"
 
 class GameObject;
 

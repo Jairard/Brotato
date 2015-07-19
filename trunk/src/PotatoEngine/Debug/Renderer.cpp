@@ -4,8 +4,6 @@
 
 #include "Renderer.hpp"
 #include "../Core/LibsHelpers.hpp"
-// TODO: refacto -> get rid of ThickPointShape dependence
-#include "../../Graphics/_ThickPointShape.hpp"
 
 namespace Pot 
 {
@@ -170,7 +168,7 @@ void Renderer::DrawCircle(const Vector2f& center, float32 radius, const sf::Colo
 	DrawCircle(pv_2_sfv(center), radius, color);
 }
 
-void Renderer::DrawSolidCircle(const Vector2f& center, float32 radius, const sf::Vector2f& axis, const sf::Color& color)
+void Renderer::DrawSolidCircle(const Vector2f& center, float32 radius, const Vector2f& axis, const sf::Color& color)
 {
 	DrawSolidCircle(pv_2_sfv(center), radius, pv_2_sfv(axis), color);
 }
@@ -190,12 +188,14 @@ void Renderer::DrawPoint(const sf::Vector2f& p, float32 size, const sf::Color& c
 {
 	assert(!m_isLocked);
 	
-	ThickPointShape point(&m_window, p);
+	// TODO: test
+	const sf::Vector2u& windowSize = m_window.getSize();
+	const sf::Vector2f& viewSize = m_window.getView().getSize();
+	const float xRatio = viewSize.x / (float)windowSize.x;
+	const float yRatio = viewSize.y / (float)windowSize.y;
 
-	point.setColor(color);
-	point.setThickness(size);
-
-	m_window.draw(point);
+	AARect rect(sfv_2_pv(p), Vector2f(size * xRatio, size * yRatio));
+	DrawRect(rect, color);
 }
 
 void Renderer::DrawSegment(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Color& color)
@@ -347,7 +347,8 @@ char buffer[512];
 vsprintf(buffer, string, arg);
 
 	sf::FloatRect viewport = m_window.getView().getViewport();
-	Vector2f windowSize(m_window.getSize());
+	sf::Vector2u sfWindowSize = m_window.getSize();
+	Vector2f windowSize(sfWindowSize.x, sfWindowSize.y);
 	const float realX = viewport.left*windowSize.x + x*viewport.width;
 	const float realY = viewport.top*windowSize.y + y*viewport.height;
 	const float yRatio = 0.5 * m_window.getView().getSize().y / (float)m_window.getSize().y;

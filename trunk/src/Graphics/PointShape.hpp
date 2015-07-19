@@ -1,7 +1,7 @@
 #ifndef __GRAPHICS_POINT_SHAPE__
 #define __GRAPHICS_POINT_SHAPE__
 
-#include "../Core/Vector2_.hpp"
+#include "../PotatoEngine/Core/Vector2.hpp"
 #include "Shape.hpp"
 
 namespace Graphics
@@ -9,7 +9,7 @@ namespace Graphics
 	class PointShape: public Shape
 	{
 		public:
-			PointShape(const Vector2f& p=Vector2f());
+			PointShape(const Pot::Vector2f& p=Pot::Vector2f());
 			virtual ~PointShape() {}
 
 		protected:

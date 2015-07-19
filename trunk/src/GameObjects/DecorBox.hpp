@@ -9,7 +9,7 @@ namespace GO
 	{
 		public:
 			DecorBox(Phy::World* world,
-					 const Vector2f& center, const Vector2f& size,
+					 const Pot::Vector2f& center, const Pot::Vector2f& size,
 					 float angle=0., const sf::Color& color=sf::Color::White);
 			virtual ~DecorBox() {}
 			

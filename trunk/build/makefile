@@ -45,6 +45,7 @@ INC = -I$(INCLUDE_DIR)
 # SRC files
 SRC_DIR = ../src
 SRC = $(wildcard $(SRC_DIR)/*.cpp) 
+ENGINE_SRC = 
 
 # OBJ files
 OBJ_DIR = ../obj
@@ -55,13 +56,13 @@ BIN_DIR = ../bin
 
 # Subdirectories
 POTATO_ENGINE_SUBDIR = PotatoEngine
-SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_SUBDIR)/*.cpp) 
+ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_SUBDIR)/*.cpp) 
 
 POTATO_ENGINE_DEBUG_SUBDIR = PotatoEngine/Debug
-SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_DEBUG_SUBDIR)/*.cpp)
+ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_DEBUG_SUBDIR)/*.cpp)
 
 POTATO_ENGINE_CORE_SUBDIR = PotatoEngine/Core
-SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_CORE_SUBDIR)/*.cpp)
+ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_CORE_SUBDIR)/*.cpp)
 
 PHYSICS_SUBDIR = Physics
 SRC += $(wildcard $(SRC_DIR)/$(PHYSICS_SUBDIR)/*.cpp) 
@@ -83,18 +84,22 @@ SRC += $(wildcard $(SRC_DIR)/$(DEBUG_SUBDIR)/*.cpp)
 
 # OBJ files
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+ENGINE_OBJ = $(ENGINE_SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+ENGINE_OBJ_NO_MAIN = $(filter-out $(OBJ_DIR)/$(POTATO_ENGINE_SUBDIR)/_potatoEngine_main.o, $(ENGINE_OBJ))
 
 # Delete targets
-DELETE_TARGETS = $(OBJ:%=delete_%)
+DELETE_TARGETS = $(OBJ:%=delete_%) $(ENGINE_OBJ:%=delete_%)
 
-all: $(OBJ)
+all: $(OBJ) $(ENGINE_OBJ_NO_MAIN)
+	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
+	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
+
+engine: $(ENGINE_OBJ)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
 	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
 
 c++11: OSX/Qt/main_11.cpp
 	g++ -std=c++11 -W -Wall -g -o c++11 OSX/Qt/main_11.cpp
-	@#/opt/local/bin/g++-mp-4.9 -std=c++11 -o c++11 OSX/Qt/main_11.cpp
-	@#-W -Wall -ansi -g
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
 	@ $(CREATE_DIR) $(@D)

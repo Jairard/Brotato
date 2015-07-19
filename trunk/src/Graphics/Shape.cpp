@@ -1,5 +1,4 @@
 #include "Shape.hpp"
-#include "../Core/Logger.hpp"
 
 namespace Graphics
 {

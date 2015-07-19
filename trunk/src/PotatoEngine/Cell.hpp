@@ -1,7 +1,7 @@
 #ifndef __CELL__
 #define __CELL__
 
-#include "../Core/NonCopyable.hpp"
+#include "Core/NonCopyable.hpp"
 #include "Core/ClassHelpers.hpp"
 #include "Debug/Logger.hpp"
 #include "Potato.hpp"
@@ -14,7 +14,7 @@ namespace Debug
 	class Renderer;
 }
 
-class Cell: NonCopyable
+class Cell: public NonCopyable
 {
 	friend class Potato;
 	

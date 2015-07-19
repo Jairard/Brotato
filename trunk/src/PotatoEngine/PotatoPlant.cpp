@@ -4,7 +4,7 @@
 
 #include "PotatoPlant.hpp"
 
-#include "../Core/Tools.hpp"
+#include "Core/Tools.hpp"
 #include "Core/Vector2.hpp"
 #include "Debug/Renderer.hpp"
 #include "Debug/Logger.hpp"

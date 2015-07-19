@@ -8,6 +8,9 @@
 struct TOOLS_VSINK { template<typename ...Args> TOOLS_VSINK(Args const & ... ) {} };
 #define VUNUSED(x)		TOOLS_VSINK {x...}
 
+namespace Pot
+{
+
 class Tools: public NonInstantiable
 {
 	public:
@@ -36,5 +39,7 @@ class Tools: public NonInstantiable
 			return dynamic_cast<T*>(data);
 		}
 };
+
+}
 
 #endif

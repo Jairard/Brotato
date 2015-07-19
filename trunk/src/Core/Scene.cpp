@@ -1,6 +1,9 @@
 #include <sstream>
 #include <list>
 #include "Scene.hpp"
+#include "../PotatoEngine/Debug/Logger.hpp"
+
+using Pot::Debug::Logger;
 
 Scene::Scene(const std::string& name):
 	m_name(name),

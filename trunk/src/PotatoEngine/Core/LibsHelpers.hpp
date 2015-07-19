@@ -26,7 +26,7 @@ inline Pot::Vector2f b2v_2_pv(const b2Vec2& b2v)
 	return Pot::Vector2f(b2v.x, b2v.y);
 }
 
-inline b2Vec2 pv_2_b2v(const sf::Vector2f& v)
+inline b2Vec2 pv_2_b2v(const Pot::Vector2f& v)
 {
 	return b2Vec2(v.x, v.y);
 }

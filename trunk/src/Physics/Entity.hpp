@@ -2,7 +2,7 @@
 #define __PHY_ENTITY__
 
 #include <Box2D/Box2D.h>
-#include "../Core/Vector2_.hpp"
+#include "../PotatoEngine/Core/Vector2.hpp"
 
 namespace Phy
 {
@@ -18,21 +18,21 @@ namespace Phy
 			virtual ~Entity();
 
 			/* Accessors */
-			World*				world()	const			{ return m_world; }
-			b2Body*				body() const			{ return m_body; }
-			virtual b2Shape*	shape()	const			{ return m_shape; }
-			b2Fixture*			shapeFixture() const	{ return m_shapeFixture; }
-			const b2BodyDef&	bodyDef() const			{ return m_bodyDef; }
-			const b2FixtureDef&	fixtureDef() const		{ return m_fixtureDef; }
-			b2BodyDef&			bodyDef()				{ return m_bodyDef; }
-			b2FixtureDef&		fixtureDef()			{ return m_fixtureDef; }
-			bool				isSetup() const			{ return m_isSetup; }
-			const Vector2f&		position() const		{ return m_position; }
-			float				angle() const			{ return m_angle; }
+			World*					world()	const			{ return m_world; }
+			b2Body*					body() const			{ return m_body; }
+			virtual b2Shape*		shape()	const			{ return m_shape; }
+			b2Fixture*				shapeFixture() const	{ return m_shapeFixture; }
+			const b2BodyDef&		bodyDef() const			{ return m_bodyDef; }
+			const b2FixtureDef&		fixtureDef() const		{ return m_fixtureDef; }
+			b2BodyDef&				bodyDef()				{ return m_bodyDef; }
+			b2FixtureDef&			fixtureDef()			{ return m_fixtureDef; }
+			bool					isSetup() const			{ return m_isSetup; }
+			const Pot::Vector2f&	position() const		{ return m_position; }
+			float					angle() const			{ return m_angle; }
 
 			/* Methods */
 			virtual void setup(void);
-			virtual void update(const Vector2f& position, float angle);
+			virtual void update(const Pot::Vector2f& position, float angle);
 
 		protected:
 			bool m_isSecure;
@@ -47,7 +47,7 @@ namespace Phy
 			bool m_isSetup;
 
 			/* Geomtrics members */
-			Vector2f m_position;
+			Pot::Vector2f m_position;
 			float m_angle;
 	};
 }

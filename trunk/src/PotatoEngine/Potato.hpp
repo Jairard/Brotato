@@ -7,9 +7,9 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Core/Transform.hpp"
-#include "../Core/Tools.hpp"
-#include "../Core/Stainable.hpp"
-#include "../Core/Pool.hpp"
+#include "Core/Tools.hpp"
+#include "Core/Stainable.hpp"
+#include "Core/Pool.hpp"
 #include "Core/ClassHelpers.hpp"
 #include "Stem.hpp"
 

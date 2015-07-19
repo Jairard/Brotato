@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Debug/Renderer.hpp"
 #include "Core/ClassHelpers.hpp"
-#include "../Windows/InputListener.hpp"
+#include "InputListener.hpp"
 
 namespace Pot
 {
@@ -54,7 +54,7 @@ class PotatoPlant// : Singleton<PotatoPlant>
 		static const unsigned int DEFAULT_UPS;
 		
 		sf::RenderWindow m_window;
-		InputListener m_inputListener;
+		SimpleInputListener m_inputListener;
 		Stem* m_stem;
 		// TODO: check why implementing the accessor here does not compile (after cleaning)
 		// and set m_debugRenderer as an instance (and not a pointer)

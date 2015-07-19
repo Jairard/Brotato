@@ -1,7 +1,7 @@
 #include "Stem.hpp"
 
 #include <assert.h>
-#include "../Core/Tools.hpp"
+#include "Core/Tools.hpp"
 #include "Core/LibsHelpers.hpp"
 #include "Debug/Logger.hpp"
 #include "Debug/Renderer.hpp"

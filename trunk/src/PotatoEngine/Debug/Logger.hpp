@@ -1,10 +1,10 @@
-#ifndef __CORE_LOGGER__
-#define __CORE_LOGGER__
+#ifndef __LOGGER__
+#define __LOGGER__
 
 #include <list>
 #include <string>
 #include <stdarg.h>
-#include "../../Core/NonInstantiable.hpp"
+#include "../Core/NonInstantiable.hpp"
 
 namespace Pot 
 {

@@ -24,9 +24,9 @@ struct AARect
 		height(rectHeight)
 	{}
 	
-	AARect(const Vector2f& position, const Vector2f& size):
-		left(position.x),
-		bottom(position.y),
+	AARect(const Vector2f& center, const Vector2f& size):
+		left(center.x - size.x / 2.f),
+		bottom(center.y - size.y / 2.f),
 		width(size.x),
 		height(size.y)
 	{}

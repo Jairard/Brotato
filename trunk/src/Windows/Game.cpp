@@ -1,8 +1,8 @@
 #include "Window.hpp"
 #include "Game.hpp"
 #include "../GameObjects.hpp"
-#include "../Core/Math.hpp"
-#include "../Core/Logger.hpp"
+#include "../PotatoEngine/Core/Math.hpp"
+#include "../PotatoEngine/Debug/Logger.hpp"
 #include "../Graphics/DebugRenderer.hpp"
 
 Game::Game(Window& window, Phy::World* world):
@@ -10,7 +10,7 @@ Game::Game(Window& window, Phy::World* world):
 	m_inputListener(0),
 	m_renderer(0)
 {
-	m_inputListener = new InputListener(window);
+	m_inputListener = new Pot::SimpleInputListener(window);
 	m_renderer = new Graphics::Renderer(window);
 	
 	Graphics::DebugRenderer* debugRenderer = new Graphics::DebugRenderer(window);
@@ -31,15 +31,15 @@ Game::~Game()
 void Game::initScene1()
 {
 	/* Ground */
-	GO::DecorBox* ground = new GO::DecorBox(m_world, Vector2f(0., -5), Vector2f(25., 10.));
+	GO::DecorBox* ground = new GO::DecorBox(m_world, Pot::Vector2f(0., -5), Pot::Vector2f(25., 10.));
 	ground->setColor(sf::Color::Yellow);
 
 	/* Objects */
-	GO::Box* rect = new GO::Box(m_world, Phy::Dynamic, sf::Vector2f(0., 20.), sf::Vector2f(2., 2.), 1., sf::Color::Red);
-	GO::Box* rect2 = new GO::Box(m_world, Phy::Dynamic, sf::Vector2f(0.5, sqrt(2.)), sf::Vector2f(2., 2.), Math::pi()/4., sf::Color::Blue);
+	GO::Box* rect = new GO::Box(m_world, Phy::Dynamic, Pot::Vector2f(0., 20.), Pot::Vector2f(2., 2.), 1., sf::Color::Red);
+	GO::Box* rect2 = new GO::Box(m_world, Phy::Dynamic, Pot::Vector2f(0.5, sqrt(2.)), Pot::Vector2f(2., 2.), Pot::Math::pi()/4., sf::Color::Blue);
 	
-	GO::Segment* segment = new GO::Segment(m_world, Phy::Static, Vector2f(-20., 20.), Vector2f(20., -20.));
-	GO::Segment* segment2 = new GO::Segment(m_world, Phy::Dynamic, Vector2f(-2., 0.), Vector2f(-2., 5.));
+	GO::Segment* segment = new GO::Segment(m_world, Phy::Static, Pot::Vector2f(-20., 20.), Pot::Vector2f(20., -20.));
+	GO::Segment* segment2 = new GO::Segment(m_world, Phy::Dynamic, Pot::Vector2f(-2., 0.), Pot::Vector2f(-2., 5.));
 	segment->setColors(sf::Color::Cyan, sf::Color::Magenta);
 	segment2->setColors(sf::Color::Cyan, sf::Color::Magenta);
 	
@@ -52,10 +52,10 @@ void Game::initScene1()
 
 void Game::initScene2()
 {
-	GO::Box* rect = new GO::Box(m_world, Phy::Dynamic, sf::Vector2f(0., 20.), sf::Vector2f(2., 2.), 0., sf::Color::Red);
+	GO::Box* rect = new GO::Box(m_world, Phy::Dynamic, Pot::Vector2f(0., 20.), Pot::Vector2f(2., 2.), 0., sf::Color::Red);
 	m_renderer->addEntity(rect);
 	
-	Logger::enableTag("graphics");
+	Pot::Debug::Logger::enableTag("graphics");
 }
 
 void Game::initScene3()

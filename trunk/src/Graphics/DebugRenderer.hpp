@@ -5,11 +5,11 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <Box2D/Collision/b2Collision.h>
-#include "../Core/NonCopyable.hpp"
+#include "../PotatoEngine/Core/NonCopyable.hpp"
 
 namespace Graphics
 {
-	class DebugRenderer: public b2Draw, public NonCopyable
+	class DebugRenderer: public b2Draw, public Pot::NonCopyable
 	{
 		public:
 			DebugRenderer(sf::RenderTarget& window, const char* fontFile = DEFAULT_FONT_FILE);
