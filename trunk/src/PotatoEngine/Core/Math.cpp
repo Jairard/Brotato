@@ -43,21 +43,4 @@ Vector2f Math::lerp(const Vector2f& source, const Vector2f& target, float coef)
 	return (1. - coef) * source + coef * target;
 }
 
-sf::Transformable Math::lerp(const sf::Transformable& source, const sf::Transformable& delta, float coef)
-{
-	sf::Transformable res;
-	const Vector2f& srcPos = sfv_2_pv(source.getPosition()),
-	                srcScale = sfv_2_pv(source.getScale());
-	float srcRot = source.getRotation();
-	
-	Vector2f resPos = Math::lerp(srcPos, srcPos + sfv_2_pv(delta.getPosition()), coef),
-	         resScale = Math::lerp(srcScale, srcScale + sfv_2_pv(delta.getScale()), coef);
-	
-	res.setPosition(resPos.x, resPos.y);
-	res.setScale(resScale.x, resScale.y);
-	res.setRotation(Math::lerp(srcRot, srcRot + delta.getRotation(), coef));
-	
-	return res;
-}
-
 }

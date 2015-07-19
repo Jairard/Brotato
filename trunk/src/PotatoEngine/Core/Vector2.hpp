@@ -186,7 +186,7 @@ Vector2<T>& operator/=(Vector2<T>& v, const U& c)
 	return v;
 }
 
-/* arithmetical operatos with Vectors */
+/* arithmetical operators with Vectors */
 template <typename T, typename U>
 Vector2<T> operator+(const Vector2<T>& left, const Vector2<U>& right)
 {
@@ -257,6 +257,13 @@ template <typename T, typename U>
 Vector2<T> operator^=(Vector2<T>& left, const Vector2<U>& right)
 {
 	return left = left^right;
+}
+
+template <typename T, typename U>
+bool operator==(const Vector2<T>& left, const Vector2<U>& right)
+{
+	Vector2<T> diff = left - right;
+	return diff.isNull();
 }
 
 /* stream operator */

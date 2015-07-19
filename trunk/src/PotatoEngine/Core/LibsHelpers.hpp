@@ -18,7 +18,7 @@ inline sf::Vector2f b2v_2_sfv(const b2Vec2& b2v)
 
 inline b2Vec2 sfv_2_b2v(const sf::Vector2f& sfv)
 {
-	return b2Vec2(sfv.x, -sfv.y);
+	return b2Vec2(sfv.x, sfv.y);
 }
 
 inline Pot::Vector2f b2v_2_pv(const b2Vec2& b2v)
@@ -76,6 +76,11 @@ inline Pot::Rect paar_2_pr(const Pot::AARect& paar)
 	res.points[3] = Pot::Vector2f(paar.left             , paar.bottom + paar.height);
 	
 	return res;
+}
+
+inline Pot::Rect sfr_2_pr(const sf::FloatRect& sfr)
+{
+	return paar_2_pr(sfr_2_paar(sfr));
 }
 
 #endif

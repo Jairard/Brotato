@@ -1,8 +1,7 @@
-#ifndef __MATH__
-#define __MATH__
+#ifndef __POT_MATH__
+#define __POT_MATH__
 
 #include <cmath>
-#include <SFML/Graphics/Transformable.hpp>
 #include "NonInstantiable.hpp"
 #include "Vector2.hpp"
 
@@ -24,8 +23,7 @@ class Math: public NonInstantiable
 		static T clamp(const T& min, const T& max, const T& value);
 		static float lerp(float source, float target, float coef);
 		static Vector2f lerp(const Vector2f& source, const Vector2f& target, float coef);
-		// TODO: sf::Transformable -> Pot::Transform
-		static sf::Transformable lerp(const sf::Transformable& source, const sf::Transformable& delta, float coef);
+		// TODO: lerp Pot::Transform
 };
 
 template <typename T>

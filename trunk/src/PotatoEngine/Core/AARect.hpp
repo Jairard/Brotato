@@ -17,6 +17,13 @@ struct AARect
 		height(0.f)
 	{}
 	
+	AARect(const AARect& other):
+		left(other.left),
+		bottom(other.bottom),
+		width(other.width),
+		height(other.height)
+	{}
+	
 	AARect(float rectLeft, float rectBottom, float rectWidth, float rectHeight):
 		left(rectLeft),
 		bottom(rectBottom),
@@ -30,6 +37,24 @@ struct AARect
 		width(size.x),
 		height(size.y)
 	{}
+	
+	bool operator==(const AARect& other)
+	{
+		return left   == other.left   &&
+		       bottom == other.bottom &&
+		       width  == other.width  &&
+		       height == other.height;
+	}
+	
+	AARect& operator=(const AARect& other)
+	{
+		left = other.left;
+		bottom = other.bottom;
+		width = other.width;
+		height = other.height;
+		
+		return *this;
+	}
 };
 
 }

@@ -46,6 +46,7 @@ INC = -I$(INCLUDE_DIR)
 SRC_DIR = ../src
 SRC = $(wildcard $(SRC_DIR)/*.cpp) 
 ENGINE_SRC = 
+ENGINE_TESTS_SRC =
 
 # OBJ files
 OBJ_DIR = ../obj
@@ -63,6 +64,9 @@ ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_DEBUG_SUBDIR)/*.cpp)
 
 POTATO_ENGINE_CORE_SUBDIR = PotatoEngine/Core
 ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_CORE_SUBDIR)/*.cpp)
+
+POTATO_ENGINE_TESTS_SUBDIR = PotatoEngine/UnitTests
+ENGINE_TESTS_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_TESTS_SUBDIR)/*.cpp)
 
 PHYSICS_SUBDIR = Physics
 SRC += $(wildcard $(SRC_DIR)/$(PHYSICS_SUBDIR)/*.cpp) 
@@ -86,15 +90,21 @@ SRC += $(wildcard $(SRC_DIR)/$(DEBUG_SUBDIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 ENGINE_OBJ = $(ENGINE_SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 ENGINE_OBJ_NO_MAIN = $(filter-out $(OBJ_DIR)/$(POTATO_ENGINE_SUBDIR)/_potatoEngine_main.o, $(ENGINE_OBJ))
+ENGINE_TEST_OBJ = $(ENGINE_TESTS_SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # Delete targets
-DELETE_TARGETS = $(OBJ:%=delete_%) $(ENGINE_OBJ:%=delete_%)
+TEST_DELETE_TARGETS = $(ENGINE_TEST_OBJ:%=delete_%)
+DELETE_TARGETS = $(OBJ:%=delete_%) $(ENGINE_OBJ:%=delete_%) $(TEST_DELETE_TARGETS)
 
 all: $(OBJ) $(ENGINE_OBJ_NO_MAIN)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
 	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
 
 engine: $(ENGINE_OBJ)
+	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
+	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
+
+engine_tests: $(ENGINE_OBJ_NO_MAIN) $(ENGINE_TEST_OBJ)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
 	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
 
@@ -118,6 +128,9 @@ delete_$(OBJ_DIR)/%:
 	fi
 
 clean: $(DELETE_TARGETS)
+	@ $(ECHO) 'Object files removed'
+
+clean_tests: $(TEST_DELETE_TARGETS)
 	@ $(ECHO) 'Object files removed'
 
 mrproper: clean
