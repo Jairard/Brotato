@@ -112,6 +112,7 @@ const char* Transform::order_str() const
 		case Pot::TransformOrder::TRANSLATION_SCALE_ROTATION:
 			return "TRANSLATION_SCALE_ROTATION";
 		default:
+			ASSERT_NOT_REACHED_MSG("TransformOrder");
 			return "INVALID_TRANSFORM_ORDER";
 	}
 }
