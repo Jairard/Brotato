@@ -93,7 +93,7 @@ Transform& Potato::localTransform()
 const Transform& Potato::localTransform() const
 {
 	m_stem->ensureIntegrityIFN(this);
-	assert(!m_localTransform.isRotten());
+	ASSERT_DEBUG(!m_localTransform.isRotten());
 	return m_localTransform;
 }
 
@@ -108,7 +108,8 @@ Transform& Potato::worldTransform()
 const Transform& Potato::worldTransform() const
 {
 	m_stem->ensureIntegrityIFN(this);
-	assert(!m_worldTransform.isRotten());
+	// TOOD: remove this assert ?
+	ASSERT_DEBUG(!m_worldTransform.isRotten());
 	return m_worldTransform;
 }
 
