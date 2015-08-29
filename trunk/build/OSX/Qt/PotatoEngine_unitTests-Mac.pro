@@ -14,6 +14,8 @@ SOURCES +=  \
     ../../../src/PotatoEngine/UnitTests/libsHelpers_tests.cpp \
     ../../../src/PotatoEngine/UnitTests/math_tests.cpp \
     ../../../src/PotatoEngine/UnitTests/rect_tests.cpp \
+    ../../../src/PotatoEngine/UnitTests/pool_tests.cpp \
+    ../../../src/PotatoEngine/UnitTests/stainable_tests.cpp
 
 HEADERS +=  \
     ../../../src/PotatoEngine/UnitTests/catch.hpp \

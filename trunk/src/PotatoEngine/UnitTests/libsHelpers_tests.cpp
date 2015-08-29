@@ -3,11 +3,11 @@
 
 SCENARIO("LibsHelpers", "helpers")
 {
-	GIVEN("A Pot::Vectof2f")
+	GIVEN("a Pot::Vectof2f")
 	{
 		Pot::Vector2f v(4.2f, 13.37f);
 		
-		THEN("It can be converted to sf::Vector2f and b2Vec2")
+		THEN("it can be converted to sf::Vector2f and b2Vec2")
 		{
 			sf::Vector2f sfv = pv_2_sfv(v);
 			CHECK(v.x == sfv.x);
@@ -18,7 +18,7 @@ SCENARIO("LibsHelpers", "helpers")
 			CHECK(v.y == b2v.y);
 		}
 		
-		THEN("It's not modified by chained conversions")
+		THEN("it's not modified by chained conversions")
 		{
 			CHECK(v == sfv_2_pv(pv_2_sfv(v)));
 			CHECK(v == b2v_2_pv(pv_2_b2v(v)));
@@ -27,11 +27,11 @@ SCENARIO("LibsHelpers", "helpers")
 		}
 	}
 	
-	GIVEN("An sf::Vectof2f")
+	GIVEN("an sf::Vectof2f")
 	{
 		sf::Vector2f v(4.2f, 13.37f);
 		
-		THEN("It can be converted to Pot::Vector2f and b2Vec2")
+		THEN("it can be converted to Pot::Vector2f and b2Vec2")
 		{
 			Pot::Vector2f pv = sfv_2_pv(v);
 			CHECK(v.x == pv.x);
@@ -42,7 +42,7 @@ SCENARIO("LibsHelpers", "helpers")
 			CHECK(v.y == b2v.y);
 		}
 		
-		THEN("It's not modified by chained conversions")
+		THEN("it's not modified by chained conversions")
 		{
 			CHECK(v == pv_2_sfv(sfv_2_pv(v)));
 			CHECK(v == b2v_2_sfv(sfv_2_b2v(v)));
@@ -51,11 +51,11 @@ SCENARIO("LibsHelpers", "helpers")
 		}
 	}
 	
-	GIVEN("A b2Vec2")
+	GIVEN("a b2Vec2")
 	{
 		b2Vec2 v(4.2f, 13.37f);
 		
-		THEN("It can be converted to Pot::Vector2f and sf::Vector2f")
+		THEN("it can be converted to Pot::Vector2f and sf::Vector2f")
 		{
 			Pot::Vector2f pv = b2v_2_pv(v);
 			CHECK(v.x == pv.x);
@@ -66,7 +66,7 @@ SCENARIO("LibsHelpers", "helpers")
 			CHECK(v.y == sfv.y);
 		}
 		
-		THEN("It's not modified by chained conversions")
+		THEN("it's not modified by chained conversions")
 		{
 			CHECK(v == pv_2_b2v(b2v_2_pv(v)));
 			CHECK(v == sfv_2_b2v(b2v_2_sfv(v)));
@@ -75,11 +75,11 @@ SCENARIO("LibsHelpers", "helpers")
 		}
 	}
 	
-	GIVEN("An sf::Color")
+	GIVEN("an sf::Color")
 	{
 		sf::Color c(128, 42, 35);
 		
-		THEN("It can be converted to b2Color")
+		THEN("it can be converted to b2Color")
 		{
 			b2Color b2c = sfc_2_b2c(c);
 			const float coef = 1.f / 255.f;
@@ -88,17 +88,17 @@ SCENARIO("LibsHelpers", "helpers")
 			CHECK(b2c.b == (float)c.b * coef);
 		}
 		
-		THEN("It's not modified by chained conversions")
+		THEN("it's not modified by chained conversions")
 		{
 			CHECK(c == b2c_2_sfc(sfc_2_b2c(c)));
 		}
 	}
 	
-	GIVEN("A b2Color")
+	GIVEN("a b2Color")
 	{
 		b2Color c(0.5f, 0.345f, 0.654f);
 		
-		THEN("It can be converted to b2Color")
+		THEN("it can be converted to b2Color")
 		{
 			sf::Color sfc = b2c_2_sfc(c);
 			const float coef = 255.f;
@@ -109,7 +109,7 @@ SCENARIO("LibsHelpers", "helpers")
 			CHECK(fabsf(sfc.b - c.b * coef) < 1.f);
 		}
 		
-		THEN("It's not modified by chained conversions")
+		THEN("it's not modified by chained conversions")
 		{
 			b2Color converted = sfc_2_b2c(b2c_2_sfc(c));
 			const float maxError = 1.f / 255.f;
@@ -120,11 +120,11 @@ SCENARIO("LibsHelpers", "helpers")
 		}
 	}
 	
-	GIVEN("A Pot::AARect")
+	GIVEN("a Pot::AARect")
 	{
 		Pot::AARect paar(1.1f, 2.3f, 4.6f, 56.7f);
 		
-		THEN("It can be converted to sf::FloatRect")
+		THEN("it can be converted to sf::FloatRect")
 		{
 			sf::FloatRect sfr = paar_2_sfr(paar);
 			CHECK(paar.left == sfr.left);
@@ -133,12 +133,12 @@ SCENARIO("LibsHelpers", "helpers")
 			CHECK(paar.height == sfr.height);
 		}
 		
-		THEN("It can be converted to Pot::Rect")
+		THEN("it can be converted to Pot::Rect")
 		{
 			CHECK(paar_2_pr(paar).AABB() == paar);
 		}
 		
-		THEN("It's not modified by chained conversions")
+		THEN("it's not modified by chained conversions")
 		{
 			Pot::AARect converted = sfr_2_paar(paar_2_sfr(paar));
 			CHECK(paar.left == converted.left);
@@ -148,11 +148,11 @@ SCENARIO("LibsHelpers", "helpers")
 		}
 	}
 	
-	GIVEN("An sf::FloatRect")
+	GIVEN("an sf::FloatRect")
 	{
 		sf::FloatRect sfr(1.1f, 2.3f, 4.6f, 56.7f);
 		
-		THEN("It can be converted to Pot::AARect")
+		THEN("it can be converted to Pot::AARect")
 		{
 			Pot::AARect paar = sfr_2_paar(sfr);
 			CHECK(sfr.left == paar.left);
@@ -161,7 +161,7 @@ SCENARIO("LibsHelpers", "helpers")
 			CHECK(sfr.height == paar.height);
 		}
 		
-		THEN("It can be converted to Pot::Rect")
+		THEN("it can be converted to Pot::Rect")
 		{
 			Pot::AARect rectAABB = sfr_2_pr(sfr).AABB();
 			CHECK(sfr.left == rectAABB.left);
@@ -170,7 +170,7 @@ SCENARIO("LibsHelpers", "helpers")
 			CHECK(sfr.height == rectAABB.height);
 		}
 		
-		THEN("It's not modified by chained conversions")
+		THEN("it's not modified by chained conversions")
 		{
 			sf::FloatRect converted = paar_2_sfr(sfr_2_paar(sfr));
 			CHECK(sfr.left == converted.left);

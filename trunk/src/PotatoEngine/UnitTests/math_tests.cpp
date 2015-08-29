@@ -22,16 +22,16 @@ SCENARIO("Math", "math")
 		CHECK(Pot::Math::rad2deg(- 2.f * M_PI) == Approx(-360.f));
 	}
 	
-	THEN("Pi value is coherent")
+	THEN("pi value is coherent")
 	{
 		CHECK(Pot::Math::pi() == Approx(Pot::Math::precisePi()));
 	}
 	
-	GIVEN("An angle")
+	GIVEN("an angle")
 	{
 		const float angle = 4.567;
 		
-		THEN("It's not modified by chained rad/deg conversions")
+		THEN("it's not modified by chained rad/deg conversions")
 		{
 			REQUIRE(angle == Pot::Math::rad2deg(Pot::Math::deg2rad(angle)));
 			REQUIRE(angle == Pot::Math::deg2rad(Pot::Math::rad2deg(angle)));
