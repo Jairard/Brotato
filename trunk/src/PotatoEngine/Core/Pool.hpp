@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include <list>
+#include "../Debug/assert.hpp"
 
 namespace Pot
 {
@@ -13,7 +13,7 @@ template <typename T>
 class Pool
 {
 	public:
-		Pool(bool allowSafetyChecks = false, size_t capacity = c_defaultCapacity):
+		Pool(bool allowSafetyChecks = true, size_t capacity = c_defaultCapacity):
 			m_allowSafetyChecks(allowSafetyChecks),
 			m_capacity(capacity)
 		{
@@ -30,7 +30,7 @@ class Pool
 
 		T* create()
 		{
-			assert(!isFull());
+			ASSERT_DEBUG(!isFull());
 			
 			T* chunk = &m_data[m_avaibleChunks.front()];
 			m_avaibleChunks.pop_front();
@@ -43,7 +43,7 @@ class Pool
 			destroy(chunk - m_data);
 		}
 
-		bool isFull(void) const
+		bool isFull() const
 		{
 			return m_avaibleChunks.empty();
 		}
@@ -66,11 +66,10 @@ class Pool
 	private:
 		void destroy(size_t i)
 		{
-			assert(i >= 0);
-			assert(i < m_capacity);
+			ASSERT_RELEASE(i < m_capacity);
 			
 			if (m_allowSafetyChecks)
-				assert(!isAvailable(i));
+				ASSERT_DEBUG(!isAvailable(i));
 			
 			m_avaibleChunks.push_front(i);
 		}

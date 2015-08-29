@@ -24,6 +24,7 @@ SOURCES += \
     ../../../src/PotatoEngine/Debug/Logger.cpp \
     ../../../src/PotatoEngine/Core/Transform.cpp \
     ../../../src/PotatoEngine/Core/Math.cpp \
+    ../../../src/PotatoEngine/Debug/assert.cpp
 
 HEADERS +=  \
     ../../../src/PotatoEngine/PotatoPlant.hpp \
@@ -40,6 +41,7 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Core/AARect.hpp \
     ../../../src/PotatoEngine/Core/Rect.hpp \
     ../../../src/PotatoEngine/Core/ClassHelpers.hpp \
+    ../../../src/PotatoEngine/Core/ClassHelpers.hpp \
     ../../../src/PotatoEngine/Core/LibsHelpers.hpp \
     ../../../src/PotatoEngine/Core/Transform.hpp \
     ../../../src/PotatoEngine/Core/Vector2.hpp \
@@ -50,3 +52,5 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Core/NonCopyable.hpp \
     ../../../src/PotatoEngine/Core/Stainable.hpp \
     ../../../src/PotatoEngine/Core/Singleton.hpp \
+    ../../../src/PotatoEngine/Core/CompilFlags.hpp \
+    ../../../src/PotatoEngine/Debug/assert.hpp

@@ -236,7 +236,7 @@ void Transform::recomputeIFN()
 		m_transform.wash();
 	}
 	
-	assert(!m_transform.isRotten());
+	ASSERT_DEBUG(!m_transform.isRotten());
 }
 
 void Transform::log(const char* tag) const
@@ -308,7 +308,7 @@ void Transform::computeTransform()
 			break;
 			
 		default:
-			assert(false);
+			ASSERT_NOT_REACHED_MSG("TransformOrder");
 			break;
 	}
 }
@@ -330,7 +330,7 @@ TransformOrder::Type Transform::inverseOrder() const
 		case TransformOrder::TRANSLATION_SCALE_ROTATION:
 			return TransformOrder::ROTATION_SCALE_TRANSLATION;
 		default:
-			assert(false);
+			ASSERT_NOT_REACHED_MSG("TransformOrder");
 			break;
 	}
 }

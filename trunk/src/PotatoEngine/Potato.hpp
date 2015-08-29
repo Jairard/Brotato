@@ -113,7 +113,7 @@ class Potato
 		Potato();
 	private:
 		// TODO: inherit from NonCopyable ?
-		Potato(const Potato& other) { UNUSED(other); assert(false); }
+		Potato(const Potato& other) { UNUSED(other); ASSERT_NOT_REACHED(); }
 		
 		void initialize(const std::string& name = "__unnamed__", Stem* stem = nullptr, Potato* parent = nullptr);
 		void shutdown();

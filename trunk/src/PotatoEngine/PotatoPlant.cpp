@@ -96,6 +96,7 @@ void transformTest()
 void PotatoPlant::initialize()
 {
 	Logger::enableTag("Debug");
+	Logger::enableTag(Logger::Assert);
 	Logger::enableTag(Logger::Warning);
 	Logger::enableTag(Logger::Error);
 	//Logger::enableTag(Stem::c_tag);

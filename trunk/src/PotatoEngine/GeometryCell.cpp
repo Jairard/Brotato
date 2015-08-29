@@ -38,7 +38,7 @@ void GeometryCell::updateAABBs()
 
 void GeometryCell::updateLocalAABB()
 {
-	assert(m_array.getVertexCount() > 0);
+	ASSERT_RELEASE(m_array.getVertexCount() > 0);
 	const unsigned int vertexCount = m_array.getVertexCount();
 	float right = 0.f, top = 0.f;
 	m_localAABB.left = right = m_array[0].position.x;
@@ -59,7 +59,7 @@ void GeometryCell::updateLocalAABB()
 
 void GeometryCell::updateWorldAABB()
 {
-	assert(m_array.getVertexCount() > 0);
+	ASSERT_RELEASE(m_array.getVertexCount() > 0);
 	const unsigned int vertexCount = m_array.getVertexCount();
 	const Transform& localToWorld = sPotato()->localToWorldTransform();
 	Vector2f transformedPoint = localToWorld.transformPoint(sfv_2_pv(m_array[0].position));

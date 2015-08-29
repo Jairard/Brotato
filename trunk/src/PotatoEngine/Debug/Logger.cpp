@@ -12,9 +12,11 @@ namespace Debug
 const char* Logger::CWarning = "Warning";
 const char* Logger::CError = "Error";
 const char* Logger::CDefault = "Default";
+const char* Logger::CAssert = "Assert";
 const std::string Logger::Warning = Logger::CWarning;
 const std::string Logger::Error = Logger::CError;
 const std::string Logger::Default = Logger::CDefault;
+const std::string Logger::Assert = Logger::CAssert;
 
 int Logger::m_bufferSize = 4096;
 std::list<std::string> Logger::m_enabledTags = std::list<std::string>();

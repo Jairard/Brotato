@@ -1,7 +1,9 @@
 #ifndef __CLASSHELPERS__
 #define __CLASSHELPERS__
 
-#define SAFETY_CHECK(VAR)					assert(VAR != nullptr)
+#include "../Debug/assert.hpp"
+
+#define SAFETY_CHECK(VAR)   ASSERT_DEBUG_MSG(VAR != nullptr, #VAR " is null on accessor call")
 
 // Accessor helpers
 #define ACCESSOR(TYPE, MEMBER)					ACCESSOR_WITH_NAME(TYPE, MEMBER, MEMBER)

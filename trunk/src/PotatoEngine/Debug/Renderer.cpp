@@ -4,6 +4,7 @@
 
 #include "Renderer.hpp"
 #include "../Core/LibsHelpers.hpp"
+#include "assert.hpp"
 
 namespace Pot 
 {
@@ -35,7 +36,7 @@ void Renderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& co
 
 void Renderer::DrawTransform(const b2Transform& t)
 {
-	assert(!m_isLocked);
+	ASSERT_DEBUG(!m_isLocked);
 	
 	// TODO: b2Transform -> sf::Transform conversion ?
 	b2Color xColor(1.f, 0.f, 0.f), yColor(0.f, 1.f, 0.f);
@@ -74,7 +75,7 @@ void Renderer::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec
 
 void Renderer::DrawAABB(b2AABB* aabb, const b2Color& color)
 {
-	assert(!m_isLocked);
+	ASSERT_DEBUG(!m_isLocked);
 
 	// TODO: test with rect
 	/*
@@ -186,7 +187,7 @@ sf::Vector2f* Renderer::pva_2_sfva(const Vector2f* vertices, int32 vertexCount) 
 // SFML manipulators
 void Renderer::DrawPoint(const sf::Vector2f& p, float32 size, const sf::Color& color)
 {
-	assert(!m_isLocked);
+	ASSERT_DEBUG(!m_isLocked);
 	
 	// TODO: test
 	const sf::Vector2u& windowSize = m_window.getSize();
@@ -200,7 +201,7 @@ void Renderer::DrawPoint(const sf::Vector2f& p, float32 size, const sf::Color& c
 
 void Renderer::DrawSegment(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Color& color)
 {
-	assert(!m_isLocked);
+	ASSERT_DEBUG(!m_isLocked);
 	
 	sf::VertexArray array(sf::Lines, 2);
 	array[0].position = p1;
@@ -255,7 +256,7 @@ void Renderer::DrawPolygon(const sf::Vector2f* vertices, int32 vertexCount, cons
 
 void Renderer::DrawSolidPolygon(const sf::Vector2f* vertices, int32 vertexCount, const sf::Color& color)
 {
-	assert(!m_isLocked);
+	ASSERT_DEBUG(!m_isLocked);
 	
 	sf::Color fillColor(color.r * 0.5f, color.g * 0.5f, color.b * 0.5f, 255.f * 0.5f);
 	sf::ConvexShape poly(vertexCount);
@@ -338,13 +339,13 @@ void Renderer::DrawString(int x, int y, const sf::Color& color, const char* stri
 
 void Renderer::vDrawString(int x, int y, const char* string, va_list arg, const sf::Color& color)
 {
-	assert(!m_isLocked);
+	ASSERT_DEBUG(!m_isLocked);
 
 	if (!m_isFontLoaded)
 		return;
 
-char buffer[512];
-vsprintf(buffer, string, arg);
+	char buffer[512];
+	vsprintf(buffer, string, arg);
 
 	sf::FloatRect viewport = m_window.getView().getViewport();
 	sf::Vector2u sfWindowSize = m_window.getSize();

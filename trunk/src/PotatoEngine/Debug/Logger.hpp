@@ -50,9 +50,11 @@ namespace Debug
 			static const char* CWarning;
 			static const char* CError;
 			static const char* CDefault;
+			static const char* CAssert;
 			static const std::string Warning;
 			static const std::string Error;
 			static const std::string Default;
+			static const std::string Assert;
 			
 		protected:
 			static int m_bufferSize;

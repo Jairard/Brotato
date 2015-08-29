@@ -41,7 +41,7 @@ void Potato::shutdown()
 
 void Potato::removeChild(const Potato* child)
 {
-	assert(child != nullptr);
+	ASSERT_DEBUG(child != nullptr);
 	
 	std::vector<Potato*>::iterator it;
 	
@@ -54,33 +54,31 @@ void Potato::removeChild(const Potato* child)
 		}
 	}
 	
-	assert(false);
+	ASSERT_NOT_REACHED();
 }
 
 void Potato::addChild(Potato* child)
 {
-	assert(child != nullptr);
+	ASSERT_DEBUG(child != nullptr);
 	m_children.push_back(child);
 }
 
 Potato* Potato::child(unsigned int i)
 {
-	assert(i >= 0);
-	assert(i < childCount());
+	ASSERT_RELEASE(i < childCount());
 	
 	Potato* child = m_children[i];
-	assert(child != nullptr);
+	ASSERT_DEBUG(child != nullptr);
 	
 	return m_children[i];
 }
 
 const Potato* Potato::child(unsigned int i) const
 {
-	assert(i >= 0);
-	assert(i < childCount());
+	ASSERT_RELEASE(i < childCount());
 	
 	const Potato* child = m_children[i];
-	assert(child != nullptr);
+	ASSERT_DEBUG(child != nullptr);
 	
 	return m_children[i];
 }
@@ -88,6 +86,7 @@ const Potato* Potato::child(unsigned int i) const
 Transform& Potato::localTransform()
 {
 	m_stem->ensureIntegrityIFN(this);
+	ASSERT_DEBUG(!m_localTransform.isRotten());
 	return m_localTransform;
 }
 
@@ -101,6 +100,8 @@ const Transform& Potato::localTransform_const()
 Transform& Potato::worldTransform()
 {
 	m_stem->ensureIntegrityIFN(this);
+	// TOOD: remove this assert ?
+	ASSERT_DEBUG(!m_worldTransform.isRotten());
 	return m_worldTransform;
 }
 
@@ -119,7 +120,7 @@ const Transform& Potato::localToWorldTransform()
 const Transform& Potato::worldToLocalTransform()
 {
 	m_stem->ensureIntegrityIFN(this);
-	assert(!m_invWorldTransform.isRotten());
+	ASSERT_DEBUG(!m_invWorldTransform.isRotten());
 	return m_invWorldTransform;
 }
 
@@ -131,7 +132,7 @@ const Transform& Potato::localToParentTransform()
 const Transform& Potato::parentToLocalTransform()
 {
 	m_stem->ensureIntegrityIFN(this);
-	assert(!m_invLocalTransform.isRotten());
+	ASSERT_DEBUG(!m_invLocalTransform.isRotten());
 	return m_invLocalTransform;
 }
 
