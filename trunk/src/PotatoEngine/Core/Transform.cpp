@@ -148,40 +148,6 @@ Rect Transform::transformRect(const Rect& rect) const
 	return res;
 }
 
-// Const transformation manipulators
-/*
-const sf::Transform& Transform::SFMLTransform() const
-{
-	assert(!m_transform.isRotten());
-	return m_transform.const_object();
-}
-
-Vector2f Transform::transformPoint(float x, float y) const
-{
-	return sfv_2_pv(SFMLTransform().transformPoint(x, y));
-}
-
-Vector2f Transform::transformPoint(const Vector2f& point) const
-{
-	return transformPoint(point.x, point.y);
-}
-
-Rect Transform::transformRect(const AARect& rect) const
-{
-	return transformRect(paar_2_pr(rect));
-}
-
-Rect Transform::transformRect(const Rect& rect) const
-{
-	Rect res;
-	
-	for (unsigned int i = 0; i < Rect::c_pointCount; ++i)
-		res.points[i] = transformPoint(rect.points[i]);
-	
-	return res;
-}
-//*/
-
 // Operators
 Transform Transform::operator*(const Transform& other) const
 {
