@@ -36,7 +36,22 @@ template <typename T> class Vector2
 		void setLength(double length);
 		template <typename U>
 		Vector2<T>& clamp(const U& min, const U& max);
+
+		static Vector2<T> zero, one, left, right, up, down;
 };
+
+template<typename T>
+Vector2<T> Vector2<T>::zero = Vector2<T>(0, 0);
+template<typename T>
+Vector2<T> Vector2<T>::one = Vector2<T>(1, 1);
+template<typename T>
+Vector2<T> Vector2<T>::left = Vector2<T>(-1, 0);
+template<typename T>
+Vector2<T> Vector2<T>::right = Vector2<T>(1, 0);
+template<typename T>
+Vector2<T> Vector2<T>::up = Vector2<T>(0, 1);
+template<typename T>
+Vector2<T> Vector2<T>::down = Vector2<T>(0, -1);
 
 template <typename T>
 bool Vector2<T>::isNull() const
