@@ -1,5 +1,5 @@
-#ifndef __GRAPHICS_DEBUGRENDERER__
-#define __GRAPHICS_DEBUGRENDERER__
+#ifndef __POT_DEBUG_RENDERER__
+#define __POT_DEBUG_RENDERER__
 
 #include <cstdarg>
 #include <SFML/Graphics.hpp>

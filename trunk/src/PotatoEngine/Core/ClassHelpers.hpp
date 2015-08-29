@@ -1,5 +1,5 @@
-#ifndef __CLASSHELPERS__
-#define __CLASSHELPERS__
+#ifndef __POT_CORE_CLASSHELPERS__
+#define __POT_CORE_CLASSHELPERS__
 
 #include "../Debug/assert.hpp"
 

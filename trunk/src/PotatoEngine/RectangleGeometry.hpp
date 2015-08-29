@@ -1,5 +1,5 @@
-#ifndef __RECTANGLEGEOMETRY__
-#define __RECTANGLEGEOMETRY__
+#ifndef __POT_RECTANGLEGEOMETRY__
+#define __POT_RECTANGLEGEOMETRY__
 
 #include "GeometryCell.hpp"
 #include "Core/Vector2.hpp"

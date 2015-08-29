@@ -1,5 +1,5 @@
-#ifndef __RECT__
-#define __RECT__
+#ifndef __POT_CORE_RECT__
+#define __POT_CORE_RECT__
 
 #include "Vector2.hpp"
 #include "AARect.hpp"

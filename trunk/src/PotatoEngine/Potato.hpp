@@ -1,5 +1,5 @@
-#ifndef __POTATO__
-#define __POTATO__
+#ifndef __POT_POTATO__
+#define __POT_POTATO__
 
 #include <assert.h>
 #include <string>

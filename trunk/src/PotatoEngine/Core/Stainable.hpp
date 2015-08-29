@@ -1,5 +1,5 @@
-#ifndef __STAINABLE__
-#define __STAINABLE__
+#ifndef __POT_CORE_STAINABLE__
+#define __POT_CORE_STAINABLE__
 
 namespace Pot
 {

@@ -1,5 +1,5 @@
-#ifndef __CELL__
-#define __CELL__
+#ifndef __POT_CELL__
+#define __POT_CELL__
 
 #include "Core/NonCopyable.hpp"
 #include "Core/ClassHelpers.hpp"

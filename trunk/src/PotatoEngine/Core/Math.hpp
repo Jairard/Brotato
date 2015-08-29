@@ -1,5 +1,5 @@
-#ifndef __POT_MATH__
-#define __POT_MATH__
+#ifndef __POT_CORE_MATH__
+#define __POT_CORE_MATH__
 
 #include <cmath>
 #include "NonInstantiable.hpp"

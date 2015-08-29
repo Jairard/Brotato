@@ -1,5 +1,5 @@
-#ifndef __NONCOPYABLE__
-#define __NONCOPYABLE__
+#ifndef __POT_CORE_NONCOPYABLE__
+#define __POT_CORE_NONCOPYABLE__
 
 namespace Pot
 {

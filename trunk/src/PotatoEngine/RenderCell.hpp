@@ -1,5 +1,5 @@
-#ifndef __RENDERCELL__
-#define __RENDERCELL__
+#ifndef __POT_RENDERCELL__
+#define __POT_RENDERCELL__
 
 #include <SFML/Graphics.hpp>
 #include "Core/ClassHelpers.hpp"

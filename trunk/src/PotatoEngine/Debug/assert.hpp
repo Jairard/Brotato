@@ -1,5 +1,5 @@
-#ifndef __POT_CORE_ASSERT__
-#define __POT_CORE_ASSERT__
+#ifndef __POT_DEBUG_ASSERT__
+#define __POT_DEBUG_ASSERT__
 
 #include "../Core/CompilFlags.hpp"
 

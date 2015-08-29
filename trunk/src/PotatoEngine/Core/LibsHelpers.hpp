@@ -1,5 +1,5 @@
-#ifndef __LIBSHELPERS__
-#define __LIBSHELPERS__
+#ifndef __POT_CORE_LIBSHELPERS__
+#define __POT_CORE_LIBSHELPERS__
 
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>

@@ -1,5 +1,5 @@
-#ifndef __POOL__
-#define __POOL__
+#ifndef __POT_CORE_POOL__
+#define __POT_CORE_POOL__
 
 #include <stdlib.h>
 #include <string.h>

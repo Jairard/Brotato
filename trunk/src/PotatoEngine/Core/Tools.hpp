@@ -1,5 +1,5 @@
-#ifndef __CORE_TOOLS__
-#define __CORE_TOOLS__
+#ifndef __POT_CORE_TOOLS__
+#define __POT_CORE_TOOLS__
 
 #include <typeinfo>
 #include "NonInstantiable.hpp"

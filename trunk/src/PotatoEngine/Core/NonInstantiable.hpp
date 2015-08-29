@@ -1,5 +1,5 @@
-#ifndef __NONINSTANTIABLE__
-#define __NONINSTANTIABLE__
+#ifndef __POT_CORE_NONINSTANTIABLE__
+#define __POT_CORE_NONINSTANTIABLE__
 
 namespace Pot
 {

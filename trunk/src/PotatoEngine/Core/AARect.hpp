@@ -1,5 +1,5 @@
-#ifndef __AARECT__
-#define __AARECT__
+#ifndef __POT_CORE_AARECT__
+#define __POT_CORE_AARECT__
 
 #include "Vector2.hpp"
 

@@ -1,5 +1,5 @@
-#ifndef __SINGLETON__
-#define __SINGLETON__
+#ifndef __POT_CORE_SINGLETON__
+#define __POT_CORE_SINGLETON__
 
 namespace Pot
 {

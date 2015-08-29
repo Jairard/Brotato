@@ -1,5 +1,5 @@
-#ifndef __STEM__
-#define __STEM__
+#ifndef __POT_STEM__
+#define __POT_STEM__
 
 #include <string>
 #include <list>

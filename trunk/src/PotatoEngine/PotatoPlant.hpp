@@ -1,5 +1,5 @@
-#ifndef __POTATOPLANT__
-#define __POTATOPLANT__
+#ifndef __POT_POTATOPLANT__
+#define __POT_POTATOPLANT__
 
 #include <SFML/Graphics.hpp>
 #include "Core/ClassHelpers.hpp"

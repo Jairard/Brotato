@@ -1,5 +1,5 @@
-#ifndef __TRANSFORM__
-#define __TRANSFORM__
+#ifndef __POT_CORE_TRANSFORM__
+#define __POT_CORE_TRANSFORM__
 
 #include <SFML/Graphics/Transform.hpp>
 #include "Stainable.hpp"

@@ -1,5 +1,5 @@
-#ifndef __GEOMETRYCELL__
-#define __GEOMETRYCELL__
+#ifndef __POT_GEOMETRYCELL__
+#define __POT_GEOMETRYCELL__
 
 #include <SFML/Graphics.hpp>
 #include "Core/AARect.hpp"

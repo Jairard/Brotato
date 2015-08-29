@@ -1,5 +1,5 @@
-#ifndef __LOGGER__
-#define __LOGGER__
+#ifndef __POT_DEBUG_LOGGER__
+#define __POT_DEBUG_LOGGER__
 
 #include <list>
 #include <string>

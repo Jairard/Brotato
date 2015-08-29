@@ -1,5 +1,5 @@
-#ifndef __INPUTLISTENER__
-#define __INPUTLISTENER__
+#ifndef __POT_INPUTLISTENER__
+#define __POT_INPUTLISTENER__
 
 #include <SFML/Window/Event.hpp>
 #include "Core/Tools.hpp"

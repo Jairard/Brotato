@@ -1,5 +1,5 @@
-#ifndef __LINEGEOMETRY__
-#define __LINEGEOMETRY__
+#ifndef __POT_LINEGEOMETRY__
+#define __POT_LINEGEOMETRY__
 
 #include "GeometryCell.hpp"
 #include <SFML/System/Vector2.hpp>
