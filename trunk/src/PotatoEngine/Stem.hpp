@@ -31,18 +31,18 @@ class Stem
 		bool isMotherPotato(const Potato* potato) const;
 		void setParent(Potato* potato, Potato* parent) const;
 		void destroyPotato(Potato* potato, bool deleteRecursively = false);
-		void ensureIntegrityIFN(Potato* potato) const;
+		void ensureIntegrityIFN(const Potato* potato) const;
 		
-		PotatoPlant* sPlant(void)              { assert(m_plant != nullptr); return m_plant; }
+		SAFE_ACCESSOR_WITH_NAME(PotatoPlant*, plant, sPlant);
 		
 	private:
 		void renderRec(Potato* potato, float elapsedTime, bool isRotten) const;
 		void debugRenderRec(const Potato* potato, Debug::Renderer& renderer) const;
 		void updatePotatoRec(Potato* potato);
 		void destroyPotatoRec(Potato* potato);
-		void updateTransform(Potato* potato) const;
-		void getRottenAncestorsIFP(Potato* potato, std::list<Potato*>& outRottenAncestors) const;
-		Potato* getClosestRottenAncestorIFP(Potato* potato, std::list<Potato*>& outRottenAncestors) const;
+		void updateTransform(const Potato* potato) const;
+		void getRottenAncestorsIFP(const Potato* potato, std::list<const Potato*>& outRottenAncestors) const;
+		const Potato* getClosestRottenAncestorIFP(const Potato* potato, std::list<const Potato*>& outRottenAncestors) const;
 		
 	public:
 		static const char*c_tag;

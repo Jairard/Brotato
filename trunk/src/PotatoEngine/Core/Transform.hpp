@@ -58,13 +58,6 @@ class Transform
 		const char* order_str() const;
 		
 		// Transformation manipulators
-		const sf::Transform& SFMLTransform();
-		Vector2f transformPoint(float x, float y);
-		Vector2f transformPoint(const Vector2f& point);
-		Rect transformRect(const AARect& rect);
-		Rect transformRect(const Rect& rect);
-		
-		// Const transformation manipulators
 		const sf::Transform& SFMLTransform() const;
 		Vector2f transformPoint(float x, float y) const;
 		Vector2f transformPoint(const Vector2f& point) const;
@@ -80,7 +73,7 @@ class Transform
 		
 		// Misc
 		Transform inverse() const;
-		void recomputeIFN();
+		void recomputeIFN() const;
 		void log(const char* tag) const;
 		
 		// Accessors
@@ -95,7 +88,7 @@ class Transform
 		void wash()           { m_transform.wash(); }
 		bool isRotten() const { return m_transform.isRotten(); }
 		
-		void computeTransform();
+		void computeTransform() const;
 		TransformOrder::Type inverseOrder() const;
 	
 	private:
@@ -105,7 +98,7 @@ class Transform
 		Vector2f m_position;
 		float m_rotation;
 		Vector2f m_scale;
-		Stainable<sf::Transform> m_transform;
+		mutable Stainable<sf::Transform> m_transform;
 };
 
 }

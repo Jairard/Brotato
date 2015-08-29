@@ -90,7 +90,7 @@ Transform& Potato::localTransform()
 	return m_localTransform;
 }
 
-const Transform& Potato::localTransform_const()
+const Transform& Potato::localTransform() const
 {
 	m_stem->ensureIntegrityIFN(this);
 	assert(!m_localTransform.isRotten());
@@ -105,31 +105,31 @@ Transform& Potato::worldTransform()
 	return m_worldTransform;
 }
 
-const Transform& Potato::worldTransform_const()
+const Transform& Potato::worldTransform() const
 {
 	m_stem->ensureIntegrityIFN(this);
 	assert(!m_worldTransform.isRotten());
 	return m_worldTransform;
 }
 
-const Transform& Potato::localToWorldTransform()
+const Transform& Potato::localToWorldTransform() const
 {
-	return worldTransform_const();
+	return worldTransform();
 }
 
-const Transform& Potato::worldToLocalTransform()
+const Transform& Potato::worldToLocalTransform() const
 {
 	m_stem->ensureIntegrityIFN(this);
 	ASSERT_DEBUG(!m_invWorldTransform.isRotten());
 	return m_invWorldTransform;
 }
 
-const Transform& Potato::localToParentTransform()
+const Transform& Potato::localToParentTransform() const
 {
-	return localTransform_const();
+	return localTransform();
 }
 
-const Transform& Potato::parentToLocalTransform()
+const Transform& Potato::parentToLocalTransform() const
 {
 	m_stem->ensureIntegrityIFN(this);
 	ASSERT_DEBUG(!m_invLocalTransform.isRotten());

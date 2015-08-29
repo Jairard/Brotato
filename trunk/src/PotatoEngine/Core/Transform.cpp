@@ -117,28 +117,28 @@ const char* Transform::order_str() const
 }
 
 // Transformation manipulators
-const sf::Transform& Transform::SFMLTransform()
+const sf::Transform& Transform::SFMLTransform() const
 {
 	recomputeIFN();
 	return m_transform.const_object();
 }
 
-Vector2f Transform::transformPoint(float x, float y)
+Vector2f Transform::transformPoint(float x, float y) const
 {
 	return sfv_2_pv(SFMLTransform().transformPoint(x, y));
 }
 
-Vector2f Transform::transformPoint(const Vector2f& p)
+Vector2f Transform::transformPoint(const Vector2f& p) const
 {
 	return transformPoint(p.x, p.y);
 }
 
-Rect Transform::transformRect(const AARect& rect)
+Rect Transform::transformRect(const AARect& rect) const
 {
 	return transformRect(paar_2_pr(rect));
 }
 
-Rect Transform::transformRect(const Rect& rect)
+Rect Transform::transformRect(const Rect& rect) const
 {
 	Rect res;
 	
@@ -149,6 +149,7 @@ Rect Transform::transformRect(const Rect& rect)
 }
 
 // Const transformation manipulators
+/*
 const sf::Transform& Transform::SFMLTransform() const
 {
 	assert(!m_transform.isRotten());
@@ -179,6 +180,7 @@ Rect Transform::transformRect(const Rect& rect) const
 	
 	return res;
 }
+//*/
 
 // Operators
 Transform Transform::operator*(const Transform& other) const
@@ -228,7 +230,7 @@ Transform Transform::inverse() const
 	return t;
 }
 
-void Transform::recomputeIFN()
+void Transform::recomputeIFN() const
 {
 	if (m_transform.isRotten())
 	{
@@ -246,7 +248,7 @@ void Transform::log(const char* tag) const
 }
 
 // Private manipulators
-void Transform::computeTransform()
+void Transform::computeTransform() const
 {
 	const float angle  = Math::deg2rad(m_rotation);
 	const float cosine = static_cast<float>(std::cos(angle));

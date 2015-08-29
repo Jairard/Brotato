@@ -139,16 +139,16 @@ void Stem::destroyPotato(Potato* potato, bool deleteRecursively)
 	}
 }
 
-void Stem::ensureIntegrityIFN(Potato* potato) const
+void Stem::ensureIntegrityIFN(const Potato* potato) const
 {
 	ASSERT_DEBUG(potato != nullptr);
 	s_transformComputationCount = 0;
-	std::list<Potato*> rottenAancestors;
+	std::list<const Potato*> rottenAncestors;
 	
-	getRottenAncestorsIFP(potato, rottenAancestors);
+	getRottenAncestorsIFP(potato, rottenAncestors);
 	
 	// Recomputing world transform for the rotten ancestors
-	for (std::list<Potato*>::iterator it = rottenAancestors.begin(); it != rottenAancestors.end(); ++it)
+	for (std::list<const Potato*>::const_iterator it = rottenAncestors.begin(); it != rottenAncestors.end(); ++it)
 	{
 		updateTransform(*it);
 		s_transformComputationCount++;
@@ -208,15 +208,15 @@ void Stem::updateTransform(const Potato* potato) const
 	             !potato->m_localTransform.isRotten() && !potato->m_invLocalTransform.isRotten());
 }
 
-void Stem::getRottenAncestorsIFP(Potato* potato, std::list<Potato*>& outRottenAncestors) const
+void Stem::getRottenAncestorsIFP(const Potato* potato, std::list<const Potato*>& outRottenAncestors) const
 {
 	ASSERT_DEBUG(potato != nullptr);
 	
 	if (isMotherPotato(potato))
 		return;
 	
-	std::list<Potato*> ancestors;
-	Potato* closest = getClosestRottenAncestorIFP(potato, ancestors);
+	std::list<const Potato*> ancestors;
+	const Potato* closest = getClosestRottenAncestorIFP(potato, ancestors);
 	
 	if (closest != nullptr)
 	{
@@ -225,7 +225,7 @@ void Stem::getRottenAncestorsIFP(Potato* potato, std::list<Potato*>& outRottenAn
 	}
 }
 
-Potato* Stem::getClosestRottenAncestorIFP(Potato* potato, std::list<Potato*>& outRottenAncestors) const
+const Potato* Stem::getClosestRottenAncestorIFP(const Potato* potato, std::list<const Potato*>& outRottenAncestors) const
 {
 	ASSERT_DEBUG(potato != nullptr);
 	

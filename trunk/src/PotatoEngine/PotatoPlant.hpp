@@ -2,7 +2,6 @@
 #define __POTATOPLANT__
 
 #include <SFML/Graphics.hpp>
-#include "Debug/Renderer.hpp"
 #include "Core/ClassHelpers.hpp"
 #include "InputListener.hpp"
 
@@ -15,8 +14,6 @@ namespace Debug
 }
 
 class Stem;
-// TODO: remove
-class Potato;
 
 // TODO: add physics
 class PotatoPlant// : Singleton<PotatoPlant>
@@ -46,9 +43,6 @@ class PotatoPlant// : Singleton<PotatoPlant>
 		void update();
 		
 		void checkTime(void); // Debug purpose
-		
-		// Temp
-		void setupPotato(Potato* potato);
 		
 	private:
 		static const unsigned int DEFAULT_UPS;

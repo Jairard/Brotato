@@ -47,14 +47,14 @@ class Potato
 		
 		// Transform manipulators
 		Transform& localTransform();
-		const Transform& localTransform_const();
+		const Transform& localTransform() const;
 		Transform& worldTransform();
-		const Transform& worldTransform_const();
+		const Transform& worldTransform() const;
 		
-		const Transform& localToWorldTransform();
-		const Transform& worldToLocalTransform();
-		const Transform& localToParentTransform();
-		const Transform& parentToLocalTransform();
+		const Transform& localToWorldTransform() const;
+		const Transform& worldToLocalTransform() const;
+		const Transform& localToParentTransform() const;
+		const Transform& parentToLocalTransform() const;
 		
 		// Cells manipulators
 		//void addCell(Cell* cell);
@@ -129,8 +129,8 @@ class Potato
 		std::string m_name;
 		Potato* m_parent;
 		std::vector<Potato*> m_children;
-		Transform m_worldTransform, m_invWorldTransform;   // local -> world, world -> local
-		Transform m_localTransform, m_invLocalTransform;   // local -> parent, parent -> local
+		mutable Transform m_worldTransform, m_invWorldTransform;   // local -> world, world -> local
+		mutable Transform m_localTransform, m_invLocalTransform;   // local -> parent, parent -> local
 		std::list<Cell*> m_cells;
 };
 

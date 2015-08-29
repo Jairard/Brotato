@@ -7,6 +7,7 @@
 #define UNUSED(x)		((void)(x))
 struct TOOLS_VSINK { template<typename ...Args> TOOLS_VSINK(Args const & ... ) {} };
 #define VUNUSED(x)		TOOLS_VSINK {x...}
+#define FUNUSED(x)		x __attribute__((unused))
 
 namespace Pot
 {
