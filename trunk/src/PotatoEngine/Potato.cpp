@@ -7,6 +7,7 @@
 #include "Debug/Logger.hpp"
 #include "Stem.hpp"
 #include "Cell.hpp"
+#include "PotatoDNA.hpp"
 #include "RenderCell.hpp"
 
 namespace Pot
@@ -14,29 +15,58 @@ namespace Pot
 
 using Debug::Logger;
 
-Potato::Potato()
+// TODO: regroup all reserved names here (mother potato, unnamed)
+const std::string Potato::c_deadPotatoName = "__deadPotato__";
+
+Potato::Potato():
+	m_stem(nullptr),
+	m_name(c_deadPotatoName),
+	m_parent(nullptr),
+	m_children(),
+	m_worldTransform(),
+	m_invWorldTransform(),
+	m_localTransform(),
+	m_invLocalTransform(),
+	m_cells(),
+	m_DNAs()
 {
 	initialize();
 }
 
 void Potato::initialize(const std::string& name, Stem* stem, Potato* parent)
 {
+	ASSERT_DEBUG(m_parent == nullptr);
+	ASSERT_DEBUG(m_stem == nullptr);
+	// TODO: check why this asserts
+	//ASSERT_DEBUG(m_name == c_deadPotatoName);
+	ASSERT_DEBUG(m_children.empty());
+	ASSERT_DEBUG(m_cells.empty());
+	ASSERT_DEBUG(m_DNAs.empty());
+
 	m_stem = stem;
 	m_name = name;
 	m_parent = parent;
-	m_children.clear();
 	m_worldTransform = Transform();
 	m_worldTransform.recomputeIFN();
 	m_localTransform = Transform();
 	m_localTransform.recomputeIFN();
-	m_cells.clear();
 }
 
 void Potato::shutdown()
 {
+	m_parent = nullptr;
+	m_stem = nullptr;
+	m_name = c_deadPotatoName;
+
+	m_children.clear();
+
 	for (std::list<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); ++it)
 		delete *it;
 	m_cells.clear();
+
+	for (std::list<PotatoDNA*>::iterator it = m_DNAs.begin(); it != m_DNAs.end(); ++it)
+		(*it)->onPotatoShutdown(this);
+	m_DNAs.clear();
 }
 
 void Potato::removeChild(const Potato* child)
@@ -63,7 +93,7 @@ void Potato::addChild(Potato* child)
 	m_children.push_back(child);
 }
 
-Potato* Potato::child(unsigned int i)
+Potato* Potato::childPtr(unsigned int i)
 {
 	ASSERT_RELEASE(i < childCount());
 	
@@ -73,7 +103,7 @@ Potato* Potato::child(unsigned int i)
 	return m_children[i];
 }
 
-const Potato* Potato::child(unsigned int i) const
+const Potato* Potato::childPtr(unsigned int i) const
 {
 	ASSERT_RELEASE(i < childCount());
 	
@@ -135,6 +165,26 @@ const Transform& Potato::parentToLocalTransform() const
 	m_stem->ensureIntegrityIFN(this);
 	ASSERT_DEBUG(!m_invLocalTransform.isRotten());
 	return m_invLocalTransform;
+}
+
+void Potato::registerDNA(PotatoDNA* dna)
+{
+	ASSERT_DEBUG(dna != nullptr);
+	m_DNAs.push_back(dna);
+}
+
+void Potato::unregisterDNA(PotatoDNA* dna)
+{
+	for (std::list<PotatoDNA*>::iterator it = m_DNAs.begin(); it != m_DNAs.end(); ++it)
+	{
+		if (dna == *it)
+		{
+			m_DNAs.erase(it);
+			return;
+		}
+	}
+
+	ASSERT_NOT_REACHED();
 }
 
 /*

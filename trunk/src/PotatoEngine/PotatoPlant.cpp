@@ -9,7 +9,7 @@
 #include "Debug/Renderer.hpp"
 #include "Debug/Logger.hpp"
 #include "Stem.hpp"
-#include "Potato.hpp"
+#include "PotatoDNA.hpp"
 #include "RenderCell.hpp"
 #include "RectangleGeometry.hpp"
 #include "LineGeometry.hpp"
@@ -23,6 +23,7 @@ namespace Pot
 		FUNUSED(void transformTest());
 		FUNUSED(void setupPotato(Potato* potato));
 		FUNUSED(Stem* initScene1(PotatoPlant* plant, sf::RenderWindow& window));
+		FUNUSED(void potataDNATest());
 
 		void transformTest()
 		{
@@ -30,8 +31,8 @@ namespace Pot
 			Logger::log(Logger::CWarning, "");
 
 			Stem* stem = new Stem(nullptr);
-			Potato* p1 = stem->instantiatePotato("potato 1");
-			Potato* p11 = stem->instantiatePotato("potato 1.1");
+			PotatoDNA p1 = stem->instantiatePotato("potato 1");
+			PotatoDNA p11 = stem->instantiatePotato("potato 1.1");
 			stem->setParent(p11, p1);
 
 			//*
@@ -55,23 +56,17 @@ namespace Pot
 			//*/
 
 			Logger::log(Logger::CWarning, "p1 local transform");
-			//p1->localTransform_const().log(Logger::CWarning);
 			p1->localTransform().log(Logger::CWarning);
 			Logger::log(Logger::CWarning, "p1 world transform");
-			//p1->worldTransform_const().log(Logger::CWarning);
 			p1->worldTransform().log(Logger::CWarning);
 			Logger::log(Logger::CWarning, "p2 local transform");
-			//p11->localTransform_const().log(Logger::CWarning);
 			p11->localTransform().log(Logger::CWarning);
 			Logger::log(Logger::CWarning, "p2 inv local transform");
-			//p11->localTransform_const().inverse().log(Logger::CWarning);
 			p11->localTransform().inverse().log(Logger::CWarning);
 			p11->parentToLocalTransform().log(Logger::CWarning);
 			Logger::log(Logger::CWarning, "p2 world transform");
-			//p11->worldTransform_const().log(Logger::CWarning);
 			p11->worldTransform().log(Logger::CWarning);
 			Logger::log(Logger::CWarning, "p2 inv world transform");
-			//p11->worldTransform_const().inverse().log(Logger::CWarning);
 			p11->worldTransform().inverse().log(Logger::CWarning);
 			p11->worldToLocalTransform().log(Logger::CWarning);
 
@@ -85,7 +80,7 @@ namespace Pot
 			delete stem;
 		}
 
-		void setupPotato(Potato* potato)
+		void setupPotato(PotatoDNA potato)
 		{
 			potato->addCell<RenderCell>();
 			RectangleGeometry* geometry =  potato->addCell<RectangleGeometry>();
@@ -97,18 +92,18 @@ namespace Pot
 		{
 			Stem* stem = new Stem(plant);
 
-			Potato* p1 = stem->instantiatePotato("potato 1");
-			Potato* p11 = stem->instantiatePotato("potato 1.1");
+			PotatoDNA p1 = stem->instantiatePotato("potato 1");
+			PotatoDNA p11 = stem->instantiatePotato("potato 1.1");
 			stem->setParent(p11, p1);
-			Potato* p12 = stem->instantiatePotato("potato 1.2");
+			PotatoDNA p12 = stem->instantiatePotato("potato 1.2");
 			stem->setParent(p12, p1);
-			Potato* p111 = stem->instantiatePotato("potato 1.1.1");
+			PotatoDNA p111 = stem->instantiatePotato("potato 1.1.1");
 			stem->setParent(p111, p11);
-			Potato* p112 = stem->instantiatePotato("potato 1.1.2");
+			PotatoDNA p112 = stem->instantiatePotato("potato 1.1.2");
 			stem->setParent(p112, p11);
-			Potato* p121 = stem->instantiatePotato("potato 1.2.1");
+			PotatoDNA p121 = stem->instantiatePotato("potato 1.2.1");
 			stem->setParent(p121, p12);
-			Potato* p1111 = stem->instantiatePotato("potato 1.1.1.1");
+			PotatoDNA p1111 = stem->instantiatePotato("potato 1.1.1.1");
 			stem->setParent(p1111, p111);
 
 			//*
@@ -122,7 +117,7 @@ namespace Pot
 			//*/
 
 			//*
-			Potato* line = stem->instantiatePotato("line !");
+			PotatoDNA line = stem->instantiatePotato("line !");
 			line->addCell<RenderCell>();
 			LineGeometry* geometry = line->addCell<LineGeometry>();
 			geometry->setPoint1(Vector2f(-50.f, -50.f));
@@ -159,6 +154,14 @@ namespace Pot
 
 			plant->setCellsDebugStatus(true);
 			return stem;
+		}
+
+		void potataDNATest()
+		{
+			Logger::log(Logger::CWarning, "DNA size: %d", sizeof(PotatoDNA));
+
+			Stem* stem = new Stem(nullptr);
+			PotatoDNA dna(stem->instantiatePotato("p2"));
 		}
 	}
 

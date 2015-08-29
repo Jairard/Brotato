@@ -1,10 +1,16 @@
-Graphics:
-- primitives (segment, square, circle)
-- shapes (circle, polygon)
-- textures
-
 Core:
+- class PotatoDNA
+- class CellDNA<T>
+- file cast.hpp
 - JSON parser -> JsonCpp
 - XML parser
 - Stack trace debugger
+
+Graphics:
+- primitives (segment, square, circle) -> Factory ?
+- shapes (circle, polygon)
+- textures
+
+Cells:
+- class PhysicCell
 

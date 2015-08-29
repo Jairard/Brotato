@@ -14,7 +14,6 @@
 #include "Core/Transform.hpp"
 #include "Debug/Logger.hpp"
 #include "PotatoPlant.hpp"
-#include "Potato.hpp"
 #include "RenderCell.hpp"
 
 /*

@@ -47,7 +47,7 @@ void Stem::renderRec(Potato* potato, float elapsedTime, bool isRotten) const
 	isRotten |= potato->m_worldTransform.isRotten() | potato->m_localTransform.isRotten();
 	if (isRotten)
 	{
-		ASSERT_DEBUG(!isMotherPotato(potato));
+		ASSERT_DEBUG(!isMotherPotatoPtr(potato));
 		// We don't want to check matrix's state, it's ensured by the recursive call
 		updateTransform(potato);
 		Logger::log(c_tag, "render: updating transform for '%s'", potato->name().c_str());
@@ -57,7 +57,7 @@ void Stem::renderRec(Potato* potato, float elapsedTime, bool isRotten) const
 	potato->render(elapsedTime);
 	
 	for (unsigned int i = 0; i < potato->childCount(); ++i)
-		renderRec(potato->child(i), elapsedTime, isRotten);
+		renderRec(potato->childPtr(i), elapsedTime, isRotten);
 }
 
 void Stem::debugRender(Debug::Renderer& renderer) const
@@ -76,7 +76,7 @@ void Stem::debugRenderRec(const Potato* potato, Debug::Renderer& renderer) const
 	
 	potato->debugRender(renderer);
 	for (unsigned int i = 0; i < potato->childCount(); ++i)
-		debugRenderRec(potato->child(i), renderer);
+		debugRenderRec(potato->childPtr(i), renderer);
 }
 
 void Stem::update()
@@ -84,16 +84,22 @@ void Stem::update()
 	updatePotatoRec(m_motherPotato);
 }
 
-Potato* Stem::instantiatePotato(const char* name)
+PotatoDNA Stem::instantiatePotato(const char* name)
 {
 	ASSERT_DEBUG_MSG(name != c_motherPotatoName, "this potato name is reserved");
 	Potato* potato = m_potatoPool.create();
 	potato->initialize(name, this, m_motherPotato);
 	m_motherPotato->m_children.push_back(potato);
-	return potato;
+	return PotatoDNA(potato);
 }
 
-bool Stem::isMotherPotato(const Potato* potato) const
+bool Stem::isMotherPotato(PotatoDNA dna) const
+{
+	ASSERT_DEBUG(dna.isValid());
+	return isMotherPotatoPtr(dna.m_potato);
+}
+
+bool Stem::isMotherPotatoPtr(const Potato* potato) const
 {
 	if (potato == m_motherPotato)
 	{
@@ -105,10 +111,17 @@ bool Stem::isMotherPotato(const Potato* potato) const
 	return false;
 }
 
-void Stem::setParent(Potato* potato, Potato* parent) const
+void Stem::setParent(PotatoDNA dna, PotatoDNA parentDna) const
+{
+	ASSERT_DEBUG(dna.isValid());
+	ASSERT_DEBUG(parentDna.isValid());
+	setParent_internal(dna.m_potato, parentDna.m_potato);
+}
+
+void Stem::setParent_internal(Potato* potato, Potato* parent) const
 {
 	// TODO: Check that potato is not an ancestor of parent ? (or handle this case ?)
-	ASSERT_DEBUG(!isMotherPotato(potato));
+	ASSERT_DEBUG(!isMotherPotatoPtr(potato));
 	ASSERT_RELEASE(parent != nullptr);
 	
 	potato->m_parent->removeChild(potato);
@@ -119,10 +132,16 @@ void Stem::setParent(Potato* potato, Potato* parent) const
 	potato->m_localTransform.soil();
 }
 
-void Stem::destroyPotato(Potato* potato, bool deleteRecursively)
+void Stem::destroyPotato(PotatoDNA dna, bool deleteRecursively)
+{
+	ASSERT_DEBUG(dna.isValid());
+	destroyPotato_internal(dna.m_potato, deleteRecursively);
+}
+
+void Stem::destroyPotato_internal(Potato* potato, bool deleteRecursively)
 {
 	ASSERT_RELEASE(potato != nullptr);
-	ASSERT_DEBUG(!isMotherPotato(potato));
+	ASSERT_DEBUG(!isMotherPotatoPtr(potato));
 	
 	Potato* parent = potato->m_parent;
 	parent->removeChild(potato);
@@ -132,7 +151,7 @@ void Stem::destroyPotato(Potato* potato, bool deleteRecursively)
 	else
 	{
 		for (unsigned int i = 0; i < potato->childCount(); ++i)
-			setParent(potato->child(i), parent);
+			setParent_internal(potato->childPtr(i), parent);
 	
 		potato->shutdown();
 		m_potatoPool.destroy(potato);
@@ -164,7 +183,7 @@ void Stem::updatePotatoRec(Potato* potato)
 	
 	potato->update();
 	for (unsigned int i = 0; i < potato->childCount(); ++i)
-		updatePotatoRec(potato->child(i));
+		updatePotatoRec(potato->childPtr(i));
 }
 
 void Stem::destroyPotatoRec(Potato* potato)
@@ -172,7 +191,7 @@ void Stem::destroyPotatoRec(Potato* potato)
 	ASSERT_RELEASE(potato != nullptr);
 	
 	for (unsigned int i = 0; i < potato->childCount(); ++i)
-		destroyPotatoRec(potato->child(i));
+		destroyPotatoRec(potato->childPtr(i));
 	
 	potato->shutdown();
 	m_potatoPool.destroy(potato);
@@ -181,7 +200,7 @@ void Stem::destroyPotatoRec(Potato* potato)
 void Stem::updateTransform(const Potato* potato) const
 {
 	ASSERT_RELEASE(potato != nullptr);
-	ASSERT_DEBUG(!isMotherPotato(potato));
+	ASSERT_DEBUG(!isMotherPotatoPtr(potato));
 	ASSERT_DEBUG( potato->m_worldTransform.isRotten() ||  potato->m_localTransform.isRotten());
 	ASSERT_DEBUG(!potato->m_worldTransform.isRotten() || !potato->m_localTransform.isRotten());
 	
@@ -202,7 +221,7 @@ void Stem::updateTransform(const Potato* potato) const
 	
 	// Soil children's local transform so that their world transforms will be recomputed
 	for (unsigned int i = 0; i < potato->childCount(); ++i)
-		potato->child(i)->m_localTransform.soil();
+		potato->childPtr(i)->m_localTransform.soil();
 	
 	ASSERT_DEBUG(!potato->m_worldTransform.isRotten() && !potato->m_invWorldTransform.isRotten() &&
 	             !potato->m_localTransform.isRotten() && !potato->m_invLocalTransform.isRotten());
@@ -212,7 +231,7 @@ void Stem::getRottenAncestorsIFP(const Potato* potato, std::list<const Potato*>&
 {
 	ASSERT_DEBUG(potato != nullptr);
 	
-	if (isMotherPotato(potato))
+	if (isMotherPotatoPtr(potato))
 		return;
 	
 	std::list<const Potato*> ancestors;
@@ -230,7 +249,7 @@ const Potato* Stem::getClosestRottenAncestorIFP(const Potato* potato, std::list<
 	ASSERT_DEBUG(potato != nullptr);
 	
 	// If the mother potato is reached, then there is no rotten potato in the ancestors
-	if (isMotherPotato(potato))
+	if (isMotherPotatoPtr(potato))
 		return nullptr;
 	
 	// It's really important to call push_front and not push_back,
