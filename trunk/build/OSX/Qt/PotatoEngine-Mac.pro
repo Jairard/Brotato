@@ -22,10 +22,11 @@ SOURCES += \
     ../../../src/PotatoEngine/InputListener.cpp \
     ../../../src/PotatoEngine/Debug/Renderer.cpp \
     ../../../src/PotatoEngine/Debug/Logger.cpp \
+    ../../../src/PotatoEngine/Debug/assert.cpp \
     ../../../src/PotatoEngine/Core/Transform.cpp \
     ../../../src/PotatoEngine/Core/Math.cpp \
-    ../../../src/PotatoEngine/Debug/assert.cpp \
-    ../../../src/PotatoEngine/PotatoDNA.cpp
+    ../../../src/PotatoEngine/DNACollector.cpp \
+    ../../../src/PotatoEngine/BaseOrganism.cpp
 
 HEADERS +=  \
     ../../../src/PotatoEngine/PotatoPlant.hpp \
@@ -36,26 +37,29 @@ HEADERS +=  \
     ../../../src/PotatoEngine/GeometryCell.hpp \
     ../../../src/PotatoEngine/RectangleGeometry.hpp \
     ../../../src/PotatoEngine/LineGeometry.hpp \
-    ../../../src/PotatoEngine/InputListener.hpp \
+    ../../../src/PotatoEngine/InputListener.hpp \ \
     ../../../src/PotatoEngine/Debug/Renderer.hpp \
     ../../../src/PotatoEngine/Debug/Logger.hpp \
-    ../../../src/PotatoEngine/Core/AARect.hpp \
-    ../../../src/PotatoEngine/Core/Rect.hpp \
-    ../../../src/PotatoEngine/Core/ClassHelpers.hpp \
-    ../../../src/PotatoEngine/Core/ClassHelpers.hpp \
-    ../../../src/PotatoEngine/Core/LibsHelpers.hpp \
-    ../../../src/PotatoEngine/Core/Transform.hpp \
+    ../../../src/PotatoEngine/Debug/assert.hpp \
+    ../../../src/PotatoEngine/Core/compilFlags.hpp \
     ../../../src/PotatoEngine/Core/Vector2.hpp \
-    ../../../src/PotatoEngine/Core/Math.hpp \
-    ../../../src/PotatoEngine/Core/Pool.hpp \
+    ../../../src/PotatoEngine/Core/Transform.hpp \
     ../../../src/PotatoEngine/Core/Tools.hpp \
-    ../../../src/PotatoEngine/Core/NonInstantiable.hpp \
-    ../../../src/PotatoEngine/Core/NonCopyable.hpp \
     ../../../src/PotatoEngine/Core/Stainable.hpp \
     ../../../src/PotatoEngine/Core/Singleton.hpp \
-    ../../../src/PotatoEngine/Core/CompilFlags.hpp \
-    ../../../src/PotatoEngine/Debug/assert.hpp \
-    ../../../src/PotatoEngine/PotatoDNA.hpp
+    ../../../src/PotatoEngine/Core/Rect.hpp \
+    ../../../src/PotatoEngine/Core/Pool.hpp \
+    ../../../src/PotatoEngine/Core/NonInstantiable.hpp \
+    ../../../src/PotatoEngine/Core/NonCopyable.hpp \
+    ../../../src/PotatoEngine/Core/Math.hpp \
+    ../../../src/PotatoEngine/Core/LibsHelpers.hpp \
+    ../../../src/PotatoEngine/Core/ClassHelpers.hpp \
+    ../../../src/PotatoEngine/Core/AARect.hpp \
+    ../../../src/PotatoEngine/Core/types.hpp \
+    ../../../src/PotatoEngine/DNACollector.hpp \
+    ../../../src/PotatoEngine/BaseOrganism.hpp \
+    ../../../src/PotatoEngine/DNA.hpp
 
 OTHER_FILES += \
-    ../../../src/TODO
+    ../../../src/TODO \
+    ../../../build/makefile
