@@ -6,15 +6,18 @@
 
 //#define DEBUG
 
+/*
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include "Core/Pool.hpp"
 #include "Core/ClassHelpers.hpp"
 #include "Core/LibsHelpers.hpp"
 #include "Core/Transform.hpp"
+#include "Core/types.hpp"
 #include "Debug/Logger.hpp"
 #include "PotatoPlant.hpp"
 #include "RenderCell.hpp"
+*/
 
 /*
 Does not work :( (see Potato)
@@ -53,11 +56,159 @@ void initialize<Pot::RenderCell*, sf::RenderTarget*>(Pot::RenderCell* cell, sf::
 }
 //*/
 
+#include "Core/Pool.hpp"
+#include "DNA.hpp"
+#include "BaseOrganism.hpp"
+#include "DNACollector.hpp"
+
+class FakeCell: public Pot::BaseOrganism
+{
+	public:
+		FakeCell(): Pot::BaseOrganism() { Pot::Logger::log(Pot::Logger::CWarning, "constructor"); }
+		
+		virtual ~FakeCell()
+		{
+			//Pot::Logger::log(Pot::Logger::CWarning, "destructor of organism %u", this);
+			//Pot::DNACollector::notifyOrganismDeath(*this);
+		}
+};
+
+class FakeDerivedCell: public FakeCell
+{
+	public:
+		FakeDerivedCell() {}
+		virtual ~FakeDerivedCell() {}
+};
+
+//*
+typedef Pot::DNA<FakeCell> FakeCellDNA;
+typedef Pot::DNA<FakeDerivedCell> FakeDerivedCellDNA;
+
+using Pot::Debug::Logger;
+using Pot::DNACollector;
+
+// Misc + upcast
+void test1()
+{
+	DNACollector::instantiate();
+	
+	FakeDerivedCell* cell = new FakeDerivedCell();
+	{
+		FakeDerivedCellDNA dna(cell);
+		ASSERT_DEBUG(dna.isValid());
+		
+		FakeCellDNA upcasted(dna);
+		ASSERT_DEBUG(upcasted.isValid());
+		
+		DNACollector::dump(Logger::CWarning);
+		
+		FakeDerivedCellDNA downcasted(upcasted);
+		ASSERT_DEBUG(downcasted.isValid());
+		
+		DNACollector::dump(Logger::CWarning);
+		
+		{
+			FakeDerivedCellDNA copyDna(dna);
+			ASSERT_DEBUG(copyDna.isValid());
+			DNACollector::instance().dump(Logger::CWarning);
+			Logger::log(Logger::CWarning, "cell(%u), dna(%u), copyDna(%u), parentDna(%u)", cell, &dna, &copyDna, &upcasted);
+		}
+		
+		DNACollector::dump(Logger::CWarning);
+		Logger::log(Logger::CWarning, "cell(%u), dna(%u), formChildDNA(%u)", cell, &dna, &upcasted);
+	}
+	
+	DNACollector::dump(Logger::CWarning);
+	delete cell;
+	DNACollector::dump(Logger::CWarning);
+	
+	Pot::DNACollector::deleteInstance();
+}
+
+// Downcast
+void test2()
+{
+	DNACollector::instantiate();
+	
+	FakeCell* baseCell = new FakeCell();
+	{
+		FakeCellDNA baseDNA(baseCell);
+		ASSERT_DEBUG(baseDNA.isValid());
+		DNACollector::dump(Logger::CWarning);
+		
+		//FakeDerivedCellDNA downcastedBadCast(baseCell); // Bad cast -> assert
+		
+		//FakeCellDNA privatizeDefaultConstructor;           // Invalid constructor -> compilation error
+		//FakeCellDNA assertOnNullPointerOrganism(nullptr);  // Can't construct from nullptr -> assert
+	}
+	
+	delete baseCell;
+	Pot::DNACollector::deleteInstance();
+}
+
+// Early organism deletion
+void test3()
+{
+	DNACollector::instantiate();
+
+	FakeCell* baseCell = new FakeCell();
+	{
+		FakeCellDNA dna(baseCell);
+		delete baseCell;
+		
+		{
+			DNACollector::dump(Logger::CWarning);
+			FakeCellDNA invalidCopy(dna);
+			DNACollector::dump(Logger::CWarning);
+		}
+	}
+
+	DNACollector::deleteInstance();
+}
+
+// Pool
+void test4()
+{
+	DNACollector::instantiate();
+
+	{
+		Pot::Pool<FakeCell> pool(1);
+		FakeCell* cell = pool.create();
+		FakeCellDNA dna(cell);
+		DNACollector::dump(Logger::CWarning);
+		
+		pool.destroy(cell);
+		FakeCell* cell2 = pool.create();
+		
+		ASSERT_DEBUG(cell == cell2);
+		
+		FakeCellDNA dna2(cell2);
+		DNACollector::dump(Logger::CWarning);
+	}
+	
+	DNACollector::deleteInstance();
+}
+
+//*
 int main(int argc, char* argv[])
 {
 	UNUSED(argc);
 	UNUSED(argv);
 	
-	Pot::PotatoPlant plant("Potatoes gonna potate", sf::VideoMode(400, 400));
-	return plant.loop();
+	Logger::enableTag(Logger::CWarning);
+	Logger::enableTag(Logger::CAssert);
+	Logger::log(Logger::CWarning, "");
+	
+	//*
+	test1();
+	test2();
+	test3();
+	//*/
+	test4();
+	
+	return EXIT_SUCCESS;
+	
+	//Pot::PotatoPlant plant("Potatoes gonna potate", sf::VideoMode(400, 400));
+	//return plant.loop();
 }
+//*/

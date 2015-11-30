@@ -1,6 +1,9 @@
 #ifndef __POT_CORE_SINGLETON__
 #define __POT_CORE_SINGLETON__
 
+#include <cstddef>
+#include "../Debug/assert.hpp"
+
 namespace Pot
 {
 
@@ -8,22 +11,30 @@ template <typename T>
 class Singleton
 {
 	public:
-		static T* instance()
+		static void instantiate()
 		{
-			if (!hasInstance())
-				m_instance = new T();
+			ASSERT_DEBUG(!hasInstance());
+			m_instance = new T();
+		}
+
+		static T& instance()
+		{
+			ASSERT_RELEASE(hasInstance());
+			return *m_instance;
+		}
+
+		static T* instanceIFP()
+		{
 			return m_instance;
 		}
 
 		static void deleteInstance()
 		{
-			if (hasInstance())
-			{
-				delete m_instance;
-				m_instance = nullptr;
-			}
+			ASSERT_DEBUG(hasInstance());
+			delete m_instance;
+			m_instance = nullptr;
 		}
-		
+
 		static bool hasInstance()
 		{
 			return m_instance != nullptr;
@@ -41,7 +52,7 @@ class Singleton
 };
 
 template <typename T>
-T* Singleton<T>::m_instance = nulltptr;
+T* Singleton<T>::m_instance = nullptr;
 
 }
 

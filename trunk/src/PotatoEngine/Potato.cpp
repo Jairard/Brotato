@@ -7,7 +7,7 @@
 #include "Debug/Logger.hpp"
 #include "Stem.hpp"
 #include "Cell.hpp"
-#include "PotatoDNA.hpp"
+//#include "PotatoDNA.hpp"
 #include "RenderCell.hpp"
 
 namespace Pot
@@ -19,6 +19,7 @@ using Debug::Logger;
 const std::string Potato::c_deadPotatoName = "__deadPotato__";
 
 Potato::Potato():
+	//m_organismImpl(),
 	m_stem(nullptr),
 	m_name(c_deadPotatoName),
 	m_parent(nullptr),
@@ -27,21 +28,22 @@ Potato::Potato():
 	m_invWorldTransform(),
 	m_localTransform(),
 	m_invLocalTransform(),
-	m_cells(),
-	m_DNAs()
+	m_cells()/*,
+	m_DNAs()*/
 {
 	initialize();
 }
 
 void Potato::initialize(const std::string& name, Stem* stem, Potato* parent)
 {
+	//ASSERT_DEBUG(m_organismImpl.DNACount() == 0);
 	ASSERT_DEBUG(m_parent == nullptr);
 	ASSERT_DEBUG(m_stem == nullptr);
 	// TODO: check why this asserts
 	//ASSERT_DEBUG(m_name == c_deadPotatoName);
 	ASSERT_DEBUG(m_children.empty());
 	ASSERT_DEBUG(m_cells.empty());
-	ASSERT_DEBUG(m_DNAs.empty());
+	//ASSERT_DEBUG(m_DNAs.empty());
 
 	m_stem = stem;
 	m_name = name;
@@ -60,13 +62,13 @@ void Potato::shutdown()
 
 	m_children.clear();
 
-	for (std::list<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); ++it)
+	for (std::vector<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); ++it)
 		delete *it;
 	m_cells.clear();
 
-	for (std::list<PotatoDNA*>::iterator it = m_DNAs.begin(); it != m_DNAs.end(); ++it)
-		(*it)->onPotatoShutdown(this);
-	m_DNAs.clear();
+	//m_organismImpl.onOrganismDeath();
+	//onOrganismDeath();
+	//m_DNAs.clear();
 }
 
 void Potato::removeChild(const Potato* child)
@@ -74,7 +76,6 @@ void Potato::removeChild(const Potato* child)
 	ASSERT_DEBUG(child != nullptr);
 	
 	std::vector<Potato*>::iterator it;
-	
 	for (it = m_children.begin(); it != m_children.end(); ++it)
 	{
 		if (*it == child)
@@ -100,7 +101,7 @@ Potato* Potato::childPtr(unsigned int i)
 	Potato* child = m_children[i];
 	ASSERT_DEBUG(child != nullptr);
 	
-	return m_children[i];
+	return child;
 }
 
 const Potato* Potato::childPtr(unsigned int i) const
@@ -110,7 +111,7 @@ const Potato* Potato::childPtr(unsigned int i) const
 	const Potato* child = m_children[i];
 	ASSERT_DEBUG(child != nullptr);
 	
-	return m_children[i];
+	return child;
 }
 
 Transform& Potato::localTransform()
@@ -167,15 +168,20 @@ const Transform& Potato::parentToLocalTransform() const
 	return m_invLocalTransform;
 }
 
-void Potato::registerDNA(PotatoDNA* dna)
+/*
+void Potato::registerDNA(PotatoDNA* dna) const
 {
 	ASSERT_DEBUG(dna != nullptr);
+	Logger::log(Logger::CWarning, "registering %d", dna);
 	m_DNAs.push_back(dna);
 }
 
-void Potato::unregisterDNA(PotatoDNA* dna)
+void Potato::unregisterDNA(PotatoDNA* dna) const
 {
-	for (std::list<PotatoDNA*>::iterator it = m_DNAs.begin(); it != m_DNAs.end(); ++it)
+	ASSERT_DEBUG(dna != nullptr);
+	Logger::log(Logger::CWarning, "unregistering %d", dna);
+
+	for (std::vector<PotatoDNA*>::iterator it = m_DNAs.begin(); it != m_DNAs.end(); ++it)
 	{
 		if (dna == *it)
 		{
@@ -186,6 +192,13 @@ void Potato::unregisterDNA(PotatoDNA* dna)
 
 	ASSERT_NOT_REACHED();
 }
+
+void Potato::onOrganismDeath()
+{
+	for (std::vector<PotatoDNA*>::iterator it = m_DNAs.begin(); it != m_DNAs.end(); ++it)
+		(*it)->onOrganismDeath(this);
+}
+*/
 
 /*
 void Potato::addCell(Cell* cell)
@@ -253,9 +266,23 @@ void Potato::fetchCells(std::list<const T*>& outCells) const
 }
 //*/
 
+void Potato::removeCell(const Cell* cell)
+{
+	for (std::vector<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); ++it)
+	{
+		if (cell == *it)
+		{
+			m_cells.erase(it);
+			return;
+		}
+	}
+
+	ASSERT_NOT_REACHED();
+}
+
 void Potato::update()
 {
-	for (std::list<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); it++)
+	for (std::vector<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); ++it)
 		(*it)->update();
 }
 
@@ -272,7 +299,7 @@ void Potato::debugRender(Debug::Renderer& renderer) const
 {
 	// debugRender() is not handled by the potato itself
 	// but each cell can have its own rendering method
-	for (std::list<Cell*>::const_iterator it = m_cells.begin(); it != m_cells.end(); ++it)
+	for (std::vector<Cell*>::const_iterator it = m_cells.begin(); it != m_cells.end(); ++it)
 		(*it)->debugRender(renderer);
 }
 

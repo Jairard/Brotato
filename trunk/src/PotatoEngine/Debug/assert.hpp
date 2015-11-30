@@ -1,20 +1,22 @@
 #ifndef __POT_DEBUG_ASSERT__
 #define __POT_DEBUG_ASSERT__
 
-#include "../Core/CompilFlags.hpp"
+#include "../Core/compilFlags.hpp"
+
+#define DONOTHING  ;
 
 #define ASSERT_RELEASE(test)           ASSERT_RELEASE_MSG(test, "")
-#define ASSERT_RELEASE_MSG(test, msg)  { if (!(test)) assertTest(#test, msg, __FILE__, __LINE__, __PRETTY_FUNCTION__); }
+#define ASSERT_RELEASE_MSG(test, msg)  { if (!(test)) ::Pot::assertTest(#test, msg, __FILE__, __LINE__, __PRETTY_FUNCTION__); }
 #define ASSERT_NOT_REACHED()           ASSERT_NOT_REACHED_MSG("")
-#define ASSERT_NOT_REACHED_MSG(msg)    assertNotReached(msg, __FILE__, __LINE__, __PRETTY_FUNCTION__);
-#define ASSERT_NOT_IMPLEMENTED()       assertNotImplemented(__FILE__, __LINE__, __PRETTY_FUNCTION__);
+#define ASSERT_NOT_REACHED_MSG(msg)    ::Pot::assertNotReached(msg, __FILE__, __LINE__, __PRETTY_FUNCTION__);
+#define ASSERT_NOT_IMPLEMENTED()       ::Pot::assertNotImplemented(__FILE__, __LINE__, __PRETTY_FUNCTION__);
 
 #ifdef POT_DEBUG
 # define ASSERT_DEBUG(test)            ASSERT_RELEASE(test)
 # define ASSERT_DEBUG_MSG(test, msg)   ASSERT_RELEASE_MSG(test, msg)
 #else
-# define ASSERT_DEBUG(test)            ASSERT_RELEASE(test)
-# define ASSERT_DEBUG_MSG(test, msg)
+# define ASSERT_DEBUG(test)            DONOTHING
+# define ASSERT_DEBUG_MSG(test, msg)   DONOTHING
 #endif
 
 namespace Pot

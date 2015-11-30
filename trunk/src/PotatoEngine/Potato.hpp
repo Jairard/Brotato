@@ -10,11 +10,10 @@
 #include "Core/Transform.hpp"
 #include "Core/Tools.hpp"
 #include "Core/Stainable.hpp"
-#include "Core/Pool.hpp"
 #include "Core/ClassHelpers.hpp"
 #include "Stem.hpp"
-
 #include "Cell.hpp"
+#include "DNA.hpp"
 
 namespace Pot
 {
@@ -24,14 +23,14 @@ namespace Debug
 	class Renderer;
 }
 
+template <typename T> class Pool;
 class Cell;
-class PotatoDNA;
 
-class Potato
+//DEFINE_DNA_TYPE(Potato);
+
+class Potato//: public DefaultOrganismImpl<Potato>
 {
 	friend class Stem;
-	friend class PotatoDNA;
-	// Does not work. Goal: set Potato() as private
 	template <typename T> friend class Pool;
 
 	public:
@@ -42,9 +41,15 @@ class Potato
 
 	public:
 		// Hierarchy manipulators
+		/*
 		PotatoDNA parent() const        { return PotatoDNA(m_parent); }
 		unsigned int childCount() const { return m_children.size(); }
 		PotatoDNA child(unsigned int i);
+		/*/
+		Potato* parent() const        { return m_parent; }
+		unsigned int childCount() const { return m_children.size(); }
+		Potato* child(unsigned int i);
+		//*/
 
 		// Transform manipulators
 		Transform& localTransform();
@@ -57,13 +62,24 @@ class Potato
 		const Transform& localToParentTransform() const;
 		const Transform& parentToLocalTransform() const;
 
+		// OrganismDNA<Potato> implementation
+		/*
+		void registerDNA(PotatoDNA* dna) const;
+		void unregisterDNA(PotatoDNA* dna) const;
+		void onOrganismDeath();
+		// TODO: only in test mode
+		size_t DNACount() const { return m_DNAs.size(); }
+		*/
+
 		// Cells manipulators
 		//void addCell(Cell* cell);
 		//*
-		template<typename CellT>
-		CellT* addCell()
+		// TODO: return OrganismDNA<CellType>
+		template<typename CellType>
+		CellType* addCell()
 		{
-			CellT* cell = new CellT(this);
+			static_assert(Tools::is<CellType, Cell>(), "This cell does not inherit form ::Pot::Cell");
+			CellType* cell = new CellType(this);
 			m_cells.push_back(cell);
 			return cell;
 		}
@@ -79,40 +95,47 @@ class Potato
 		} 
 		//*/
 
-		template <typename T> T* fetchCellIFP()
+		// TODO: return OrganismDNA<CellType>
+		template <typename CellType> CellType* fetchCellIFP()
 		{
-			for (std::list<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); it++)
-				if (Tools::is<T>(*it))
-					return (T*)*it;
+			for (std::vector<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); it++)
+				if (Tools::is<CellType>(*it))
+					return (CellType*)*it;
+			
+			return nullptr;
+		}
+		
+		// TODO: return OrganismDNA<CellType>
+		template <typename CellType> const CellType* fetchCellIFP() const
+		{
+			for (std::vector<Cell*>::const_iterator it = m_cells.begin(); it != m_cells.end(); it++)
+				if (Tools::is<CellType>(*it))
+					return (const CellType*)*it;
 			
 			return nullptr;
 		}
 
-		template <typename T> const T* fetchCellIFP() const
+		// TODO: std::list<OrganismDNA<CellType>>& outCells
+		template <typename CellType> void fetchCells(std::list<CellType*>& outCells)
 		{
-			for (std::list<Cell*>::const_iterator it = m_cells.begin(); it != m_cells.end(); it++)
-				if (Tools::is<const T>(*it))
-					return (const T*)*it;
-			
-			return nullptr;
+			for (std::vector<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); it++)
+				if (Tools::is<CellType>(*it))
+					outCells.push_back((CellType*)*it);
 		}
 
-		template <typename T> void fetchCells(std::list<T*>& outCells)
+		// TODO: std::list<OrganismDNA<CellType>>& outCells
+		template <typename CellType> void fetchCells(std::list<const CellType*>& outCells) const
 		{
-			for (std::list<Cell*>::iterator it = m_cells.begin(); it != m_cells.end(); it++)
-				if (Tools::is<T>(*it))
-					outCells.push_back((T*)*it);
+			for (std::vector<Cell*>::const_iterator it = m_cells.begin(); it != m_cells.end(); it++)
+				if (Tools::is<CellType>(*it))
+					outCells.push_back((const CellType*)*it);
 		}
 
-		template <typename T> void fetchCells(std::list<const T*>& outCells) const
-		{
-			for (std::list<Cell*>::const_iterator it = m_cells.begin(); it != m_cells.end(); it++)
-				if (Tools::is<T>(*it))
-					outCells.push_back((const T*)*it);
-		}
+		// TODO: CCellDNA cell;
+		void removeCell(const Cell* cell);
 
-		Potato();
 	private:
+		Potato();
 		// TODO: inherit from NonCopyable ?
 		Potato(const Potato& other) { UNUSED(other); ASSERT_NOT_REACHED(); }
 
@@ -124,11 +147,6 @@ class Potato
 		Potato* childPtr(unsigned int i);
 		const Potato* childPtr(unsigned int i) const;
 
-		// DNA manipulators
-		void registerDNA(PotatoDNA* dna);
-		void unregisterDNA(PotatoDNA* dna);
-		size_t DNACount() const { return m_DNAs.size(); }
-
 		void update();
 		void render(float elapsedTime);
 		void debugRender(Debug::Renderer& renderer) const;
@@ -136,14 +154,15 @@ class Potato
 	private:
 		static const std::string c_deadPotatoName;
 
+		//DefaultOrganismImpl<Potato> m_organismImpl;
 		Stem* m_stem;
 		std::string m_name;
 		Potato* m_parent;
 		std::vector<Potato*> m_children;
 		mutable Transform m_worldTransform, m_invWorldTransform;   // local -> world, world -> local
 		mutable Transform m_localTransform, m_invLocalTransform;   // local -> parent, parent -> local
-		std::list<Cell*> m_cells;
-		std::list<PotatoDNA*> m_DNAs;
+		std::vector<Cell*> m_cells;
+		//mutable std::vector<PotatoDNA*> m_DNAs;
 };
 
 }

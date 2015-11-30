@@ -9,7 +9,7 @@
 #include "Debug/Renderer.hpp"
 #include "Debug/Logger.hpp"
 #include "Stem.hpp"
-#include "PotatoDNA.hpp"
+//#include "PotatoDNA.hpp"
 #include "RenderCell.hpp"
 #include "RectangleGeometry.hpp"
 #include "LineGeometry.hpp"
@@ -31,8 +31,13 @@ namespace Pot
 			Logger::log(Logger::CWarning, "");
 
 			Stem* stem = new Stem(nullptr);
+			/*
 			PotatoDNA p1 = stem->instantiatePotato("potato 1");
 			PotatoDNA p11 = stem->instantiatePotato("potato 1.1");
+			/*/
+			Potato* p1 = stem->instantiatePotato("potato 1");
+			Potato* p11 = stem->instantiatePotato("potato 1.1");
+			//*/
 			stem->setParent(p11, p1);
 
 			//*
@@ -80,7 +85,11 @@ namespace Pot
 			delete stem;
 		}
 
+		/*
 		void setupPotato(PotatoDNA potato)
+		/*/
+		void setupPotato(Potato* potato)
+		//*/
 		{
 			potato->addCell<RenderCell>();
 			RectangleGeometry* geometry =  potato->addCell<RectangleGeometry>();
@@ -92,6 +101,7 @@ namespace Pot
 		{
 			Stem* stem = new Stem(plant);
 
+			/*
 			PotatoDNA p1 = stem->instantiatePotato("potato 1");
 			PotatoDNA p11 = stem->instantiatePotato("potato 1.1");
 			stem->setParent(p11, p1);
@@ -105,6 +115,21 @@ namespace Pot
 			stem->setParent(p121, p12);
 			PotatoDNA p1111 = stem->instantiatePotato("potato 1.1.1.1");
 			stem->setParent(p1111, p111);
+			/*/
+			Potato* p1 = stem->instantiatePotato("potato 1");
+			Potato* p11 = stem->instantiatePotato("potato 1.1");
+			stem->setParent(p11, p1);
+			Potato* p12 = stem->instantiatePotato("potato 1.2");
+			stem->setParent(p12, p1);
+			Potato* p111 = stem->instantiatePotato("potato 1.1.1");
+			stem->setParent(p111, p11);
+			Potato* p112 = stem->instantiatePotato("potato 1.1.2");
+			stem->setParent(p112, p11);
+			Potato* p121 = stem->instantiatePotato("potato 1.2.1");
+			stem->setParent(p121, p12);
+			Potato* p1111 = stem->instantiatePotato("potato 1.1.1.1");
+			stem->setParent(p1111, p111);
+			//*/
 
 			//*
 			setupPotato(p1);
@@ -117,7 +142,8 @@ namespace Pot
 			//*/
 
 			//*
-			PotatoDNA line = stem->instantiatePotato("line !");
+			//PotatoDNA line = stem->instantiatePotato("line !");
+			Potato* line = stem->instantiatePotato("line !");
 			line->addCell<RenderCell>();
 			LineGeometry* geometry = line->addCell<LineGeometry>();
 			geometry->setPoint1(Vector2f(-50.f, -50.f));
@@ -158,10 +184,30 @@ namespace Pot
 
 		void potataDNATest()
 		{
+			/*
 			Logger::log(Logger::CWarning, "DNA size: %d", sizeof(PotatoDNA));
 
 			Stem* stem = new Stem(nullptr);
-			PotatoDNA dna(stem->instantiatePotato("p2"));
+			PotatoDNA dna1(stem->instantiatePotato("p2"));
+			*//*
+			PotatoDNA dna2 = dna1;
+			return;
+			//*/
+			
+			/*
+			Logger::log(Logger::CWarning, "%d dnas", dna1->DNACount());
+			Logger::log(Logger::CWarning, "dna1: %d", &dna1);
+			//Potato* pot = *dna;
+			
+			{
+				//PotatoDNA dna2 = PotatoDNA(dna1.m_organism);
+				PotatoDNA dna3(dna1);
+				
+				Logger::log(Logger::CWarning, "%d dnas", dna1->DNACount());
+				Logger::log(Logger::CWarning, "dna3: %d", &dna3);
+			}
+			Logger::log(Logger::CWarning, "%d dnas", dna1->DNACount());
+			*/
 		}
 	}
 
@@ -196,7 +242,9 @@ void PotatoPlant::initialize()
 	
 	m_debugRenderer->lock();
 	
-	m_stem = initScene1(this, m_window);
+	//m_stem = initScene1(this, m_window);
+	potataDNATest();
+	exit(EXIT_SUCCESS);
 }
 
 void PotatoPlant::shutdown()
@@ -228,7 +276,7 @@ int PotatoPlant::loop()
 			
 			while (acc >= updateFramerate)
 			{
-				update();
+				update(); // TODO: update(elapsedTime)
 				m_updateCount++;
 				acc -= updateFramerate;
 			}

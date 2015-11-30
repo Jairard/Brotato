@@ -6,7 +6,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Core/Pool.hpp"
 #include "PotatoPlant.hpp"
-#include "PotatoDNA.hpp"
+#include "DNA.hpp"
 
 namespace Pot
 {
@@ -17,6 +17,7 @@ namespace Debug
 }
 
 class Potato;
+//class PotatoDNA;
 
 class Stem
 {
@@ -28,11 +29,19 @@ class Stem
 		void debugRender(Debug::Renderer& renderer) const;
 		void update(void);
 		
+		/*
 		PotatoDNA instantiatePotato(const char* name="<unnamed potato>");
 		bool isMotherPotato(PotatoDNA potato) const;
 		void setParent(PotatoDNA potato, PotatoDNA parent) const;
 		void destroyPotato(PotatoDNA potato, bool deleteRecursively = false);
 		void ensureIntegrityIFN(const Potato* potato) const;
+		/*/
+		Potato* instantiatePotato(const char* name="<unnamed potato>");
+		bool isMotherPotato(Potato* potato) const;
+		void setParent(Potato* potato, Potato* parent) const;
+		void destroyPotato(Potato* potato, bool deleteRecursively = false);
+		void ensureIntegrityIFN(const Potato* potato) const;
+		//*/
 		
 		SAFE_ACCESSOR_WITH_NAME(PotatoPlant*, plant, sPlant);
 		
@@ -47,7 +56,6 @@ class Stem
 		void updatePotatoRec(Potato* potato);
 		void updateTransform(const Potato* potato) const;
 		void destroyPotatoRec(Potato* potato);
-		void destroyPotatoRec(PotatoDNA potato);
 		void getRottenAncestorsIFP(const Potato* potato, std::list<const Potato*>& outRottenAncestors) const;
 		const Potato* getClosestRottenAncestorIFP(const Potato* potato, std::list<const Potato*>& outRottenAncestors) const;
 		

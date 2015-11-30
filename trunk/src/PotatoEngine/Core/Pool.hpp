@@ -5,6 +5,7 @@
 #include <string.h>
 #include <list>
 #include "../Debug/assert.hpp"
+#include "../DNACollector.hpp"
 
 namespace Pot
 {
@@ -13,8 +14,7 @@ template <typename T>
 class Pool
 {
 	public:
-		Pool(bool allowSafetyChecks = true, size_t capacity = c_defaultCapacity):
-			m_allowSafetyChecks(allowSafetyChecks),
+		Pool(size_t capacity = c_defaultCapacity):
 			m_capacity(capacity)
 		{
 			m_data = new T[m_capacity];
@@ -67,10 +67,9 @@ class Pool
 		void destroy(size_t i)
 		{
 			ASSERT_RELEASE(i < m_capacity);
+			ASSERT_DEBUG(!isAvailable(i));
 			
-			if (m_allowSafetyChecks)
-				ASSERT_DEBUG(!isAvailable(i));
-			
+			m_data[i].~T(); // Used to notify organism death
 			m_avaibleChunks.push_front(i);
 		}
 
@@ -87,7 +86,6 @@ class Pool
 		static const size_t c_defaultCapacity = 256;
 
 		T* m_data;
-		bool m_allowSafetyChecks;
 		std::list<size_t> m_avaibleChunks;
 		std::size_t m_capacity;
 };

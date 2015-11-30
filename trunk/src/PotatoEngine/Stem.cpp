@@ -19,7 +19,7 @@ int Stem::s_transformComputationCount = 0;
 
 Stem::Stem(PotatoPlant* plant):
 	m_plant(plant),
-	m_potatoPool(true, 512)
+	m_potatoPool(512)
 {
 	UNUSED(m_plant);
 	m_motherPotato = m_potatoPool.create();
@@ -84,39 +84,61 @@ void Stem::update()
 	updatePotatoRec(m_motherPotato);
 }
 
+/*
 PotatoDNA Stem::instantiatePotato(const char* name)
+/*/
+Potato* Stem::instantiatePotato(const char* name)
+//*/
 {
 	ASSERT_DEBUG_MSG(name != c_motherPotatoName, "this potato name is reserved");
 	Potato* potato = m_potatoPool.create();
 	potato->initialize(name, this, m_motherPotato);
 	m_motherPotato->m_children.push_back(potato);
+	/*
 	return PotatoDNA(potato);
+	/*/
+	return potato;
+	//*/
 }
 
+/*
 bool Stem::isMotherPotato(PotatoDNA dna) const
 {
 	ASSERT_DEBUG(dna.isValid());
-	return isMotherPotatoPtr(dna.m_potato);
+	return isMotherPotatoPtr(dna.operator->()); // TODO: *dna ?
 }
+/*/
+bool Stem::isMotherPotato(Potato* dna) const
+{
+	return isMotherPotatoPtr(dna);
+}
+//*/
 
 bool Stem::isMotherPotatoPtr(const Potato* potato) const
 {
 	if (potato == m_motherPotato)
 	{
 		ASSERT_DEBUG(potato->m_parent == nullptr);
-		ASSERT_DEBUG(potato->name() == c_motherPotatoName);
+		ASSERT_DEBUG(potato->name() == c_motherPotatoName); // TODO: ptr comparison
 		return true;
 	}
 	
 	return false;
 }
 
+/*
 void Stem::setParent(PotatoDNA dna, PotatoDNA parentDna) const
 {
 	ASSERT_DEBUG(dna.isValid());
 	ASSERT_DEBUG(parentDna.isValid());
-	setParent_internal(dna.m_potato, parentDna.m_potato);
+	setParent_internal(dna.operator->(), parentDna.operator->());
 }
+/*/
+void Stem::setParent(Potato* dna, Potato* parentDna) const
+{
+	setParent_internal(dna, parentDna);
+}
+//*/
 
 void Stem::setParent_internal(Potato* potato, Potato* parent) const
 {
@@ -132,11 +154,18 @@ void Stem::setParent_internal(Potato* potato, Potato* parent) const
 	potato->m_localTransform.soil();
 }
 
+/*
 void Stem::destroyPotato(PotatoDNA dna, bool deleteRecursively)
 {
 	ASSERT_DEBUG(dna.isValid());
-	destroyPotato_internal(dna.m_potato, deleteRecursively);
+	destroyPotato_internal(dna.operator->(), deleteRecursively);
 }
+/*/
+void Stem::destroyPotato(Potato* dna, bool deleteRecursively)
+{
+	destroyPotato_internal(dna, deleteRecursively);
+}
+//*/
 
 void Stem::destroyPotato_internal(Potato* potato, bool deleteRecursively)
 {
