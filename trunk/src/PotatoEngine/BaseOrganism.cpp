@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "BaseOrganism.hpp"
 
 #include "DNA.hpp"

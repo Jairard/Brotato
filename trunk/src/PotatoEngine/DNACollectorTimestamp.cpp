@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "DNACollectorTimestamp.hpp"
 
 #include <limits>
@@ -38,7 +39,7 @@ namespace Pot
 
 	DNACollectorTimestamp DNACollectorTimestamp::operator++(int depr)
 	{
-		UNUSED(depr);
+		POT_UNUSED(depr);
 		DNACollectorTimestamp tmp(*this);
 		++(*this);
 		return tmp;

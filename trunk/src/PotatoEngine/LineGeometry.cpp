@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "LineGeometry.hpp"
 #include "Debug/Logger.hpp"
 

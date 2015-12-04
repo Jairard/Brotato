@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "GeometryCell.hpp"
 #include "Core/LibsHelpers.hpp"
 #include "Debug/Logger.hpp"

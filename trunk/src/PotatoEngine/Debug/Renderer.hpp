@@ -64,7 +64,7 @@ namespace Debug
 			void DrawSolidCircle(const sf::Vector2f& center, float32 radius, const sf::Vector2f& axis, const sf::Color& color);
 			void DrawAABB(const sf::FloatRect& aabb, const sf::Color& color);
 			void DrawString(int x, int y, const sf::Color& color, const char* string, ...);
-			void vDrawString(int x, int y, const char* string, va_list arg, const sf::Color& color=sf::Color(1., 1., 1.));
+			void vDrawString(int x, int y, const char* string, va_list arg, const sf::Color& color=sf::Color(1, 1, 1));
 		
 		// Common:
 		public:

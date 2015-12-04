@@ -1,3 +1,4 @@
+#include "../stdafx.h"
 #include "Transform.hpp"
 
 #include <iostream>
@@ -300,7 +301,7 @@ TransformOrder::Type Transform::inverseOrder() const
 			return TransformOrder::ROTATION_SCALE_TRANSLATION;
 		default:
 			ASSERT_NOT_REACHED_MSG("TransformOrder");
-			break;
+			return static_cast<TransformOrder::Type>(0);
 	}
 }
 

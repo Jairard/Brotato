@@ -45,13 +45,15 @@ inline sf::Vector2f pv_2_sfv(const Pot::Vector2f& v)
 inline sf::Color b2c_2_sfc(const b2Color& b2c)
 {
 	const float coef = 255.f;
-	return sf::Color(b2c.r * coef, b2c.g * coef, b2c.b * coef);
+	return sf::Color(static_cast<sf::Uint8>(b2c.r * coef),
+                     static_cast<sf::Uint8>(b2c.g * coef),
+                     static_cast<sf::Uint8>(b2c.b * coef));
 }
 
 inline b2Color sfc_2_b2c(const sf::Color& sfc)
 {
 	const float coef = 1.f / 255.f;
-	return b2Color((float)sfc.r * coef, sfc.g * coef, sfc.b *coef);
+	return b2Color(sfc.r * coef, sfc.g * coef, sfc.b *coef);
 }
 
 // Rect helpers

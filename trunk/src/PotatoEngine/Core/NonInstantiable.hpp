@@ -8,6 +8,7 @@ class NonInstantiable
 {
 	private:
 		NonInstantiable();
+    public:
 		virtual ~NonInstantiable();
 };
 

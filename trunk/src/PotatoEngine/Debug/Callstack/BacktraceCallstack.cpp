@@ -1,3 +1,4 @@
+#include "../../stdafx.h"
 #include "BacktraceCallstack.hpp"
 
 #ifdef POT_BACKTRACE_SUPPORT

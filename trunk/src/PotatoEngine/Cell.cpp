@@ -1,6 +1,8 @@
+#include "stdafx.h"
 #include "Cell.hpp"
 
 #include <iostream>
+#include "Debug/Renderer.hpp"
 
 namespace Pot
 {
@@ -16,7 +18,7 @@ void initializeCell(Args... args)
 
 void Cell::debugRender(Debug::Renderer& renderer) const
 {
-	UNUSED(renderer);
+	POT_UNUSED(renderer);
 }
 
 }

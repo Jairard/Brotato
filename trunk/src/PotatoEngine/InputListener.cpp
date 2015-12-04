@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "InputListener.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>

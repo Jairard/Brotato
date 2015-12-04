@@ -47,8 +47,8 @@ class RenderCell: public Cell
 template<>
 void initializeCell<RenderCell*, sf::RenderTarget*>(RenderCell* cell,  sf::RenderTarget* target)
 {
-	UNUSED(cell);
-	UNUSED(target);
+	POT_UNUSED(cell);
+	POT_UNUSED(target);
 	std::cout << "Yay !" << std::endl;
 	//m_target = target;
 }

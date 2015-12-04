@@ -1,8 +1,13 @@
+#include "../stdafx.h"
 #include <cstdio>
 #include <iostream>
 #include <sstream>
 #include <ctime>
+#ifdef _MSC_VER
+# include <debugapi.h>
+#endif
 #include "Logger.hpp"
+#include "assert.hpp"
 
 namespace Pot
 {
@@ -18,9 +23,9 @@ const std::string Logger::Error = Logger::CError;
 const std::string Logger::Default = Logger::CDefault;
 const std::string Logger::Assert = Logger::CAssert;
 
-int Logger::m_bufferSize = 4096;
+const size_t Logger::c_bufferSize = 4096;
+const std::string Logger::c_vlogError = "An error occured while reading formatted data";
 std::list<std::string> Logger::m_enabledTags = std::list<std::string>();
-const std::string Logger::m_vlogError = "An error occured while reading formatted data";
 std::ostream* Logger::m_defaultStream = &std::cout;
 
 void Logger::setDefaultStream(std::ostream& stream)
@@ -46,10 +51,13 @@ void Logger::log(std::ostream& stream, const std::string& tag, const std::string
 	if (!isTagEnabled(tag))
 		return;
 	
-	// Using returned stream adds a '1' at the end
-	outputTime(stream, currentTime());
-	outputTag(stream, tag);
-	stream << msg << std::endl;
+    // Using returned stream adds a '1' at the end
+    std::stringstream str;
+	outputTime(str, currentTime());
+	outputTag(str, tag);
+	str << msg << std::endl;
+
+    logImpl(stream, str.str().c_str());
 }
 
 // Can't factorise code with Log(std::ostream& stream, const char* tag, const char* fmt, ...)
@@ -81,11 +89,6 @@ void Logger::log(std::ostream& stream, const char* tag, const char* fmt, ...)
 	va_end(list);
 }
 
-void Logger::setBufferSize(unsigned int size)
-{
-	m_bufferSize = (int)size;
-}
-
 void Logger::vLog(const char* fmt, va_list list)
 {
 	vLog(Default.c_str(), fmt, list);
@@ -101,27 +104,24 @@ void Logger::vLog(std::ostream& stream, const char* tag, const char* fmt, va_lis
 	if (!isTagEnabled(tag))
 		return;
 	
-	char* buffer = new char[m_bufferSize];
-	
-	int n = vsnprintf(buffer, m_bufferSize, fmt, list);
+    char buffer[c_bufferSize];
+	int n = vsnprintf(buffer, c_bufferSize, fmt, list);
 	// No error occured (but the buffer was potentially not big enough)
 	if (n >= 0)
 	{
-		if (n >= m_bufferSize)
+		if (n >= c_bufferSize)
 		{
 			logVariadicError(stream);
-			buffer[m_bufferSize-1] = '\0';
+			buffer[c_bufferSize-1] = '\0';
 		}
 		log(stream, std::string(tag), std::string(buffer));
 	}
-	
-	delete buffer;
 }
 
 void Logger::logVariadicError(std::ostream& stream)
 {
 	std::stringstream str;
-	str << m_vlogError << " (current buffer size: " << m_bufferSize << ")";
+	str << c_vlogError << " (buffer size: " << c_bufferSize << ")";
 	log(stream, Error, str.str());
 }
 
@@ -174,7 +174,7 @@ std::ostream& Logger::outputTag(std::ostream& stream, const std::string& tag)
 std::ostream& Logger::outputTime(std::ostream& stream, tm* time)
 {
 	char fill = stream.fill();
-	int width = stream.width();
+	std::streamsize width = stream.width();
 	
 	stream.fill('0');
 	stream << "[";
@@ -203,6 +203,19 @@ tm* Logger::currentTime()
 {
 	time_t now = time(0);
 	return localtime(&now);
+}
+
+std::ostream& Logger::logImpl(std::ostream& stream, const char* str)
+{
+    ASSERT_RELEASE(str != nullptr);
+
+#ifdef _MSC_VER
+    OutputDebugStringA(str);
+#elif
+    stream << str;
+#endif
+
+    return stream;
 }
 
 }

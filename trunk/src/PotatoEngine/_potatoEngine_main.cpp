@@ -1,8 +1,10 @@
+#include "stdafx.h"
 #include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+#include "PotatoPlant.hpp"
 
 //#define DEBUG
 
@@ -32,8 +34,8 @@ class PoolChunk
 
 int main(int argc, char* argv[])
 {
-	UNUSED(argc);
-	UNUSED(argv);
+	POT_UNUSED(argc);
+	POT_UNUSED(argv);
 	
 	Pool<PoolChunk> pool;
 	return EXIT_SUCCESS;
@@ -236,20 +238,29 @@ void test4()
 	//*/
 }
 
+#include "Debug/Callstack.hpp"
+
 int main(int argc, char* argv[])
 {
-	UNUSED(argc);
-	UNUSED(argv);
-
+	POT_UNUSED(argc);
+	POT_UNUSED(argv);
+	
 	Logger::enableTag(Logger::CWarning);
 	Logger::enableTag(Logger::CAssert);
 	Logger::enableTag(Pot::DNACollector::tag());
 	Logger::log(Logger::CWarning, "");
 
+    Logger::log(Logger::CWarning, "Callstack:\n%s", Pot::Debug::Callstack()());
+
+    /*
 	test1();
 	test2();
 	test3();
 	test4();
+    //*/
 
 	return EXIT_SUCCESS;
+	
+	Pot::PotatoPlant plant("Potatoes gonna potate", sf::VideoMode(400, 400));
+	return plant.loop();
 }

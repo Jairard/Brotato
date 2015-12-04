@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Potato.hpp"
 
 #include <assert.h>
@@ -288,7 +289,7 @@ void Potato::update()
 
 void Potato::render(float elapsedTime)
 {
-	UNUSED(elapsedTime);
+	POT_UNUSED(elapsedTime);
 	
 	RenderCell* renderer = fetchCellIFP<RenderCell>();
 	if (renderer != nullptr)

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "DNACollector.hpp"
 
 #include <set>
@@ -54,8 +55,8 @@ namespace Pot
 #endif
 	{
 #ifndef POT_DEBUG
-		UNUSED(_type);
-		UNUSED(_alive);
+		POT_UNUSED(_type);
+		POT_UNUSED(_alive);
 #endif
 	}
 

@@ -1,3 +1,4 @@
+#include "../stdafx.h"
 #include <cstdio>
 #include <iostream>
 #include <cstring>
@@ -11,7 +12,11 @@ namespace Pot
 namespace Debug
 {
 const sf::Color Renderer::TRANSPARENT_COLOR = sf::Color(0, 0, 0, 0);
+# ifdef _MSC_VER
+const char* Renderer::DEFAULT_FONT_FILE = "arial.ttf";
+#else
 const char* Renderer::DEFAULT_FONT_FILE = "../res/arial.ttf";
+#endif
 
 Renderer::Renderer(sf::RenderTarget& window, const char* fontFile):
 	b2Draw(),
@@ -258,7 +263,10 @@ void Renderer::DrawSolidPolygon(const sf::Vector2f* vertices, int32 vertexCount,
 {
 	ASSERT_DEBUG(!m_isLocked);
 	
-	sf::Color fillColor(color.r * 0.5f, color.g * 0.5f, color.b * 0.5f, 255.f * 0.5f);
+	sf::Color fillColor(static_cast<sf::Uint8>(color.r * 0.5f),
+                        static_cast<sf::Uint8>(color.g * 0.5f),
+                        static_cast<sf::Uint8>(color.b * 0.5f),
+                        static_cast<sf::Uint8>(  255.f * 0.5f));
 	sf::ConvexShape poly(vertexCount);
 
 	// Inside
@@ -344,20 +352,21 @@ void Renderer::vDrawString(int x, int y, const char* string, va_list arg, const 
 	if (!m_isFontLoaded)
 		return;
 
-	char buffer[512];
-	vsprintf(buffer, string, arg);
+    const size_t bufferSize = 512;
+    char buffer[bufferSize];
+    vsnprintf_s(buffer, bufferSize, string, arg);
 
 	sf::FloatRect viewport = m_window.getView().getViewport();
 	sf::Vector2u sfWindowSize = m_window.getSize();
-	Vector2f windowSize(sfWindowSize.x, sfWindowSize.y);
+	Vector2f windowSize(static_cast<float>(sfWindowSize.x), static_cast<float>(sfWindowSize.y));
 	const float realX = viewport.left*windowSize.x + x*viewport.width;
 	const float realY = viewport.top*windowSize.y + y*viewport.height;
-	const float yRatio = 0.5 * m_window.getView().getSize().y / (float)m_window.getSize().y;
+	const float yRatio = 0.5f * m_window.getView().getSize().y / (float)m_window.getSize().y;
 	sf::Text text;
 
 	text.setFont(m_font);
 	text.setString(buffer);
-	text.setPosition(m_window.mapPixelToCoords(sf::Vector2i(realX, realY)));
+	text.setPosition(m_window.mapPixelToCoords(sf::Vector2i(static_cast<int>(realX), static_cast<int>(realY))));
 	text.setCharacterSize(30);
 	text.setScale(sf::Vector2f(yRatio, yRatio));
 	text.setColor(color);

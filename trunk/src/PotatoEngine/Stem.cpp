@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Stem.hpp"
 
 #include <assert.h>
@@ -21,7 +22,7 @@ Stem::Stem(PotatoPlant* plant):
 	m_plant(plant),
 	m_potatoPool(512)
 {
-	UNUSED(m_plant);
+	POT_UNUSED(m_plant);
 	m_motherPotato = m_potatoPool.create();
 	m_motherPotato->initialize(c_motherPotatoName, this);
 }

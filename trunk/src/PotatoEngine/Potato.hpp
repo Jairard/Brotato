@@ -1,6 +1,7 @@
 #ifndef __POT_POTATO__
 #define __POT_POTATO__
 
+#include <type_traits>
 #include <assert.h>
 #include <string>
 #include <vector>
@@ -78,7 +79,8 @@ class Potato//: public DefaultOrganismImpl<Potato>
 		template<typename CellType>
 		CellType* addCell()
 		{
-			static_assert(Tools::is<CellType, Cell>(), "This cell does not inherit form ::Pot::Cell");
+            static_assert(POT_STATIC_IS(CellType, Cell), "This cell does not inherit from ::Pot::Cell");
+
 			CellType* cell = new CellType(this);
 			m_cells.push_back(cell);
 			return cell;
@@ -137,7 +139,7 @@ class Potato//: public DefaultOrganismImpl<Potato>
 	private:
 		Potato();
 		// TODO: inherit from NonCopyable ?
-		Potato(const Potato& other) { UNUSED(other); ASSERT_NOT_REACHED(); }
+		Potato(const Potato& other) { POT_UNUSED(other); ASSERT_NOT_REACHED(); }
 
 		void initialize(const std::string& name = "__unnamed__", Stem* stem = nullptr, Potato* parent = nullptr);
 		void shutdown();

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "DnaCollectorChecker.hpp"
 
 #ifdef POT_DEBUG

@@ -1,3 +1,4 @@
+#include "../../stdafx.h"
 #include "BackwardCPPCallstack.hpp"
 
 #ifdef POT_BACKWARD_CPP_SUPPORT

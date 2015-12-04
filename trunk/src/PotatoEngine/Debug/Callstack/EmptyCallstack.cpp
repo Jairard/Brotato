@@ -1,3 +1,4 @@
+#include "../../stdafx.h"
 #include "EmptyCallstack.hpp"
 
 #include "../../Core/Tools.hpp"
@@ -9,7 +10,7 @@ namespace Pot { namespace Debug
 	EmptyCallstack::EmptyCallstack(size_t skippedFrameCount):
 		AbstractCallstack(0)
 	{
-		UNUSED(skippedFrameCount);
+		POT_UNUSED(skippedFrameCount);
 	}
 
 	EmptyCallstack::~EmptyCallstack()

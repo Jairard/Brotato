@@ -20,10 +20,10 @@ namespace Pot
 
 	namespace
 	{
-		FUNUSED(void transformTest());
-		FUNUSED(void setupPotato(Potato* potato));
-		FUNUSED(Stem* initScene1(PotatoPlant* plant, sf::RenderWindow& window));
-		FUNUSED(void potataDNATest());
+		POT_FUNUSED(void transformTest());
+		POT_FUNUSED(void setupPotato(Potato* potato));
+		POT_FUNUSED(Stem* initScene1(PotatoPlant* plant, sf::RenderWindow& window));
+		POT_FUNUSED(void potataDNATest());
 
 		void transformTest()
 		{
@@ -259,7 +259,7 @@ int PotatoPlant::loop()
 	
 	sf::Clock clock;
 	sf::Time previous;
-	const float updateFramerate = 1. / (float)m_targetUps;
+	const float updateFramerate = 1.f / (float)m_targetUps;
 	float acc = 0.;
 	
 	m_countingClock.restart();
@@ -320,8 +320,8 @@ void PotatoPlant::render(float elapsedTime)
 		m_debugRenderer->lock();
 	}
 	
-	if (m_debugPhysics)
-		;// TODO: physics debug render
+	//if (m_debugPhysics)
+	//	;// TODO: physics debug render
 	
 	m_window.display();
 }

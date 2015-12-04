@@ -17,6 +17,7 @@ class BaseOrganism;
 template <typename OrganismType>
 class DNA: public BaseDNA
 {
+    static_assert(POT_STATIC_IS(OrganismType, BaseOrganism), "This organism does not inherit from ::Pot::BaseOrganims");
 	friend class DNACollector;
 
 	private:
@@ -93,7 +94,7 @@ void DNA<OrganismType>::operator=(const DNA<ExtOrganismType>& other)
 template <typename OrganismType>
 void DNA<OrganismType>::operator=(const OrganismType* organism)
 {
-	UNUSED(organism);
+	POT_UNUSED(organism);
 	ASSERT_NOT_REACHED();
 }
 

@@ -23,7 +23,6 @@ namespace Debug
 			static void log(const char* fmt, ...);
 			static void log(const char* tag, const char* fmt, ...);
 			static void log(std::ostream& stream, const char* tag, const char* fmt, ...);
-			static void setBufferSize(unsigned int size);
 			/* Tags methods */
 			static void initTags(void);
 			static void enableTag(const std::string& tag);
@@ -44,6 +43,7 @@ namespace Debug
 			
 		private:
 			static tm* currentTime(void);
+            static std::ostream& logImpl(std::ostream& stream, const char* msg);
 		
 		/* Members */
 		public:
@@ -57,9 +57,9 @@ namespace Debug
 			static const std::string Assert;
 			
 		protected:
-			static int m_bufferSize;
+            static const size_t c_bufferSize;
+            static const std::string c_vlogError;
 			static std::list<std::string> m_enabledTags;
-			static const std::string m_vlogError;
 			static std::ostream* m_defaultStream;
 	};
 }

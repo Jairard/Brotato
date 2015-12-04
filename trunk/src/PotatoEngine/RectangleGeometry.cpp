@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "RectangleGeometry.hpp"
 #include "Debug/Logger.hpp"
 

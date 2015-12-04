@@ -55,6 +55,9 @@ namespace Pot { namespace Debug
 	{
 		ASSERT_DEBUG(name != nullptr);
 
+#ifdef _MSC_VER
+        m_res.assign(name);
+#else
 		int status = 0;
 		char* res = abi::__cxa_demangle(name, nullptr, nullptr, &status);
 		m_success = (status == 0);
@@ -97,6 +100,7 @@ namespace Pot { namespace Debug
 				m_res.assign(name);
 			free(res);
 		}
+#endif
 	}
 }}
 
