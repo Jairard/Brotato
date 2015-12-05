@@ -5,7 +5,6 @@
 #include <string.h>
 #include <list>
 #include "../Debug/assert.hpp"
-#include "../DNACollector.hpp"
 
 namespace Pot
 {
