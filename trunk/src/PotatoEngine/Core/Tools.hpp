@@ -3,6 +3,9 @@
 
 #include <typeinfo>
 #include <type_traits>
+#include <string>
+#include <sstream>
+#include <cxxabi.h>
 #include "../Debug/assert.hpp"
 #include "NonInstantiable.hpp"
 
@@ -65,6 +68,40 @@ class Tools: public NonInstantiable
 		{
 			static const char* str[2] = {"false", "true"};
 			return str[expr];
+		}
+
+		static std::string demangledName(const char* name)
+		{
+			int status = 0;
+			char* res = abi::__cxa_demangle(name, nullptr, nullptr, &status);
+
+			switch (status)
+			{
+				case -1:
+					ASSERT_DEBUG_MSG(false, "demangleName: a memory allocation failiure occurred");
+					break;
+				case -2:
+					{
+						std::ostringstream oss;
+						oss << "demangleName: "
+							<< "'" << name << "'"
+							<< " is not a valid name under the C++ ABI mangling rules";
+						ASSERT_DEBUG_MSG(false, oss.str().c_str());
+					}
+					break;
+				case -3:
+					ASSERT_DEBUG_MSG(false, "demangleName: one of the arguments is invalid");
+					break;
+				default:
+					break;
+			}
+
+			if (status != 0)
+				return std::string(name);
+
+			std::string resString(res);
+			free(res);
+			return resString;
 		}
 };
 

@@ -103,7 +103,7 @@ namespace Pot
 #ifdef POT_DEBUG
 				const OrganismInfo& info = organismIt->second;
 				Logger::log(tag, "      Alive: %s", Tools::bool2str(info.alive));
-				Logger::log(tag, "      Type: %s", info.type.name());
+				Logger::log(tag, "      Type: %s", Tools::demangledName(info.type.name()).c_str());
 #endif
 				++i;
 			}
@@ -123,7 +123,7 @@ namespace Pot
 				const std::type_index& type = dnasIt->first;
 				const DNAList& typedDnas = dnasIt->second;
 
-				Logger::log(tag, "* %s (%u element(s))", type.name(), typedDnas.size());
+				Logger::log(tag, "* %s (%u element(s))", Tools::demangledName(type.name()).c_str(), typedDnas.size());
 				for (size_t i = 0; i < typedDnas.size(); ++i)
 				{
 					const DNAInfo& dnaInfo = typedDnas[i];
