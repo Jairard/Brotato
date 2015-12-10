@@ -6,11 +6,13 @@
 #include "Debug/Logger.hpp"
 #include "DNACollector.hpp"
 #include "BaseDNA.hpp"
+#include "BaseOrganism.hpp"
 
 namespace Pot
 {
 
 using Debug::Logger;
+class BaseOrganism;
 
 template <typename OrganismType>
 class DNA: public BaseDNA
@@ -23,15 +25,13 @@ class DNA: public BaseDNA
 		void selfRegister();
 
 	public:
-		DNA(const OrganismType* organism);
+		DNA(const BaseOrganism* organism);
 		// We have to redefine the copy constructor because else the default
 		// one would be called over the template version (it'd be more specialized)
 		DNA(const DNA<OrganismType>& other);
 		template <typename ExtOrganismType>
 		DNA(const DNA<ExtOrganismType>& other);
 		~DNA();
-
-		bool isValid() const;
 
 		template <typename ExtOrganismType>
 		void operator=(const DNA<ExtOrganismType>& other);
@@ -44,12 +44,6 @@ class DNA: public BaseDNA
 		static DNA<OrganismType> Invalid;
 };
 
-template <typename OrganismType>
-bool DNA<OrganismType>::isValid() const
-{
-	return organism() != nullptr;
-}
-
 template<typename OrganismType>
 DNA<OrganismType> DNA<OrganismType>::Invalid = DNA<OrganismType>(nullptr);
 
@@ -59,11 +53,12 @@ DNA<OrganismType>::DNA(): BaseDNA()
 }
 
 template <typename OrganismType>
-DNA<OrganismType>::DNA(const OrganismType* organism):
+DNA<OrganismType>::DNA(const BaseOrganism* organism):
 	BaseDNA()
 {
-	ASSERT_RELEASE(organism != nullptr);
-	setOrganism(organism);
+	ASSERT_DEBUG(organism != nullptr);
+	// Force cast to ensure it's the same type
+	setOrganism(Tools::as<const OrganismType>(organism));
 	selfRegister();
 }
 

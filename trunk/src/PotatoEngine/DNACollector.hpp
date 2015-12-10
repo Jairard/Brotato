@@ -13,14 +13,14 @@
 #include "Core/Tools.hpp"
 #include "Core/types.hpp"
 #include "Debug/assert.hpp"
+#include "DnaCollectorChecker.hpp"
+#include "DNACollectorTimestamp.hpp"
 
 // TODO:
-// - checkIntegrity
 // - callstack
-// - abstract timestamp handling
-// - file .tpl
-// - pool for [Organism|DNA]Info ?
-// - check integrity ptr <-> type_info ?
+// - logs: type (remove "const*")
+// - Look for complexity improvements
+// - separate folder/namespace ?
 
 /*
  * Complexity notations:
@@ -28,12 +28,12 @@
  * - OrgWC: organisms weak count. If a pointer has several timestamps, it counts as 1.
  * - TC: timestamp count. Number of timestamps for the current organism.
  * - DnaC: dna count. If a timestamp as several dnas per type, each of them counts as 1.
- * - DnaWC: dna weakn count. If a timestamp as several dnas per type, it counts as 1.
+ * - DnaWC: dna weak count. If a timestamp as several dnas per type, it counts as 1.
  * - DnaTC: dna type count. Number of different dna types for the current timestamp.
  * - DnaCTC: dna current timestamp count. Number of dnas for the current timestamp.
  * - O(v1) | O(v2) / O(v3) | O(v4): amortized complexity in release | debug / worst case complexity in release | debug.
  *
- * For readability, approximations O(OrgWC) + O(TC) = O(OrgC) and O(DnaWC) + O(DnaTC) = O(DnaC) may be done.
+ * For readability's sake, approximations O(OrgWC) + O(TC) = O(OrgC) and O(DnaWC) + O(DnaTC) = O(DnaC) may be done.
  */
 namespace Pot
 {
@@ -53,9 +53,9 @@ namespace Pot
 		friend class Singleton;
 		friend class BaseDNA;
 		friend class BaseOrganism;
+		friend class DNACollectorChecker;
 
-		typedef potu64 Timestamp;
-
+	private:
 		struct DNAInfo
 		{
 			BaseDNA& dna;
@@ -84,11 +84,11 @@ namespace Pot
 		// DNA container
 		typedef std::vector<DNAInfo> DNAList;
 		typedef std::unordered_map<std::type_index, DNAList> DNAsByType;
-		typedef std::unordered_map<Timestamp, DNAsByType> DNAContainer;
+		typedef std::unordered_map<DNACollectorTimestamp, DNAsByType> DNAContainer;
 
 		// Organism container
-		typedef std::unordered_map<Timestamp, OrganismInfo> OrganismByTimestamp;
-		typedef std::pair<Timestamp, OrganismByTimestamp> OrganismsInfoForPointer; // Timestamp: aliveTimestamp
+		typedef std::unordered_map<DNACollectorTimestamp, OrganismInfo> OrganismByTimestamp;
+		typedef std::pair<DNACollectorTimestamp, OrganismByTimestamp> OrganismsInfoForPointer; // DNACollectorTimestamp: aliveTimestamp
 		typedef std::unordered_map<const BaseOrganism*, OrganismsInfoForPointer> OrganismContainer;
 
 	protected:
@@ -97,6 +97,7 @@ namespace Pot
 
 	public:
 		static void dump(const char* tag);
+		static const char* tag();
 		size_t memorySize() const;
 
 	private:
@@ -111,14 +112,14 @@ namespace Pot
 		void dump_internal(const char* tag) const;
 
 		/* O(OrgC) */
-		const OrganismInfo* getOrganismInfoFromTimestamp(const Timestamp& t) const;
+		const OrganismInfo* getOrganismInfoFromTimestamp(const DNACollectorTimestamp& t) const;
 		/* O(1) / O(OrgWC) | O(OrgC) */
-		const Timestamp& createOrganismEntry(const BaseOrganism* ptr, const std::type_info& type);
+		const DNACollectorTimestamp& createOrganismEntry(const BaseOrganism* ptr, const std::type_info& type);
 		/* O(1) / O(OrgWC) | O(OrgC) */
-		void clearOrganismInfoForTimestamp(const BaseOrganism* ptr, const Timestamp& t);
+		void clearOrganismInfoForTimestamp(const BaseOrganism* ptr, const DNACollectorTimestamp& t);
 		/* Alive: O(1) / O(OrgWC) | O(OrgC) */
 		/* Dead:  O(DnaC) | O(DnaC) * O(OrgC) */
-		Timestamp fetchTimestamp(const BaseDNA& dna, const std::type_index& dnaTypeIndex, const BaseOrganism** outOrganism);
+		DNACollectorTimestamp fetchTimestamp(const BaseDNA& dna, const std::type_index& dnaTypeIndex, const BaseOrganism** outOrganism) const;
 		/* O(OrgWC) */
 		size_t organismCount() const;
 		/* O(DnaC) */
@@ -126,14 +127,16 @@ namespace Pot
 
 #ifdef POT_DEBUG
 		/* O(1) / O(OrgC) */
-		void checkOrganismStatus(const BaseOrganism* ptr, const Timestamp& t, bool shouldBeAlive); // Debug only
+		void checkOrganismStatus(const BaseOrganism* ptr, const DNACollectorTimestamp& t, bool shouldBeAlive) const;
+		void checkIntegrityIFN();
 #endif
 
 		private:
-			static const Timestamp c_invalidTimestamp = std::numeric_limits<Timestamp>::max();
+			static const char* c_tag;
 			DNAContainer m_dnaContainer;
 			OrganismContainer m_organismContainer;
-			Timestamp m_timestamp;
+			DNACollectorTimestamp m_timestamp;
+			DNACollectorChecker m_checker;
 	};
 }
 

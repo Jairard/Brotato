@@ -16,6 +16,11 @@ namespace Pot
 	{
 	}
 
+	bool BaseDNA::isValid() const
+	{
+		return m_organism != nullptr;
+	}
+
 	const BaseOrganism* BaseDNA::organism() const
 	{
 		return m_organism;
@@ -34,7 +39,6 @@ namespace Pot
 	void BaseDNA::onOrganismDeath(const BaseOrganism* organism)
 	{
 		ASSERT_DEBUG(organism == m_organism);
-		Logger::log(Logger::CWarning, "%u.onOrganismDeath(%u)", this, organism);
 		m_organism = nullptr;
 	}
 }

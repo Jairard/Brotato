@@ -17,7 +17,7 @@
 #include "Debug/Logger.hpp"
 #include "PotatoPlant.hpp"
 #include "RenderCell.hpp"
-*/
+//*/
 
 /*
 Does not work :( (see Potato)
@@ -64,13 +64,10 @@ void initialize<Pot::RenderCell*, sf::RenderTarget*>(Pot::RenderCell* cell, sf::
 class FakeCell: public Pot::BaseOrganism
 {
 	public:
-		FakeCell(): Pot::BaseOrganism() { Pot::Logger::log(Pot::Logger::CWarning, "constructor"); }
+		FakeCell(): Pot::BaseOrganism() {}
 		
 		virtual ~FakeCell()
-		{
-			//Pot::Logger::log(Pot::Logger::CWarning, "destructor of organism %u", this);
-			//Pot::DNACollector::notifyOrganismDeath(*this);
-		}
+		{}
 };
 
 class FakeDerivedCell: public FakeCell
@@ -96,7 +93,7 @@ void test1()
 	{
 		FakeDerivedCellDNA dna(cell);
 		ASSERT_DEBUG(dna.isValid());
-		
+
 		FakeCellDNA upcasted(dna);
 		ASSERT_DEBUG(upcasted.isValid());
 		
@@ -128,22 +125,69 @@ void test1()
 // Downcast
 void test2()
 {
-	DNACollector::instantiate();
-	
-	FakeCell* baseCell = new FakeCell();
+	Pot::Logger::log(Pot::Logger::CWarning, "test 1");
 	{
-		FakeCellDNA baseDNA(baseCell);
-		ASSERT_DEBUG(baseDNA.isValid());
-		DNACollector::dump(Logger::CWarning);
-		
-		//FakeDerivedCellDNA downcastedBadCast(baseCell); // Bad cast -> assert
-		
-		//FakeCellDNA privatizeDefaultConstructor;           // Invalid constructor -> compilation error
-		//FakeCellDNA assertOnNullPointerOrganism(nullptr);  // Can't construct from nullptr -> assert
+		DNACollector::instantiate();
+		FakeCell* cell = new FakeCell();
+		{
+			FakeCellDNA baseDna(cell);
+			ASSERT_DEBUG(baseDna.isValid());
+		}
+		delete cell;
+		Pot::DNACollector::deleteInstance();
 	}
-	
-	delete baseCell;
-	Pot::DNACollector::deleteInstance();
+
+	Pot::Logger::log(Pot::Logger::CWarning, "test 2");
+	{
+		DNACollector::instantiate();
+		FakeDerivedCell* cell = new FakeDerivedCell();
+		{
+			FakeDerivedCellDNA derivedDna(cell); // Valid
+			ASSERT_DEBUG(derivedDna.isValid());
+		}
+		delete cell;
+		Pot::DNACollector::deleteInstance();
+	}
+
+	Pot::Logger::log(Pot::Logger::CWarning, "test 3");
+	{
+		DNACollector::instantiate();
+		FakeCell* cell = new FakeDerivedCell();
+		{
+			FakeDerivedCellDNA derivedDna(cell); // Valid
+			ASSERT_DEBUG(derivedDna.isValid());
+		}
+		delete cell;
+		Pot::DNACollector::deleteInstance();
+	}
+
+	Pot::Logger::log(Pot::Logger::CWarning, "test 4");
+	{
+		DNACollector::instantiate();
+		FakeCell* cell = new FakeCell();
+		{
+			//FakeDerivedCellDNA derivedDna(cell); // Bad cast -> assert
+		}
+		delete cell;
+		Pot::DNACollector::deleteInstance();
+	}
+
+	Pot::Logger::log(Pot::Logger::CWarning, "test 5");
+	{
+		DNACollector::instantiate();
+		const FakeCell* baseCell = new FakeDerivedCell();
+		{
+			FakeCellDNA baseDNA(baseCell);
+			ASSERT_DEBUG(baseDNA.isValid());
+			DNACollector::dump(Logger::CWarning);
+
+			//FakeCellDNA privatizeDefaultConstructor;           // Invalid constructor -> compilation error
+			//FakeCellDNA assertOnNullPointerOrganism(nullptr);  // Can't construct from nullptr -> assert
+		}
+		
+		delete baseCell;
+		Pot::DNACollector::deleteInstance();
+	}
 }
 
 // Early organism deletion
@@ -169,6 +213,9 @@ void test3()
 // Pool
 void test4()
 {
+	// Pool test not valid because pool doesn't support inheritance ...
+	// TODO: manual organism handling in pool (via template bool)
+	/*
 	DNACollector::instantiate();
 
 	{
@@ -179,7 +226,6 @@ void test4()
 		
 		pool.destroy(cell);
 		FakeCell* cell2 = pool.create();
-		
 		ASSERT_DEBUG(cell == cell2);
 		
 		FakeCellDNA dna2(cell2);
@@ -187,28 +233,23 @@ void test4()
 	}
 	
 	DNACollector::deleteInstance();
+	//*/
 }
 
-//*
 int main(int argc, char* argv[])
 {
 	UNUSED(argc);
 	UNUSED(argv);
-	
+
 	Logger::enableTag(Logger::CWarning);
 	Logger::enableTag(Logger::CAssert);
+	Logger::enableTag(Pot::DNACollector::tag());
 	Logger::log(Logger::CWarning, "");
-	
-	//*
+
 	test1();
 	test2();
 	test3();
-	//*/
 	test4();
-	
+
 	return EXIT_SUCCESS;
-	
-	//Pot::PotatoPlant plant("Potatoes gonna potate", sf::VideoMode(400, 400));
-	//return plant.loop();
 }
-//*/

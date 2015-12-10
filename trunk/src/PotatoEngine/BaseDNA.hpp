@@ -23,6 +23,8 @@ class BaseDNA
 		virtual ~BaseDNA();
 		const BaseOrganism* organism() const;
 
+		bool isValid() const;
+
 	protected:
 		BaseDNA();
 
