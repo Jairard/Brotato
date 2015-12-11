@@ -38,6 +38,7 @@ namespace Pot
 
 	void BaseDNA::onOrganismDeath(const BaseOrganism* organism)
 	{
+		UNUSED(organism);
 		ASSERT_DEBUG(organism == m_organism);
 		m_organism = nullptr;
 	}

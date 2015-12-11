@@ -53,7 +53,9 @@ namespace Pot
 		friend class Singleton;
 		friend class BaseDNA;
 		friend class BaseOrganism;
+#ifdef POT_DEBUG
 		friend class DNACollectorChecker;
+#endif
 
 	private:
 		struct DNAInfo
@@ -96,7 +98,7 @@ namespace Pot
 		~DNACollector();
 
 	public:
-		static void dump(const char* tag);
+		static void dump(const char* tag = c_tag);
 		static const char* tag();
 		size_t memorySize() const;
 
@@ -136,7 +138,9 @@ namespace Pot
 			DNAContainer m_dnaContainer;
 			OrganismContainer m_organismContainer;
 			DNACollectorTimestamp m_timestamp;
+#ifdef POT_DEBUG
 			DNACollectorChecker m_checker;
+#endif
 	};
 }
 

@@ -1,6 +1,8 @@
 #ifndef __POT_DNA_COLLECTOR_CHECKER__
 #define __POT_DNA_COLLECTOR_CHECKER__
 
+#include "Core/compilFlags.hpp"
+#ifdef POT_DEBUG
 #include "Core/NonCopyable.hpp"
 #include "Core/types.hpp"
 
@@ -53,5 +55,6 @@ namespace Pot
 			bool m_fullCheckMode;
 	};
 }
+#endif
 
 #endif

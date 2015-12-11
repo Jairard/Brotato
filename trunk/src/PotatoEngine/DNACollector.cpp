@@ -4,11 +4,14 @@
 #include <utility>
 #include <sstream>
 #include "Debug/Logger.hpp"
+#include "Debug/Demangler.hpp"
 #include "BaseDNA.hpp"
 #include "BaseOrganism.hpp"
 
 namespace Pot
 {
+	using Debug::Demangler;
+
 	const char* DNACollector::c_tag = "DNACollector";
 
 	// DNACollector::DNAInfo
@@ -58,10 +61,12 @@ namespace Pot
 
 	// DNACollector
 	DNACollector::DNACollector():
-		m_dnaContainer(),
-		m_organismContainer(),
-		m_timestamp(),
-		m_checker(*this)
+		  m_dnaContainer()
+		, m_organismContainer()
+		, m_timestamp()
+#ifdef POT_DEBUG
+		, m_checker(*this)
+#endif
 	{
 #ifdef POT_DEBUG
 		checkIntegrityIFN();
@@ -91,7 +96,7 @@ namespace Pot
 			Logger::log(tag, "");
 
 		size_t ptrCount = m_organismContainer.size();
-		Logger::log(tag, "Referenced organisms (for %#p addess%s)", ptrCount, (ptrCount > 1 ? "es" : ""));
+		Logger::log(tag, "Referenced organisms (for %u addess%s)", ptrCount, (ptrCount > 1 ? "es" : ""));
 		for (OrganismContainer::const_iterator ptrIt = m_organismContainer.begin(); ptrIt != m_organismContainer.end(); ++ptrIt)
 		{
 			const BaseOrganism* ptr = ptrIt->first;
@@ -115,7 +120,7 @@ namespace Pot
 #ifdef POT_DEBUG
 				const OrganismInfo& info = organismIt->second;
 				Logger::log(tag, "        Alive: %s", Tools::bool2str(info.alive));
-				Logger::log(tag, "        Type: %s", Tools::demangledName(info.type.name()).c_str());
+				Logger::log(tag, "        Type: %s", Demangler(info.type)());
 #endif
 				++i;
 			}
@@ -138,7 +143,7 @@ namespace Pot
 				const DNAList& typedDnas = dnasIt->second;
 
 				const size_t dnaCount = typedDnas.size();
-				Logger::log(tag, "* %s (%u element%s)", Tools::demangledName(type.name()).c_str(), dnaCount, (dnaCount > 1 ? "s" : ""));
+				Logger::log(tag, "* %s (%u element%s)", Demangler(type)(), dnaCount, (dnaCount > 1 ? "s" : ""));
 				for (size_t i = 0; i < typedDnas.size(); ++i)
 				{
 					const DNAInfo& dnaInfo = typedDnas[i];
@@ -195,8 +200,8 @@ namespace Pot
 	void DNACollector::registerDNA(BaseDNA& dna, const std::type_info& organismType)
 	{
 		Logger::log(c_tag, "register dna [%s @ %#p] for organism [%s @ %#p]",
-		    Tools::demangledName(typeid(dna).name()).c_str(), &dna,
-		    Tools::demangledName(organismType.name()).c_str(), dna.organism());
+		    Demangler(dna)(), &dna,
+		    Demangler(organismType)(), dna.organism());
 
 		// Create info structure and fill it
 		DNAInfo dnaInfo(dna);
@@ -250,8 +255,8 @@ namespace Pot
 		const std::type_index organismType = (organism != nullptr ? typeid(*organism) : typeid(organism));
 
 		Logger::log(c_tag, "unregister dna [%s @ %#p] for organism [%s @ %#p]",
-		    Tools::demangledName(typeid(dna).name()).c_str(), &dna,
-		    Tools::demangledName(organismType.name()).c_str(), dna.organism());
+		    Demangler(dna)(), &dna,
+		    Demangler(organismType)(), dna.organism());
 
 		const std::type_index dnaTypeIndex(typeid(dna));
 
@@ -299,10 +304,24 @@ namespace Pot
 	/* O(DnaCTC) / O(OrgC) + O(DnaCTC) */
 	void DNACollector::notifyOrganismDeath(const BaseOrganism& organism)
 	{
-		Logger::log(c_tag, "notify death of organism [%s @ %#p]", Tools::demangledName(typeid(organism).name()).c_str(), &organism);
-
 		const BaseOrganism* organismPtr = &organism;
 		OrganismContainer::iterator containerIt = m_organismContainer.find(organismPtr); /* O(1) / O(OrgWC) */
+
+		std::type_index organismType = std::type_index(typeid(organism)); // No more polymorphism since it's called from base destructor
+#ifdef POT_DEBUG
+		// Trying to get the polymorphic type in debug
+		if (containerIt != m_organismContainer.end())
+		{
+			const OrganismByTimestamp& organisms = containerIt->second.second; /* O(1) */
+			if (!organisms.empty())
+			{
+				const OrganismInfo& info = organisms.begin()->second; /* O(1) */
+				organismType = std::type_index(info.type);
+			}
+		}
+#endif
+		Logger::log(c_tag, "notify death of organism [%s @ %#p]", Demangler(organismType)(), &organism);
+
 		if (containerIt == m_organismContainer.end()) // No references on this pointer
 		{
 #ifdef POT_DEBUG

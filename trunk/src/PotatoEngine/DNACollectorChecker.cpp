@@ -1,7 +1,9 @@
 #include "DnaCollectorChecker.hpp"
 
+#ifdef POT_DEBUG
 #include <set>
 #include "Debug/Logger.hpp"
+#include "Debug/Demangler.hpp"
 #include "DNACollector.hpp"
 #include "DNACollectorTimestamp.hpp"
 #include "BaseDNA.hpp"
@@ -9,6 +11,7 @@
 namespace Pot
 {
 	using Debug::Logger;
+	using Debug::Demangler;
 
 	const potu8 DNACollectorChecker::c_operationCountBetweenChecks = 1;
 
@@ -145,7 +148,7 @@ namespace Pot
 
 				std::ostringstream oss;
 				oss << "DNACollector::checkIntegrity: ";
-				oss << "the DNAList is empty for timestamp " << t << " and type " << Tools::demangledName(dnaIt->first.name());
+				oss << "the DNAList is empty for timestamp " << t << " and type " << Demangler(dnaIt->first);
 				handleError(!typedDnas.empty(), oss.str().c_str());
 			}
 		}
@@ -232,7 +235,7 @@ namespace Pot
 			}
 		}
 	}
-	
+
 	/* O(OrgWC) / O(OrgC) */
 	void DNACollectorChecker::checkOrganisms_AliveTimestampIntegrity() const
 	{
@@ -314,3 +317,4 @@ namespace Pot
 		}
 	}
 }
+#endif
