@@ -11,6 +11,7 @@ ECHO =
 
 OS_LDFLAGS = 
 OS_DIR =
+# -fno-pie on OSX to get filename and line in the callstack
 
 TRUNK_DIR = ..
 LIB_DIR = $(TRUNK_DIR)/lib
@@ -62,6 +63,9 @@ ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_SUBDIR)/*.cpp)
 POTATO_ENGINE_DEBUG_SUBDIR = PotatoEngine/Debug
 ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_DEBUG_SUBDIR)/*.cpp)
 
+POTATO_ENGINE_DEBUG_CALLSTACK_SUBDIR = $(POTATO_ENGINE_DEBUG_SUBDIR)/Callstack
+ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_DEBUG_CALLSTACK_SUBDIR)/*.cpp)
+
 POTATO_ENGINE_CORE_SUBDIR = PotatoEngine/Core
 ENGINE_SRC += $(wildcard $(SRC_DIR)/$(POTATO_ENGINE_CORE_SUBDIR)/*.cpp)
 
@@ -84,7 +88,7 @@ CORE_SUBDIR = Core
 SRC += $(wildcard $(SRC_DIR)/$(CORE_SUBDIR)/*.cpp) 
 
 DEBUG_SUBDIR = Debug
-SRC += $(wildcard $(SRC_DIR)/$(DEBUG_SUBDIR)/*.cpp) 
+SRC += $(wildcard $(SRC_DIR)/$(DEBUG_SUBDIR)/*.cpp)
 
 # OBJ files
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)

@@ -5,19 +5,28 @@
 
 namespace Pot { namespace Debug
 {
-	Demangler::Demangler(const char* name)
+	Demangler::Demangler(const char* name, bool permissive):
+		m_res(),
+		m_success(false),
+		m_permissive(permissive)
 	{
 		demangle(name);
 	}
 
 	template <>
-	Demangler::Demangler(const std::type_info& type)
+	Demangler::Demangler(const std::type_info& type, bool permissive):
+		m_res(),
+		m_success(false),
+		m_permissive(permissive)
 	{
 		demangle(type.name());
 	}
 
 	template <>
-	Demangler::Demangler(const std::type_index& type)
+	Demangler::Demangler(const std::type_index& type, bool permissive):
+		m_res(),
+		m_success(false),
+		m_permissive(permissive)
 	{
 		demangle(type.name());
 	}
@@ -37,19 +46,30 @@ namespace Pot { namespace Debug
 		return m_res.c_str();
 	}
 
+	bool Demangler::success() const
+	{
+		return m_success;
+	}
+
 	void Demangler::demangle(const char* name)
 	{
 		ASSERT_DEBUG(name != nullptr);
 
 		int status = 0;
 		char* res = abi::__cxa_demangle(name, nullptr, nullptr, &status);
+		m_success = (status == 0);
 
 		switch (status)
 		{
+			case 0: // Success
+				break;
+
 			case -1:
-				ASSERT_DEBUG_MSG(false, "demangleName: a memory allocation failiure occurred");
+				if (!m_permissive)
+					ASSERT_DEBUG_MSG(false, "demangleName: a memory allocation failiure occurred");
 				break;
 			case -2:
+				if (!m_permissive)
 				{
 					std::ostringstream oss;
 					oss << "demangleName: "
@@ -59,9 +79,12 @@ namespace Pot { namespace Debug
 				}
 				break;
 			case -3:
-				ASSERT_DEBUG_MSG(false, "demangleName: one of the arguments is invalid");
+				if (!m_permissive)
+					ASSERT_DEBUG_MSG(false, "demangleName: one of the arguments is invalid");
 				break;
+
 			default:
+				ASSERT_NOT_REACHED();
 				break;
 		}
 
