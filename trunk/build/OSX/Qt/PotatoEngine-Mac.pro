@@ -26,9 +26,20 @@ SOURCES += \
     ../../../src/PotatoEngine/Core/Transform.cpp \
     ../../../src/PotatoEngine/Core/Math.cpp \
     ../../../src/PotatoEngine/DNACollector.cpp \
-    ../../../src/PotatoEngine/BaseOrganism.cpp
+    ../../../src/PotatoEngine/BaseOrganism.cpp \
+    ../../../src/PotatoEngine/BaseDNA.cpp \
+    ../../../src/PotatoEngine/DNACollectorChecker.cpp \
+    ../../../src/PotatoEngine/DNACollectorTimestamp.cpp \
+    ../../../src/PotatoEngine/Debug/Demangler.cpp \
+    ../../../src/PotatoEngine/Debug/Callstack/AbstractCallstack.cpp \
+    ../../../src/PotatoEngine/Debug/Callstack/EmptyCallstack.cpp \
+    ../../../src/PotatoEngine/Debug/Callstack/BacktraceCallstack.cpp \
+    ../../../src/PotatoEngine/Debug/Callstack/BackwardCPPCallstack.cpp \
+    ../../../src/PotatoEngine/Debug/PosixSignalHandler.cpp
 
 HEADERS +=  \
+    ../../../src/PotatoEngine/stdafx.h \
+    ../../../src/PotatoEngine/targetver.h \
     ../../../src/PotatoEngine/PotatoPlant.hpp \
     ../../../src/PotatoEngine/Stem.hpp \
     ../../../src/PotatoEngine/Potato.hpp \
@@ -41,7 +52,7 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Debug/Renderer.hpp \
     ../../../src/PotatoEngine/Debug/Logger.hpp \
     ../../../src/PotatoEngine/Debug/assert.hpp \
-    ../../../src/PotatoEngine/Core/compilFlags.hpp \
+    ../../../src/PotatoEngine/Core/compil.hpp \
     ../../../src/PotatoEngine/Core/Vector2.hpp \
     ../../../src/PotatoEngine/Core/Transform.hpp \
     ../../../src/PotatoEngine/Core/Tools.hpp \
@@ -58,7 +69,18 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Core/types.hpp \
     ../../../src/PotatoEngine/DNACollector.hpp \
     ../../../src/PotatoEngine/BaseOrganism.hpp \
-    ../../../src/PotatoEngine/DNA.hpp
+    ../../../src/PotatoEngine/DNA.hpp \
+    ../../../src/PotatoEngine/BaseDNA.hpp \
+    ../../../src/PotatoEngine/DNACollectorChecker.hpp \
+    ../../../src/PotatoEngine/DNACollectorTimestamp.hpp \
+    ../../../src/PotatoEngine/Debug/Demangler.hpp \
+    ../../../src/PotatoEngine/Debug/Callstack.hpp \
+    ../../../src/PotatoEngine/Debug/Callstack/AbstractCallstack.hpp \
+    ../../../src/PotatoEngine/Debug/Callstack/EmptyCallstack.hpp \
+    ../../../src/PotatoEngine/Debug/Callstack/BacktraceCallstack.hpp \
+    ../../../src/PotatoEngine/Debug/Callstack/BackwardCPPCallstack.hpp \
+    ../../../src/PotatoEngine/Debug/PosixSignalHandler.hpp \
+    ../../../src/PotatoEngine/Debug/SignalHandler.hpp
 
 OTHER_FILES += \
     ../../../src/TODO \

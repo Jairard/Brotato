@@ -1,7 +1,6 @@
 Core:
 - class PotatoDNA
 - class CellDNA<T>
-- file cast.hpp
 - JSON parser -> JsonCpp
 - XML parser
 - Stack trace debugger
@@ -13,4 +12,8 @@ Graphics:
 
 Cells:
 - class PhysicCell
+
+Objectives:
+- demo1: rectangle anchors
+- demo2: hierarchy (robotic arm with controls over rotation for parent and child)
 
