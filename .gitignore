@@ -17,6 +17,19 @@ trunk/build/Brotato.xcodeproj
 #*.a
 *.lib
 
+# VS
+*.ipch
+trunk/build/Windows/Visual Studio/Brotato/Debug/*.exe
+trunk/build/Windows/Visual Studio/Brotato/Debug/*.pdb
+trunk/build/Windows/Visual Studio/Brotato/Release/*.exe
+trunk/build/Windows/Visual Studio/Brotato/Release/*.pdb
+trunk/build/Windows/Visual Studio/Brotato/Brotato/Debug
+trunk/build/Windows/Visual Studio/Brotato/Brotato/Release
+trunk/build/Windows/Visual Studio/Brotato/PotatoEngine/Debug
+trunk/build/Windows/Visual Studio/Brotato/PotatoEngine/Release
+trunk/build/Windows/Visual Studio/Brotato/ipch
+
+
 # Executables
 *.exe
 *.out
@@ -24,19 +37,13 @@ trunk/build/Brotato.xcodeproj
 bin/
 
 *.ttf
-
 *.png
-
 *.jpg
-
 *.plist
 
 trunk/bin/test
 
 Brotato-build-desktop-Desktop_Qt_4_8_1_for_GCC__Qt_SDK__Debug/Makefile
-
 trunk/Brotato.xcodeproj
-
 trunk/build/c++11
-
 trunk/build/c++11.dSYM/Contents/Resources/DWARF/c++11
