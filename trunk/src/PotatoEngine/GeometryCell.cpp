@@ -9,7 +9,7 @@ namespace Pot
 
 using Debug::Logger;
 
-GeometryCell::GeometryCell(Potato* potato, sf::PrimitiveType primitiveType, unsigned int vertexCount):
+GeometryCell::GeometryCell(Potato* potato, sf::PrimitiveType primitiveType, size_t vertexCount):
 	Cell(potato),
 	m_array(primitiveType, vertexCount)
 {
@@ -17,7 +17,7 @@ GeometryCell::GeometryCell(Potato* potato, sf::PrimitiveType primitiveType, unsi
 
 void GeometryCell::setColor(const sf::Color& color)
 {
-	for (unsigned int i = 0; i < m_array.getVertexCount(); ++i)
+	for (size_t i = 0; i < m_array.getVertexCount(); ++i)
 		m_array[i].color = color;
 }
 
@@ -40,12 +40,12 @@ void GeometryCell::updateAABBs()
 void GeometryCell::updateLocalAABB()
 {
 	ASSERT_RELEASE(m_array.getVertexCount() > 0);
-	const unsigned int vertexCount = m_array.getVertexCount();
+	const size_t vertexCount = m_array.getVertexCount();
 	float right = 0.f, top = 0.f;
 	m_localAABB.left = right = m_array[0].position.x;
 	m_localAABB.bottom = top = m_array[0].position.y;
 	
-	for (unsigned int i = 1; i < vertexCount; ++i)
+	for (size_t i = 1; i < vertexCount; ++i)
 	{
 		sf::Vector2f& p = m_array[i].position;
 		m_localAABB.left = std::min(m_localAABB.left, p.x);
@@ -61,7 +61,7 @@ void GeometryCell::updateLocalAABB()
 void GeometryCell::updateWorldAABB()
 {
 	ASSERT_RELEASE(m_array.getVertexCount() > 0);
-	const unsigned int vertexCount = m_array.getVertexCount();
+	const size_t vertexCount = m_array.getVertexCount();
 	const Transform& localToWorld = sPotato()->localToWorldTransform();
 	Vector2f transformedPoint = localToWorld.transformPoint(sfv_2_pv(m_array[0].position));
 	float right = 0.f, top = 0.f;
@@ -69,7 +69,7 @@ void GeometryCell::updateWorldAABB()
 	m_worldAABB.left = right = transformedPoint.x;
 	m_worldAABB.bottom = top = transformedPoint.y;
 	
-	for (unsigned int i = 1; i < vertexCount; ++i)
+	for (size_t i = 1; i < vertexCount; ++i)
 	{
 		transformedPoint = localToWorld.transformPoint(sfv_2_pv(m_array[i].position));
 		m_worldAABB.left = std::min(m_worldAABB.left, transformedPoint.x);

@@ -3,10 +3,6 @@
 
 #include "../Core/compil.hpp"
 
-#ifndef POT_COMPILER_MSC
-#define POT_POSIX_SUPPORT
-#endif
-
 #ifdef POT_POSIX_SUPPORT
 
 #include <cstddef>
@@ -19,30 +15,30 @@
 
 namespace Pot { namespace Debug
 {
-    class PosixSignalHandler: public NonInstantiable
-    {
-    private:
-        struct SignalInfo
-        {
-            int id;
-            const char* name;
-        };
+	class PosixSignalHandler: public NonInstantiable
+	{
+	private:
+		struct SignalInfo
+		{
+			int id;
+			const char* name;
+		};
 
-    public:
-        static void setupSignalHandling();
+	public:
+		static void setupSignalHandling();
 
-    private:
-        static void handleSignal(int signalId, siginfo_t* info, void* context);
+	private:
+		static void handleSignal(int signalId, siginfo_t* info, void* context);
 
-    private:
-        static const size_t c_additionalFramesToSkip;
-        static const SignalInfo c_handledSignals[];
-        static const size_t c_signalCount;
-        static potb s_alternateStack[SIGSTKSZ];
+	private:
+		static const size_t c_additionalFramesToSkip;
+		static const SignalInfo c_handledSignals[];
+		static const size_t c_signalCount;
+		static potb s_alternateStack[SIGSTKSZ];
 #ifdef POT_DEBUG
-        static bool s_initialized;
+		static bool s_initialized;
 #endif
-    };
+	};
 }}
 #endif
 

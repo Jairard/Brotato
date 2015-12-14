@@ -17,6 +17,7 @@
 #include "DNACollectorTimestamp.hpp"
 
 // TODO:
+// - fix test pool
 // - callstack
 // - logs: type (remove "const*")
 // - Look for complexity improvements

@@ -9,15 +9,20 @@
 #define NOMINMAX
 #include "targetver.h"
 
+#ifdef POT_PLATFORM_WINDOWS
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
 #include <windows.h>
+#endif
 
 // C RunTime Header Files
 #include <stdlib.h>
-#include <malloc.h>
 #include <memory.h>
+// TODO: get rid of those files ?
+#ifdef POT_PLATFORM_WINDOWS
+#include <malloc.h>
 #include <tchar.h>
+#endif
 
 #ifdef POT_COMPILER_GCC
 # define POT_FUNC __PRETTY_FUNCTION__
@@ -50,7 +55,7 @@ struct TOOLS_VSINK { template<typename ...Args> TOOLS_VSINK(const Args& ... ) {}
 #endif
 
 #ifdef POT_CONST_EXPR_SUPPORT
-# define POT_STATIC_IS(T1, T2)  ::Pot::Tools::is<T1, T2>
+# define POT_STATIC_IS(T1, T2)  ::Pot::Tools::is<T1, T2>()
 #else
 # define POT_STATIC_IS(T1, T2)  ::std::is_base_of<T2, T1>::value
 #endif

@@ -109,7 +109,7 @@ void Logger::vLog(std::ostream& stream, const char* tag, const char* fmt, va_lis
 	// No error occured (but the buffer was potentially not big enough)
 	if (n >= 0)
 	{
-		if (n >= c_bufferSize)
+		if (static_cast<size_t>(n) >= c_bufferSize)
 		{
 			logVariadicError(stream);
 			buffer[c_bufferSize-1] = '\0';
@@ -207,15 +207,15 @@ tm* Logger::currentTime()
 
 std::ostream& Logger::logImpl(std::ostream& stream, const char* str)
 {
-    ASSERT_RELEASE(str != nullptr);
+	ASSERT_RELEASE(str != nullptr);
 
 #ifdef POT_COMPILER_MSC // POT_PLATFORM_WINDOWS ?
-    OutputDebugStringA(str);
-#elif
-    stream << str;
+	OutputDebugStringA(str);
+#else
+	stream << str;
 #endif
 
-    return stream;
+	return stream;
 }
 
 }

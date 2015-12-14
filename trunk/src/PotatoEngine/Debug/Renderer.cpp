@@ -64,7 +64,7 @@ void Renderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Co
 void Renderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 	sf::Vector2f* sfVertices = b2va_2_sfva(vertices, vertexCount);
-	DrawPolygon(sfVertices, vertexCount, b2c_2_sfc(color));
+	DrawPolygon(sfVertices, static_cast<size_t>(vertexCount), b2c_2_sfc(color));
 	delete[] sfVertices;
 }
 
@@ -162,7 +162,7 @@ void Renderer::DrawPolygon(const Vector2f* vertices, int32 vertexCount, const sf
 	delete[] sfVertices;
 }
 
-void Renderer::DrawSolidPolygon(const Vector2f* vertices, int32 vertexCount, const sf::Color& color)
+void Renderer::DrawSolidPolygon(const Vector2f* vertices, size_t vertexCount, const sf::Color& color)
 {
 	sf::Vector2f* sfVertices = pva_2_sfva(vertices, vertexCount);
 	DrawSolidPolygon(sfVertices, vertexCount, color);
@@ -259,7 +259,7 @@ void Renderer::DrawPolygon(const sf::Vector2f* vertices, int32 vertexCount, cons
 	}
 }
 
-void Renderer::DrawSolidPolygon(const sf::Vector2f* vertices, int32 vertexCount, const sf::Color& color)
+void Renderer::DrawSolidPolygon(const sf::Vector2f* vertices, size_t vertexCount, const sf::Color& color)
 {
 	ASSERT_DEBUG(!m_isLocked);
 
@@ -272,7 +272,7 @@ void Renderer::DrawSolidPolygon(const sf::Vector2f* vertices, int32 vertexCount,
 	// Inside
 	poly.setFillColor(fillColor);
 
-	for (int32 i=0; i<vertexCount; i++)
+	for (size_t i=0; i<vertexCount; i++)
 		poly.setPoint(i, vertices[i]);
 
 	m_window.draw(poly);
@@ -302,12 +302,12 @@ void Renderer::DrawCircle(const sf::Vector2f& center, float32 radius, const sf::
 void Renderer::DrawSolidCircle(const sf::Vector2f& center, float32 radius, const sf::Vector2f& axis, const sf::Color& color)
 {
 	/* circle */
-	const int32 vertexCount = 32;
+	const size_t vertexCount = 32;
 	sf::Vector2f* vertices = new sf::Vector2f[vertexCount];
 	float32 theta = 0.0f;
 	const float32 inc = 2.0f * b2_pi/(float32)vertexCount;
 
-	for (int32 i = 0; i < vertexCount; ++i)
+	for (size_t i = 0; i < vertexCount; ++i)
 	{
 		vertices[i] = center + radius * sf::Vector2f(cosf(theta), sinf(theta));
 		theta += inc;
@@ -352,9 +352,9 @@ void Renderer::vDrawString(int x, int y, const char* string, va_list arg, const 
 	if (!m_isFontLoaded)
 		return;
 
-    const size_t bufferSize = 512;
-    char buffer[bufferSize];
-    vsnprintf_s(buffer, bufferSize, string, arg);
+	const size_t bufferSize = 512;
+	char buffer[bufferSize];
+	vsnprintf(buffer, bufferSize, string, arg);
 
 	sf::FloatRect viewport = m_window.getView().getViewport();
 	sf::Vector2u sfWindowSize = m_window.getSize();

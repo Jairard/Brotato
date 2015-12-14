@@ -79,7 +79,7 @@ class Potato//: public DefaultOrganismImpl<Potato>
 		template<typename CellType>
 		CellType* addCell()
 		{
-            static_assert(POT_STATIC_IS(CellType, Cell), "This cell does not inherit from ::Pot::Cell");
+			static_assert(POT_STATIC_IS(CellType, Cell), "This cell does not inherit from ::Pot::Cell");
 
 			CellType* cell = new CellType(this);
 			m_cells.push_back(cell);

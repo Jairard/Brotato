@@ -7,7 +7,12 @@
 #include <sstream>
 #include "../stdafx.h"
 #include "../Debug/assert.hpp"
+#include "compil.hpp"
 #include "NonInstantiable.hpp"
+
+#ifdef POT_COMPILER_GCC
+#include <cxxabi.h>
+#endif
 
 namespace Pot
 {
@@ -15,17 +20,19 @@ namespace Pot
 class Tools: public NonInstantiable
 {
 	public:
-        // Useless ?
+		// Useless ?
 		template <typename T, typename U>
 		static bool is(const U* ptr)
 		{
+			POT_UNUSED(ptr);
 			return is<T, U>();
 		}
 
 		template <typename T, typename U>
 		static bool is(U* ptr)
 		{
-            return is<T, U>();
+			POT_UNUSED(ptr);
+			return is<T, U>();
 		}
 
 		template <typename T, typename U>
@@ -35,11 +42,11 @@ class Tools: public NonInstantiable
 			return std::is_base_of<U, T>();
 		}
 
-        /*
-        A* b = new B();
-        A* c = new C();
-        typeid(b) == typeid(c) ?
-        */
+		/*
+		A* b = new B();
+		A* c = new C();
+		typeid(b) == typeid(c) ?
+		*/
 		template <typename T, typename U>
 		static bool isStrictly(U*)
 		{
