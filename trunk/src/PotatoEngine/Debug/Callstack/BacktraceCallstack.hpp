@@ -1,7 +1,9 @@
 #ifndef __POT_DEBUG_BACKTRACE_CALLSTACK__
 #define __POT_DEBUG_BACKTRACE_CALLSTACK__
 
-#ifdef __GNUC__
+#include "../../Core/compil.hpp"
+
+#ifdef POT_COMPILER_GCC
 #define POT_BACKTRACE_SUPPORT
 #endif
 

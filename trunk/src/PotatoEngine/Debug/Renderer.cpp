@@ -7,12 +7,12 @@
 #include "../Core/LibsHelpers.hpp"
 #include "assert.hpp"
 
-namespace Pot 
+namespace Pot
 {
 namespace Debug
 {
 const sf::Color Renderer::TRANSPARENT_COLOR = sf::Color(0, 0, 0, 0);
-# ifdef _MSC_VER
+# ifdef POT_COMPILER_MSC
 const char* Renderer::DEFAULT_FONT_FILE = "arial.ttf";
 #else
 const char* Renderer::DEFAULT_FONT_FILE = "../res/arial.ttf";
@@ -42,7 +42,7 @@ void Renderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& co
 void Renderer::DrawTransform(const b2Transform& t)
 {
 	ASSERT_DEBUG(!m_isLocked);
-	
+
 	// TODO: b2Transform -> sf::Transform conversion ?
 	b2Color xColor(1.f, 0.f, 0.f), yColor(0.f, 1.f, 0.f);
 	const float32 k_axisScale = 0.4f;
@@ -88,7 +88,7 @@ void Renderer::DrawAABB(b2AABB* aabb, const b2Color& color)
 	            aabb->lowerBound.y,
 	            aabb->upperBound.x - aabb->lowerBound.x,
 	            aabb->upperBound.y - aabb->lowerBound.y);
-	
+
 	DrawRect(rect, b2c_2_sfc(color));
 	/*/
 	sf::Color c = b2c_2_sfc(color);
@@ -96,7 +96,7 @@ void Renderer::DrawAABB(b2AABB* aabb, const b2Color& color)
 	         p2(aabb->upperBound.x, -aabb->lowerBound.y),
 	         p3(aabb->upperBound.x, -aabb->upperBound.y),
 	         p4(aabb->lowerBound.x, -aabb->upperBound.y);
-	
+
 	DrawSegment(p1, p2, c);
 	DrawSegment(p2, p3, c);
 	DrawSegment(p3, p4, c);
@@ -115,10 +115,10 @@ void Renderer::DrawString(int x, int y, const b2Color& color, const char* string
 sf::Vector2f* Renderer::b2va_2_sfva(const b2Vec2* vertices, int32 vertexCount) const
 {
 	sf::Vector2f* res = new sf::Vector2f[vertexCount];
-	
+
 	for (int32 i = 0; i < vertexCount; ++i)
 		res[i] = b2v_2_sfv(vertices[i]);
-	
+
 	return res;
 }
 
@@ -182,10 +182,10 @@ void Renderer::DrawSolidCircle(const Vector2f& center, float32 radius, const Vec
 sf::Vector2f* Renderer::pva_2_sfva(const Vector2f* vertices, int32 vertexCount) const
 {
 	sf::Vector2f* res = new sf::Vector2f[vertexCount];
-	
+
 	for (int32 i = 0; i < vertexCount; ++i)
 		res[i] = pv_2_sfv(vertices[i]);
-	
+
 	return res;
 }
 
@@ -193,7 +193,7 @@ sf::Vector2f* Renderer::pva_2_sfva(const Vector2f* vertices, int32 vertexCount) 
 void Renderer::DrawPoint(const sf::Vector2f& p, float32 size, const sf::Color& color)
 {
 	ASSERT_DEBUG(!m_isLocked);
-	
+
 	// TODO: test
 	const sf::Vector2u& windowSize = m_window.getSize();
 	const sf::Vector2f& viewSize = m_window.getView().getSize();
@@ -207,13 +207,13 @@ void Renderer::DrawPoint(const sf::Vector2f& p, float32 size, const sf::Color& c
 void Renderer::DrawSegment(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Color& color)
 {
 	ASSERT_DEBUG(!m_isLocked);
-	
+
 	sf::VertexArray array(sf::Lines, 2);
 	array[0].position = p1;
 	array[0].color = color;
 	array[1].position = p2;
 	array[1].color = color;
-	
+
 	m_window.draw(array);
 }
 
@@ -227,7 +227,7 @@ void Renderer::DrawTransform(const sf::Transform& t)
 	sf::Color xColor = sf::Color::Red, yColor = sf::Color::Green;
 	sf::Vector2f center(0.f, 0.f), xPoint(1.f, 0.f), yPoint(0.f, 1.f);
 	sf::Vector2f xAxis = t.transformPoint(xPoint), yAxis = t.transformPoint(yPoint);
-	
+
 	DrawSegment(center, center + xAxis, xColor);
 	DrawSegment(center, center + yAxis, yColor);
 }
@@ -239,9 +239,9 @@ void Renderer::DrawRect(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf
 	vertices[1] = p2;
 	vertices[2] = p3;
 	vertices[3] = p4;
-	
+
 	DrawRect(vertices, color);
-	
+
 	delete[] vertices;
 }
 
@@ -262,7 +262,7 @@ void Renderer::DrawPolygon(const sf::Vector2f* vertices, int32 vertexCount, cons
 void Renderer::DrawSolidPolygon(const sf::Vector2f* vertices, int32 vertexCount, const sf::Color& color)
 {
 	ASSERT_DEBUG(!m_isLocked);
-	
+
 	sf::Color fillColor(static_cast<sf::Uint8>(color.r * 0.5f),
                         static_cast<sf::Uint8>(color.g * 0.5f),
                         static_cast<sf::Uint8>(color.b * 0.5f),
@@ -319,8 +319,8 @@ void Renderer::DrawSolidCircle(const sf::Vector2f& center, float32 radius, const
 	/* rendering */
 	DrawSolidPolygon(vertices, vertexCount, color);
 	DrawSegment(center, p2, color);
-	
-	delete[] vertices;
+
+    delete[] vertices;
 }
 
 void Renderer::DrawAABB(const sf::FloatRect& aabb, const sf::Color& color)

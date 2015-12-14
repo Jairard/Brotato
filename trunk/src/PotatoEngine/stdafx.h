@@ -2,9 +2,10 @@
 // or project specific include files that are used frequently, but
 // are changed infrequently
 //
+#ifndef __POT_STD_AFX__
+#define __POT_STD_AFX__
 
-#pragma once
-
+#include "Core/compil.hpp"
 #define NOMINMAX
 #include "targetver.h"
 
@@ -18,30 +19,26 @@
 #include <memory.h>
 #include <tchar.h>
 
-// TODO:
-// - POT_PLATFORM_X
-// - POT_COMPIL_X
-
-#ifdef _GNUC
+#ifdef POT_COMPILER_GCC
 # define POT_FUNC __PRETTY_FUNCTION__
 #else
 # define POT_FUNC __FUNCTION__
 #endif
 
 #define POT_UNUSED(X)  ((void)(X))
-#ifdef _GNUC
+#ifdef POT_COMPILER_GCC
 struct TOOLS_VSINK { template<typename ...Args> TOOLS_VSINK(const Args& ... ) {} };
-#define POT_VUNUSED(X) TOOLS_VSINK {X...}
-#define POT_FUNUSED(X) X __attribute__((unused))
+# define POT_VUNUSED(X) TOOLS_VSINK {X...}
+# define POT_FUNUSED(X) X __attribute__((unused))
 #else
-#define POT_VUNUSED(X)
-#define POT_FUNUSED(X) X
+# define POT_VUNUSED(X)
+# define POT_FUNUSED(X) X
 #endif
 
-#ifdef _GNUC
-#define POT_CONST_EXPR constexpr
-#define POT_CONST_EXPR_SUPPORT
-#elif defined(_MSC_VER)
+#if defined(POT_COMPILER_GCC)
+# define POT_CONST_EXPR constexpr
+# define POT_CONST_EXPR_SUPPORT
+#elif defined(POT_COMPILER_MSC)
 # if (_MSC_VER >= 1900)
 #  define POT_CONST_EXPR constexpr
 #  define POT_CONST_EXPR_SUPPORT
@@ -53,9 +50,10 @@ struct TOOLS_VSINK { template<typename ...Args> TOOLS_VSINK(const Args& ... ) {}
 #endif
 
 #ifdef POT_CONST_EXPR_SUPPORT
-#define POT_STATIC_IS(T1, T2)  ::Pot::Tools::is<T1, T2>
+# define POT_STATIC_IS(T1, T2)  ::Pot::Tools::is<T1, T2>
 #else
-#define POT_STATIC_IS(T1, T2)  ::std::is_base_of<T2, T1>::value
+# define POT_STATIC_IS(T1, T2)  ::std::is_base_of<T2, T1>::value
 #endif
 
 // TODO: reference additional headers your program requires here
+#endif

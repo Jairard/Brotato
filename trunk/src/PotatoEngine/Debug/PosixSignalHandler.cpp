@@ -74,7 +74,7 @@ namespace Pot { namespace Debug
         action.sa_sigaction = handleSignal;
         sigemptyset(&action.sa_mask);
 
-#ifdef __APPLE__
+#ifdef POT_PLATFORM_OSX
         // for some reason we backtrace() doesn't work on OSX
         // when we use an alternate stack, so this is meaningless
         action.sa_flags = SA_SIGINFO;

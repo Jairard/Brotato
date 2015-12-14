@@ -99,7 +99,7 @@ namespace Pot { namespace Debug
 		char command[bufferSize];
 
 		// Get file name and line from the adress
-#ifdef __APPLE__
+#ifdef POT_PLATFORM_OSX
 		snprintf(command, bufferSize, "xcrun atos -o %s %p", c_programName, address); 
 #else
 		snprintf(command, bufferSize, "addr2line -f -p -e %.256s %p", c_programName, address); 
@@ -137,7 +137,7 @@ namespace Pot { namespace Debug
 
 	void BacktraceCallstack::formatFileAndLine(char buffer[])
 	{
-#ifdef __APPLE__
+#ifdef POT_PLATFORM_OSX
 		// Buffer contains something like "main (in PotatoEngine) (_potatoEngine_main.cpp:257)"
 		const size_t maxFilenameSize = 128;
 		char filename[maxFilenameSize];

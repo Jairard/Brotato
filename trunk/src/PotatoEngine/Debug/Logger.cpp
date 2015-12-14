@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
-#ifdef _MSC_VER
+#ifdef POT_COMPILER_MSC // POT_PLATFORM_WINDOWS ?
 # include <debugapi.h>
 #endif
 #include "Logger.hpp"
@@ -209,7 +209,7 @@ std::ostream& Logger::logImpl(std::ostream& stream, const char* str)
 {
     ASSERT_RELEASE(str != nullptr);
 
-#ifdef _MSC_VER
+#ifdef POT_COMPILER_MSC // POT_PLATFORM_WINDOWS ?
     OutputDebugStringA(str);
 #elif
     stream << str;

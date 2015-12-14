@@ -1,7 +1,9 @@
 #ifndef __POT_DEBUG_POSIX_SIGNAL_HANDLER__
 #define __POT_DEBUG_POSIX_SIGNAL_HANDLER__
 
-#ifndef _MSC_VER
+#include "../Core/compil.hpp"
+
+#ifndef POT_COMPILER_MSC
 #define POT_POSIX_SUPPORT
 #endif
 
@@ -11,7 +13,7 @@
 #include <signal.h>
 #include <csignal>
 #include <cerrno>
-#include "../Core/compilFlags.hpp"
+#include "../Core/compil.hpp"
 #include "../Core/types.hpp"
 #include "../Core/NonInstantiable.hpp"
 

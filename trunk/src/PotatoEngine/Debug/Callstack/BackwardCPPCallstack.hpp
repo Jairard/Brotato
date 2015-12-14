@@ -1,7 +1,9 @@
 #ifndef __POT_BACKWARD_CPP_CALLSTACK__
 #define __POT_BACKWARD_CPP_CALLSTACK__
 
-#ifdef __linux__
+#include "../../Core/compil.hpp"
+
+#ifdef POT_PLATFORM_LINUX
 #define POT_BACKWARD_CPP_SUPPORT
 #endif
 

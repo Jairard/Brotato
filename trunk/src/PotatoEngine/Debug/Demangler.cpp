@@ -1,3 +1,4 @@
+#include "../Core/compil.hpp"
 #include "Demangler.hpp"
 
 #include "../Core/Tools.hpp"
@@ -55,7 +56,7 @@ namespace Pot { namespace Debug
 	{
 		ASSERT_DEBUG(name != nullptr);
 
-#ifdef _MSC_VER
+#ifdef POT_COMPILER_MSC
         m_res.assign(name);
 #else
 		int status = 0;

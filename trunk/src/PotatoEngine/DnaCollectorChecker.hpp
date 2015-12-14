@@ -1,7 +1,7 @@
 #ifndef __POT_DNA_COLLECTOR_CHECKER__
 #define __POT_DNA_COLLECTOR_CHECKER__
 
-#include "Core/compilFlags.hpp"
+#include "Core/compil.hpp"
 #ifdef POT_DEBUG
 #include "Core/NonCopyable.hpp"
 #include "Core/types.hpp"
