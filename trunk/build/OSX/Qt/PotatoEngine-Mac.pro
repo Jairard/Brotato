@@ -35,7 +35,11 @@ SOURCES += \
     ../../../src/PotatoEngine/Debug/Callstack/EmptyCallstack.cpp \
     ../../../src/PotatoEngine/Debug/Callstack/BacktraceCallstack.cpp \
     ../../../src/PotatoEngine/Debug/Callstack/BackwardCPPCallstack.cpp \
-    ../../../src/PotatoEngine/Debug/PosixSignalHandler.cpp
+    ../../../src/PotatoEngine/Debug/Callstack/StackWalkerCallstack.cpp \
+    ../../../src/PotatoEngine/Debug/Callstack/StackWalker.cpp \
+    ../../../src/PotatoEngine/Debug/SignalHandler.cpp \
+    ../../../src/PotatoEngine/Debug/PosixSignalHandler.cpp \
+    ../../../src/PotatoEngine/Debug/WindowsSignalHandler.cpp
 
 HEADERS +=  \
     ../../../src/PotatoEngine/stdafx.h \
@@ -79,8 +83,12 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Debug/Callstack/EmptyCallstack.hpp \
     ../../../src/PotatoEngine/Debug/Callstack/BacktraceCallstack.hpp \
     ../../../src/PotatoEngine/Debug/Callstack/BackwardCPPCallstack.hpp \
+    ../../../src/PotatoEngine/Debug/Callstack/StackWalkerCallstack.hpp \
+    ../../../src/PotatoEngine/Debug/Callstack/StackWalker.h \
+    ../../../src/PotatoEngine/Debug/Callstack/backward.hpp \
+    ../../../src/PotatoEngine/Debug/SignalHandler.hpp \
     ../../../src/PotatoEngine/Debug/PosixSignalHandler.hpp \
-    ../../../src/PotatoEngine/Debug/SignalHandler.hpp
+    ../../../src/PotatoEngine/Debug/WindowsSignalHandler.hpp
 
 OTHER_FILES += \
     ../../../src/TODO \
