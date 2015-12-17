@@ -101,7 +101,6 @@ namespace Pot { namespace Debug
 		if (signalId == SIGABRT)
 			framesToSkip += 5;
 
-		framesToSkip = 0;
 		// This callstack is not nice on OSX ...
 		Logger::log(Logger::CError, "Signal %s was triggered.\n%s", name, Callstack(framesToSkip)());
 		exit(EXIT_FAILURE);

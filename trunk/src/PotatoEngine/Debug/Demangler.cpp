@@ -57,7 +57,7 @@ namespace Pot { namespace Debug
 		ASSERT_DEBUG(name != nullptr);
 
 #ifdef POT_COMPILER_MSC
-        m_res.assign(name);
+		m_res = name;
 #else
 		int status = 0;
 		char* res = abi::__cxa_demangle(name, nullptr, nullptr, &status);
@@ -93,12 +93,12 @@ namespace Pot { namespace Debug
 		}
 
 		if (status != 0)
-			m_res.assign(name);
+			m_res = name;
 		else
 		{
-			m_res.assign(res);
+			m_res = res;
 			if (m_res.empty()) // There was nothing to demangle
-				m_res.assign(name);
+				m_res = name;
 			free(res);
 		}
 #endif

@@ -26,9 +26,9 @@ namespace Pot { namespace Debug
         s_initialized = true;
 #endif
 
-#ifdef POT_PLATFORM_WINDOWS
+#if defined(POT_PLATFORM_WINDOWS)
         WindowsSignalHandler::setup();
-#elif POT_POSIX_SUPPORT
+#elif defined(POT_POSIX_SUPPORT)
         PosixSignalHandler::setup();
 #else
 #pragma message("No signal handler implementation")

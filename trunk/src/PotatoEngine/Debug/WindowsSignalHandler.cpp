@@ -64,7 +64,7 @@ namespace Pot { namespace Debug
         else
         {
             std::string buffer;
-            oss << AbstractCallstack::outputFileAndLineFromAddress((void*)exceptionInfo->ContextRecord->Eip, buffer);
+            oss << AbstractCallstack::outputFileAndLineFromAddress((void*)exceptionInfo->ContextRecord->Eip, buffer, false);
         }
 
         Logger::log(Logger::CError, oss.str().c_str());
