@@ -49,7 +49,6 @@ namespace Pot { namespace Debug
 		const size_t bufferSize = 512;
 		char command[bufferSize];
 
-		const char* programName = c_programName;
 		ASSERT_DEBUG(c_programName != nullptr);
 		if (c_programName == nullptr)
 			return outString;

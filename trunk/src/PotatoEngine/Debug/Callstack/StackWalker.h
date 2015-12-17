@@ -8,10 +8,10 @@
  *  (for additional changes see History in 'StackWalker.cpp'!
  *
  **********************************************************************/
-// #pragma once is supported starting with _MCS_VER 1000, 
-// so we need not to check the version (because we only support _MSC_VER >= 1100)!
-#pragma once
+#ifndef __DEBUG_STACK_WALKER__
+#define __DEBUG_STACK_WALKER__
 
+#ifdef POT_STACKWALKER_SUPPORT
 #include <windows.h>
 
 // special defines for VC5/6 (if no actual PSDK is installed):
@@ -186,4 +186,7 @@ protected:
 	c.ContextFlags = contextFlags; \
 	RtlCaptureContext(&c); \
 } while(0);
+#endif
+
+#endif
 #endif

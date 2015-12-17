@@ -56,9 +56,9 @@ namespace Pot { namespace Debug
 				}
 
 				oss << "[" << std::setw(3) << std::right << i << "] "
-					<< Demangler(info.dli_sname, true)
-					<< " at " << outputFileAndLineFromAddress(info.dli_saddr, lineBuffer)
-					<< " (in " << binaryName << ")";
+				    << Demangler(info.dli_sname, true)
+				    << " at " << outputFileAndLineFromAddress(info.dli_saddr, lineBuffer)
+				    << " (in " << binaryName << ")";
 			}
 			else
 			{
