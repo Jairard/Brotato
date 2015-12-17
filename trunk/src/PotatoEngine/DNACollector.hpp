@@ -13,12 +13,13 @@
 #include "Core/Tools.hpp"
 #include "Core/types.hpp"
 #include "Debug/assert.hpp"
+#include "Debug/Callstack.hpp"
 #include "DnaCollectorChecker.hpp"
 #include "DNACollectorTimestamp.hpp"
 
 // TODO:
 // - fix test pool
-// - callstack
+// - callstack: check utility of organism callstacks
 // - logs: type (remove "const*")
 // - Look for complexity improvements
 // - separate folder/namespace ?
@@ -47,6 +48,7 @@ namespace Pot
 	}
 
 	using Debug::Logger;
+	using Debug::Callstack;
 
 	class DNACollector: public Singleton<DNACollector>, public NonCopyable
 	{
@@ -64,7 +66,7 @@ namespace Pot
 			BaseDNA& dna;
 			const BaseOrganism* organism;
 #ifdef POT_DEBUG
-			const char* callstack;
+			Callstack callstack;
 #endif
 
 			DNAInfo(BaseDNA& _dna);
@@ -77,7 +79,7 @@ namespace Pot
 #ifdef POT_DEBUG
 			bool alive;
 			const std::type_info& type;
-			const char* callstack;
+			Callstack callstack;
 #endif
 
 			OrganismInfo();
@@ -136,6 +138,8 @@ namespace Pot
 
 		private:
 			static const char* c_tag;
+			static const size_t c_framesToSkipForDNAInfo;
+			static const size_t c_framesToSkipForOrganismInfo;
 			DNAContainer m_dnaContainer;
 			OrganismContainer m_organismContainer;
 			DNACollectorTimestamp m_timestamp;

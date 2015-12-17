@@ -9,18 +9,23 @@
 #include "BaseDNA.hpp"
 #include "BaseOrganism.hpp"
 
+#include "Debug/CallStack/AbstractCallstack.hpp"
+#include "Debug/CallStack.hpp"
+
 namespace Pot
 {
 	using Debug::Demangler;
 
 	const char* DNACollector::c_tag = "DNACollector";
+	const size_t DNACollector::c_framesToSkipForDNAInfo      = Debug::AbstractCallstack::c_defaultSkippedFrameCount + 6;
+	const size_t DNACollector::c_framesToSkipForOrganismInfo = Debug::AbstractCallstack::c_defaultSkippedFrameCount + 7;
 
 	// DNACollector::DNAInfo
 	DNACollector::DNAInfo::DNAInfo(BaseDNA& _dna):
 		  dna(_dna)
 		, organism(nullptr)
 #ifdef POT_DEBUG
-		, callstack(nullptr)
+		, callstack(c_framesToSkipForDNAInfo, true)
 #endif
 	{}
 
@@ -29,7 +34,6 @@ namespace Pot
 		dna = other.dna;
 		organism = other.organism;
 #ifdef POT_DEBUG
-		// TODO: copy callstack
 		callstack = other.callstack;
 #endif
 
@@ -42,7 +46,7 @@ namespace Pot
 #ifdef POT_DEBUG
 		, alive(false)
 		, type(typeid(void))
-		, callstack(nullptr)
+		, callstack(c_framesToSkipForOrganismInfo, true)
 #endif
 	{}
 
@@ -51,7 +55,7 @@ namespace Pot
 #ifdef POT_DEBUG
 		, alive(_alive)
 		, type(_type)
-		, callstack(nullptr)
+		, callstack(c_framesToSkipForOrganismInfo, true)
 #endif
 	{
 #ifndef POT_DEBUG
@@ -122,6 +126,7 @@ namespace Pot
 				const OrganismInfo& info = organismIt->second;
 				Logger::log(tag, "        Alive: %s", Tools::bool2str(info.alive));
 				Logger::log(tag, "        Type: %s", Demangler(info.type)());
+				Logger::log(tag, "        Callstack:\n%s", info.callstack());
 #endif
 				++i;
 			}
@@ -151,6 +156,7 @@ namespace Pot
 					Logger::log(tag, "  [%3u] Adress: %#p", i, &dnaInfo.dna);
 					Logger::log(tag, "        organism: current(%#p), stored(%#p)", dnaInfo.dna.organism(), dnaInfo.organism);
 					Logger::log(tag, "        timestamp: %llu", containerIt->first.value());
+					Logger::log(tag, "        Callstack:\n%s", dnaInfo.callstack());
 				}
 			}
 		}
@@ -207,9 +213,6 @@ namespace Pot
 		// Create info structure and fill it
 		DNAInfo dnaInfo(dna);
 		dnaInfo.organism = dna.organism();
-#ifdef POT_DEBUG
-		dnaInfo.callstack = nullptr;
-#endif
 
 		const BaseOrganism* organism = dna.organism();
 
