@@ -26,14 +26,22 @@ namespace Pot { namespace Debug
         return m_trace;
     }
 
+	void StackWalkerCallstacl::setStackTrace(const std::string& trace)
+	{
+		m_trace = trace;
+	}
+
     void StackWalkerCallstack::OnCallstackEntry(CallstackEntryType eType, CallstackEntry& entry)
     {
         // Don't call parent, we want to totally redefine behaviour here
         if (eType == lastEntry || entry.offset == 0)
             return;
 
-        if (++m_currentFrame < m_skippedFramesCount)
+        if (++m_currentFrame < m_skippedFrameCount)
             return;
+
+		if (m_currentFrame > m_skippedFrameCount)
+			m_traceStream << std::endl;
 
         if (!isStringSet(entry.name))
             strcpy_s(entry.name, "[function name not available]");

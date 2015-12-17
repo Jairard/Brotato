@@ -16,8 +16,8 @@
 
 namespace Pot { namespace Debug
 {
-	BacktraceCallstack::BacktraceCallstack(size_t skippedFrameCount):
-		AbstractCallstack(skippedFrameCount),
+	BacktraceCallstack::BacktraceCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint):
+		AbstractCallstack(skippedFrameCount, hasRealTimeConstraint),
 		m_trace()
 	{
 		fetchCallstack();
@@ -31,6 +31,11 @@ namespace Pot { namespace Debug
 		return m_trace;
 	}
 
+	void BacktraceCallstack::setStackTrace(const std::string& trace)
+	{
+		m_trace = trace;
+	}
+
 	void BacktraceCallstack::fetchCallstack()
 	{
 		void* callstack[c_maxFrameCount];
@@ -39,8 +44,11 @@ namespace Pot { namespace Debug
 		char** symbols = backtrace_symbols(callstack, frameCount);
 
 		std::ostringstream oss;
-		for (size_t i = m_skippedFramesCount; i < frameCount; ++i)
+		for (size_t i = m_skippedFrameCount; i < frameCount; ++i)
 		{
+			if (i > m_skippedFrameCount)
+				oss << std::endl;
+
 			std::string lineBuffer;
 
 			Dl_info info;
@@ -57,7 +65,7 @@ namespace Pot { namespace Debug
 
 				oss << "[" << std::setw(3) << std::right << i << "] "
 				    << Demangler(info.dli_sname, true)
-				    << " at " << outputFileAndLineFromAddress(info.dli_saddr, lineBuffer)
+				    << " at " << getFileAndLine_internal(info.dli_saddr, lineBuffer)
 				    << " (in " << binaryName << ")";
 			}
 			else
@@ -71,22 +79,20 @@ namespace Pot { namespace Debug
 						symbolStart++;
 
 					oss << "[" << std::setw(3) << std::right << i << "] " << symbolStart
-						<< " at " << outputFileAndLineFromAddress(symbols[i], lineBuffer);
+						<< " at " << getFileAndLine_internal(symbols[i], lineBuffer);
 				}
 				else
-					oss << symbols[i] << " at " << outputFileAndLineFromAddress(symbols[i], lineBuffer);
+					oss << symbols[i] << " at " << getFileAndLine_internal(symbols[i], lineBuffer);
 
 				oss << " [dladdr failed for " << callstack[i] << "]";
 			}
-
-			oss << std::endl;
 		}
 		free(symbols);
 
 		if (frameCount == c_maxFrameCount)
-			oss << "[possibly truncated]" << std::endl;
+			oss << std::endl << "[possibly truncated]";
 
-		m_trace.assign(oss.str());
+		m_trace = oss.str();
 	}
 }}
 

@@ -19,10 +19,13 @@ namespace Pot { namespace Debug
 class BackwardCPPCallstack: public AbstractCallstack
 {
 	public:
-		BackwardCPPCallstack(size_t skippedFrameCount = AbstractCallstack::c_defaultSkippedFrameCount);
+		BackwardCPPCallstack(size_t skippedFrameCount = AbstractCallstack::c_defaultSkippedFrameCount, bool hasRealTimeConstraint = false);
 		virtual ~BackwardCPPCallstack();
 
 		virtual const std::string& str() const;
+
+	protected:
+		virtual void setStackTrace(const std::string& other);
 
 	private:
 		void fetchCallstack();

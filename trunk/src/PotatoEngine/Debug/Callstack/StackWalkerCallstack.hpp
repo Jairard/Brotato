@@ -24,6 +24,9 @@ class StackWalkerCallstack: public AbstractCallstack, public StackWalker
 		// AbstractCallstack
 		virtual const std::string& str() const;
 
+	protected:
+		virtual void setStackTrace(const std::string& trace);
+
 	private:
 		// StackWalker
 		virtual void OnCallstackEntry(CallstackEntryType eType, CallstackEntry& entry);

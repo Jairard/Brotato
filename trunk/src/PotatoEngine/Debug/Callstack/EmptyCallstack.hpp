@@ -15,6 +15,9 @@ class EmptyCallstack : public AbstractCallstack
 
 		virtual const std::string& str() const;
 
+	protected:
+		virtual void setStackTrace(const std::string& trace);
+
 	private:
 		static const std::string c_message;
 };

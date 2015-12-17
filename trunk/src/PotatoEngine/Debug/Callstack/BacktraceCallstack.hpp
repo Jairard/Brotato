@@ -17,14 +17,16 @@ namespace Pot { namespace Debug
 class BacktraceCallstack: public AbstractCallstack
 {
 	public:
-		BacktraceCallstack(size_t skippedFrameCount = AbstractCallstack::c_defaultSkippedFrameCount);
+		BacktraceCallstack(size_t skippedFrameCount = AbstractCallstack::c_defaultSkippedFrameCount, bool hasRealTimeConstraint = false);
 		virtual ~BacktraceCallstack();
 
 		virtual const std::string& str() const;
 
+	protected:
+		virtual void setStackTrace(const std::string& trace);
+
 	private:
 		void fetchCallstack();
-		std::string& getFileAndLine(const void* const address, std::string& outString);
 		void formatFileAndLine(char buffer[]);
 
 	private:

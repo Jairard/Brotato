@@ -7,16 +7,24 @@
 
 namespace Pot { namespace Debug
 {
+	const size_t AbstractCallstack::c_defaultSkippedFrameCount = 3; // Maybe it'll be needed to specialize this constant
 	const char* AbstractCallstack::c_programName = nullptr;
 	const size_t AbstractCallstack::c_maxFrameCount = 128;
-	const size_t AbstractCallstack::c_defaultSkippedFrameCount = 3; // Maybe it'll be needed to specialize this constant
 
-	AbstractCallstack::AbstractCallstack(size_t skippedFrameCount):
-		m_skippedFramesCount(skippedFrameCount)
+	AbstractCallstack::AbstractCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint):
+		m_skippedFrameCount(skippedFrameCount),
+		m_hasRealTimeConstraint(hasRealTimeConstraint)
 	{}
 
 	AbstractCallstack::~AbstractCallstack()
 	{}
+
+	void AbstractCallstack::operator=(const AbstractCallstack& other)
+	{
+		m_skippedFrameCount = other.m_skippedFrameCount;
+		m_hasRealTimeConstraint = other.m_hasRealTimeConstraint;
+		setStackTrace(other.str());
+	}
 
 	const char* AbstractCallstack::operator()() const
 	{
@@ -44,8 +52,21 @@ namespace Pot { namespace Debug
 		c_programName = name;
 	}
 
-	std::string& AbstractCallstack::outputFileAndLineFromAddress(const void* const address, std::string& outString)
+	std::string& AbstractCallstack::getFileAndLine_internal(const void* address, std::string& outString) const
 	{
+		return outputFileAndLineFromAddress(address, outString, m_hasRealTimeConstraint);
+	}
+
+	std::string& AbstractCallstack::outputFileAndLineFromAddress(const void* const address, std::string& outString, bool realTimeConstraint)
+	{
+#ifdef POT_PLATFORM_OSX
+		if (realTimeConstraint)
+		{
+			outString = "[location not available]";
+			return outString;
+		}
+#endif
+
 		const size_t bufferSize = 512;
 		char command[bufferSize];
 
@@ -96,7 +117,7 @@ namespace Pot { namespace Debug
 
 		// Output result to string
 		ASSERT_DEBUG(outString.empty());
-		outString.assign(buffer);
+		outString = buffer;
 		if (readBytes == maxReadBytes)
 			outString += " [possibly truncated]";
 

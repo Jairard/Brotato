@@ -5,7 +5,7 @@
 
 #include <sstream>
 #include "backward.hpp"
-#include "Logger.hpp"
+#include "../Logger.hpp"
 
 // Will only work on Unix platforms
 namespace backward
@@ -15,8 +15,8 @@ namespace backward
 
 namespace Pot { namespace Debug
 {
-	BackwardCPPCallstack::BackwardCPPCallstack(size_t skippedFrameCount):
-		AbstractCallstack(skippedFrameCount),
+	BackwardCPPCallstack::BackwardCPPCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint):
+		AbstractCallstack(skippedFrameCount, hasRealTimeConstraint),
 		m_trace()
 	{
 		fetchCallstack();
@@ -28,6 +28,11 @@ namespace Pot { namespace Debug
 	const std::string& BackwardCPPCallstack::str() const
 	{
 		return m_trace;
+	}
+
+	void BackwardCPPCallstack::setStackTrace(const std::string& trace)
+	{
+		m_trace = trace;
 	}
 
 	void BackwardCPPCallstack::fetchCallstack()
@@ -42,21 +47,23 @@ namespace Pot { namespace Debug
 		std::ostringstream oss;
 		// TODO: add code snippet for first non-skipped frame
 
-		for (size_t i = m_skippedFramesCount; i < frameCount; ++i)
+		for (size_t i = m_skippedFrameCount; i < frameCount; ++i)
 		{
+			if (i > m_skippedFrameCount)
+				oss << std::endl;
+
 			backward::ResolvedTrace trace = solver.resolve(stack[i]);
 			
 			oss << "[" << std::setw(3) << std::right << i << "] "
 			    << std::setw(50) << std::left << trace.source.function
 			    << " at " << trace.source.filename << ":" << trace.source.line << ", " << trace.source.col
-			    << " (in " << trace.object_filename << ")"
-			    << std::endl;
+			    << " (in " << trace.object_filename << ")";
 		}
 
 		if (frameCount == c_maxFrameCount)
-			oss << "[possibly truncated]" << std::endl;
+			oss << std::endl << "[possibly truncated]";
 
-		m_trace.assign(oss.str());
+		m_trace = oss.str();
 	}
 }}
 #endif
