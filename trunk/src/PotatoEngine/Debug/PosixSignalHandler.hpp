@@ -9,7 +9,6 @@
 #include <signal.h>
 #include <csignal>
 #include <cerrno>
-#include "../Core/compil.hpp"
 #include "../Core/types.hpp"
 #include "../Core/NonInstantiable.hpp"
 
@@ -25,7 +24,7 @@ namespace Pot { namespace Debug
 		};
 
 	public:
-		static void setupSignalHandling();
+		static void setup();
 
 	private:
 		static void handleSignal(int signalId, siginfo_t* info, void* context);
@@ -35,9 +34,6 @@ namespace Pot { namespace Debug
 		static const SignalInfo c_handledSignals[];
 		static const size_t c_signalCount;
 		static potb s_alternateStack[SIGSTKSZ];
-#ifdef POT_DEBUG
-		static bool s_initialized;
-#endif
 	};
 }}
 #endif

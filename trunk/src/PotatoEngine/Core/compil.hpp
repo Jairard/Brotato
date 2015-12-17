@@ -10,8 +10,8 @@
 //////////////
 #if defined(__APPLE__) || defined(__MACH__)
 # define POT_PLATFORM_OSX
-#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__WIN32__) ||
-      defined(WIN64) || defined(_WIN64) || defined(__WIN64) || defined(__WIN64__) ||
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__WIN32__) || \
+      defined(WIN64) || defined(_WIN64) || defined(__WIN64) || defined(__WIN64__) || \
       defined(WINNT) || defined(__WINNT) || defined(__WINNT__)
 # define POT_PLATFORM_WINDOWS
 #elif defined(linux) || defined(__linux) || defined(__linux__) || defined(__gnu_linux)

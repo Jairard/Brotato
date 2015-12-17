@@ -43,21 +43,10 @@ namespace Pot { namespace Debug
 
 	const size_t PosixSignalHandler::c_signalCount = sizeof(PosixSignalHandler::c_handledSignals) / sizeof(PosixSignalHandler::c_handledSignals[0]);
 	potb PosixSignalHandler::s_alternateStack[SIGSTKSZ];
-#ifdef POT_DEBUG
-	bool PosixSignalHandler::s_initialized = false;
-#endif
 
 	// Inspired form http://spin.atomicobject.com/2013/01/13/exceptions-stack-traces-c/
-	void PosixSignalHandler::setupSignalHandling()
+	void PosixSignalHandler::setup()
 	{
-#ifdef POT_DEBUG
-		if (s_initialized)
-		{
-			Logger::log(Logger::CWarning,"Trying to initialize signal handling twice ! This call of handleSignals_c99 will be ignored");
-			return;
-		}
-#endif
-
 		// Setup alternate stack
 		stack_t ss = {};
 		// malloc is usually used here, I'm not 100% sure my static allocation
@@ -85,13 +74,10 @@ namespace Pot { namespace Debug
 
 		for (size_t i = 0; i < c_signalCount; ++i)
 		{
-			if (sigaction(c_handledSignals[i].id, &action, nullptr) != 0)
-				Logger::log(Logger::CWarning, "setupSignalHandling: sigaction failed for %s", c_handledSignals[i].name);
+			const SignalInfo& info = c_handledSignals[i];
+			if (sigaction(info.id, &action, nullptr) != 0)
+				Logger::log(Logger::CWarning, "setupSignalHandling: sigaction failed for %s", info.name);
 		}
-
-#ifdef POT_DEBUG
-		s_initialized = true;
-#endif
 	}
 
 	void PosixSignalHandler::handleSignal(int signalId, siginfo_t* info, void* context)
@@ -104,9 +90,10 @@ namespace Pot { namespace Debug
 
 		for (size_t i = 0; i < c_signalCount; ++i)
 		{
-			if (c_handledSignals[i].id == signalId)
+			const SignalInfo& info = c_handledSignals[i];
+			if (info.id == signalId)
 			{
-				name = c_handledSignals[i].name;
+				name = info.name;
 				break;
 			}
 		}
@@ -115,7 +102,7 @@ namespace Pot { namespace Debug
 			framesToSkip += 5;
 
 		framesToSkip = 0;
-		// This callstack is not nice on OSX (and Windows ?) ...
+		// This callstack is not nice on OSX ...
 		Logger::log(Logger::CError, "Signal %s was triggered.\n%s", name, Callstack(framesToSkip)());
 		exit(EXIT_FAILURE);
 	}
