@@ -21,7 +21,6 @@ class BacktraceCallstack: public AbstractCallstack
 		virtual ~BacktraceCallstack();
 
 		virtual const std::string& str() const;
-		virtual const char* c_str() const;
 
 	private:
 		void fetchCallstack();

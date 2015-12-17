@@ -4,6 +4,7 @@
 #include "Callstack/EmptyCallstack.hpp"
 #include "Callstack/BacktraceCallstack.hpp"
 #include "Callstack/BackwardCPPCallstack.hpp"
+#include "Callstack/StackWalkerCallstack.hpp"
 
 namespace Pot { namespace Debug
 {
@@ -11,6 +12,8 @@ namespace Pot { namespace Debug
 typedef BackwardCPPCallstack Callstack;
 #elif defined(POT_BACKTRACE_SUPPORT)
 typedef BacktraceCallstack Callstack;
+#elif defined(POT_STACKWALKER_SUPPORT)
+typedef StackWalkerCallstack Callstack;
 #else
 typedef EmptyCallstack Callstack;
 #endif

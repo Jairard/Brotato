@@ -14,7 +14,6 @@ class EmptyCallstack : public AbstractCallstack
 		virtual ~EmptyCallstack();
 
 		virtual const std::string& str() const;
-		virtual const char* c_str() const;
 
 	private:
 		static const std::string c_message;

@@ -30,11 +30,6 @@ namespace Pot { namespace Debug
 		return m_trace;
 	}
 
-	const char* BackwardCPPCallstack::c_str() const
-	{
-		return m_trace.c_str();
-	}
-
 	void BackwardCPPCallstack::fetchCallstack()
 	{
 		backward::StackTrace stack;

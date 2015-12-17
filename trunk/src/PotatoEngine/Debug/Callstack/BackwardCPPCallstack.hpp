@@ -23,7 +23,6 @@ class BackwardCPPCallstack: public AbstractCallstack
 		virtual ~BackwardCPPCallstack();
 
 		virtual const std::string& str() const;
-		virtual const char* c_str() const;
 
 	private:
 		void fetchCallstack();

@@ -20,9 +20,4 @@ namespace Pot { namespace Debug
 	{
 		return c_message;
 	}
-
-	const char* EmptyCallstack::c_str() const
-	{
-		return c_message.c_str();
-	}
 }}
