@@ -57,7 +57,7 @@ void Stem::renderRec(Potato* potato, float elapsedTime, bool isRotten) const
 	
 	potato->render(elapsedTime);
 	
-	for (unsigned int i = 0; i < potato->childCount(); ++i)
+	for (size_t i = 0; i < potato->childCount(); ++i)
 		renderRec(potato->childPtr(i), elapsedTime, isRotten);
 }
 
@@ -76,7 +76,7 @@ void Stem::debugRenderRec(const Potato* potato, Debug::Renderer& renderer) const
 	ASSERT_RELEASE(potato != nullptr);
 	
 	potato->debugRender(renderer);
-	for (unsigned int i = 0; i < potato->childCount(); ++i)
+	for (size_t i = 0; i < potato->childCount(); ++i)
 		debugRenderRec(potato->childPtr(i), renderer);
 }
 
@@ -180,7 +180,7 @@ void Stem::destroyPotato_internal(Potato* potato, bool deleteRecursively)
 		destroyPotatoRec(potato);
 	else
 	{
-		for (unsigned int i = 0; i < potato->childCount(); ++i)
+		for (size_t i = 0; i < potato->childCount(); ++i)
 			setParent_internal(potato->childPtr(i), parent);
 	
 		potato->shutdown();
@@ -212,7 +212,7 @@ void Stem::updatePotatoRec(Potato* potato)
 	ASSERT_RELEASE(potato != nullptr);
 	
 	potato->update();
-	for (unsigned int i = 0; i < potato->childCount(); ++i)
+	for (size_t i = 0; i < potato->childCount(); ++i)
 		updatePotatoRec(potato->childPtr(i));
 }
 
@@ -220,7 +220,7 @@ void Stem::destroyPotatoRec(Potato* potato)
 {
 	ASSERT_RELEASE(potato != nullptr);
 	
-	for (unsigned int i = 0; i < potato->childCount(); ++i)
+	for (size_t i = 0; i < potato->childCount(); ++i)
 		destroyPotatoRec(potato->childPtr(i));
 	
 	potato->shutdown();
@@ -250,7 +250,7 @@ void Stem::updateTransform(const Potato* potato) const
 	potato->m_invLocalTransform.recomputeIFN();
 	
 	// Soil children's local transform so that their world transforms will be recomputed
-	for (unsigned int i = 0; i < potato->childCount(); ++i)
+	for (size_t i = 0; i < potato->childCount(); ++i)
 		potato->childPtr(i)->m_localTransform.soil();
 	
 	ASSERT_DEBUG(!potato->m_worldTransform.isRotten() && !potato->m_invWorldTransform.isRotten() &&

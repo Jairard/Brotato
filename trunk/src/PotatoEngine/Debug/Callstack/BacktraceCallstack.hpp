@@ -22,12 +22,8 @@ class BacktraceCallstack: public AbstractCallstack
 
 		virtual const std::string& str() const;
 
-	protected:
-		virtual void setStackTrace(const std::string& trace);
-
 	private:
 		void fetchCallstack();
-		void formatFileAndLine(char buffer[]);
 
 	private:
 		std::string m_trace;

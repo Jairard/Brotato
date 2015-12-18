@@ -12,7 +12,6 @@ class AbstractCallstack
 		AbstractCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint);
 		virtual ~AbstractCallstack();
 
-		void operator=(const AbstractCallstack& other);
 		const char* operator()() const;
 		const char* c_str() const;
 		virtual const std::string& str() const = 0;
@@ -25,7 +24,6 @@ class AbstractCallstack
 	protected:
 		bool hasRealTimeConstraint() const;
 		std::string& getFileAndLine_internal(const void* address, std::string& outString) const;
-		virtual void setStackTrace(const std::string& trace) = 0;
 
 	private:
 		static void formatFileAndLine(char buffer[]);

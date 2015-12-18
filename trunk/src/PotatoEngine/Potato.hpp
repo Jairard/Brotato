@@ -43,11 +43,11 @@ class Potato//: public DefaultOrganismImpl<Potato>
 	public:
 		// Hierarchy manipulators
 		/*
-		PotatoDNA parent() const        { return PotatoDNA(m_parent); }
-		unsigned int childCount() const { return m_children.size(); }
+		PotatoDNA parent() const  { return PotatoDNA(m_parent); }
+		size_t childCount() const { return m_children.size(); }
 		PotatoDNA child(unsigned int i);
 		/*/
-		Potato* parent() const        { return m_parent; }
+		Potato* parent() const    { return m_parent; }
 		size_t childCount() const { return m_children.size(); }
 		Potato* child(unsigned int i);
 		//*/
@@ -146,8 +146,8 @@ class Potato//: public DefaultOrganismImpl<Potato>
 
 		void addChild(Potato* child);
 		void removeChild(const Potato* child);
-		Potato* childPtr(unsigned int i);
-		const Potato* childPtr(unsigned int i) const;
+		Potato* childPtr(size_t i);
+		const Potato* childPtr(size_t i) const;
 
 		void update();
 		void render(float elapsedTime);

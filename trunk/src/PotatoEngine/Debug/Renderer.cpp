@@ -85,17 +85,17 @@ void Renderer::DrawAABB(b2AABB* aabb, const b2Color& color)
 	// TODO: test with rect
 	/*
 	AARect rect(aabb->lowerBound.x,
-	            aabb->lowerBound.y,
-	            aabb->upperBound.x - aabb->lowerBound.x,
-	            aabb->upperBound.y - aabb->lowerBound.y);
+				aabb->lowerBound.y,
+				aabb->upperBound.x - aabb->lowerBound.x,
+				aabb->upperBound.y - aabb->lowerBound.y);
 
 	DrawRect(rect, b2c_2_sfc(color));
 	/*/
 	sf::Color c = b2c_2_sfc(color);
 	Vector2f p1(aabb->lowerBound.x, -aabb->lowerBound.y),
-	         p2(aabb->upperBound.x, -aabb->lowerBound.y),
-	         p3(aabb->upperBound.x, -aabb->upperBound.y),
-	         p4(aabb->lowerBound.x, -aabb->upperBound.y);
+			 p2(aabb->upperBound.x, -aabb->lowerBound.y),
+			 p3(aabb->upperBound.x, -aabb->upperBound.y),
+			 p4(aabb->lowerBound.x, -aabb->upperBound.y);
 
 	DrawSegment(p1, p2, c);
 	DrawSegment(p2, p3, c);
@@ -264,9 +264,9 @@ void Renderer::DrawSolidPolygon(const sf::Vector2f* vertices, size_t vertexCount
 	ASSERT_DEBUG(!m_isLocked);
 
 	sf::Color fillColor(static_cast<sf::Uint8>(color.r * 0.5f),
-                        static_cast<sf::Uint8>(color.g * 0.5f),
-                        static_cast<sf::Uint8>(color.b * 0.5f),
-                        static_cast<sf::Uint8>(  255.f * 0.5f));
+						static_cast<sf::Uint8>(color.g * 0.5f),
+						static_cast<sf::Uint8>(color.b * 0.5f),
+						static_cast<sf::Uint8>(  255.f * 0.5f));
 	sf::ConvexShape poly(vertexCount);
 
 	// Inside
@@ -320,7 +320,7 @@ void Renderer::DrawSolidCircle(const sf::Vector2f& center, float32 radius, const
 	DrawSolidPolygon(vertices, vertexCount, color);
 	DrawSegment(center, p2, color);
 
-    delete[] vertices;
+	delete[] vertices;
 }
 
 void Renderer::DrawAABB(const sf::FloatRect& aabb, const sf::Color& color)

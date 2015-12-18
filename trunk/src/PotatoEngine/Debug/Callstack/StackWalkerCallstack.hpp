@@ -1,5 +1,5 @@
-#ifndef __POT_WINDOWS_CALLSTACK__
-#define __POT_WINDOWS_CALLSTACK__
+#ifndef __POT_WINDOWS_STACKWALKER_CALLSTACK__
+#define __POT_WINDOWS_STACKWALKER_CALLSTACK__
 
 #include "StackWalker.h"
 

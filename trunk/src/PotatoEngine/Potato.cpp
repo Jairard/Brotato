@@ -95,7 +95,7 @@ void Potato::addChild(Potato* child)
 	m_children.push_back(child);
 }
 
-Potato* Potato::childPtr(unsigned int i)
+Potato* Potato::childPtr(size_t i)
 {
 	ASSERT_RELEASE(i < childCount());
 	
@@ -105,7 +105,7 @@ Potato* Potato::childPtr(unsigned int i)
 	return child;
 }
 
-const Potato* Potato::childPtr(unsigned int i) const
+const Potato* Potato::childPtr(size_t i) const
 {
 	ASSERT_RELEASE(i < childCount());
 	

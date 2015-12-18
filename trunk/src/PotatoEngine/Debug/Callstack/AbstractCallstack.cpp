@@ -25,13 +25,6 @@ namespace Pot { namespace Debug
 	AbstractCallstack::~AbstractCallstack()
 	{}
 
-	void AbstractCallstack::operator=(const AbstractCallstack& other)
-	{
-		m_skippedFrameCount = other.m_skippedFrameCount;
-		m_hasRealTimeConstraint = other.m_hasRealTimeConstraint;
-		setStackTrace(other.str());
-	}
-
 	const char* AbstractCallstack::operator()() const
 	{
 		return c_str();
@@ -50,7 +43,7 @@ namespace Pot { namespace Debug
 		{
 			std::ostringstream oss;
 			oss << "AbstractCallstack: trying to set program name twice !"
-			    << " (" << c_programName << " -> " << name << ")";
+				<< " (" << c_programName << " -> " << name << ")";
 			ASSERT_DEBUG_MSG(c_programName == nullptr, oss.str().c_str());
 			return;
 		}

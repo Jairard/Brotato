@@ -58,6 +58,21 @@
 #pragma message("Unknown compiler")
 #endif
 
+///////////
+// Archi //
+///////////
+#ifdef POT_PLATFORM_WINDOWS
+# if defined(WIN64) || defined(_WIN64) || defined(__WIN64) || defined(__WIN64__)
+#  define POT_ARCH_64
+# elif defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__WIN32__)
+#  define POT_ARCH_32
+# else
+#  define POT_ARCH_UNKNWON
+# endif
+#else
+# define POT_ARCH_UNKNWON
+#endif
+
 ////////////////////////
 // Standard libraries //
 ////////////////////////
@@ -80,6 +95,8 @@
 ///////////////////
 // Configuration //
 ///////////////////
+#ifndef NDEBUG
+#endif
 
 #ifndef POT_DEBUG
 # define POT_RELEASE

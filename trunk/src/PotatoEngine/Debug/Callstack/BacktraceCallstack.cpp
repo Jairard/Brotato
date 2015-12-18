@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <execinfo.h>
 #include <dlfcn.h>
+#include "../../Core/Tools.hpp"
 #include "../assert.hpp"
 #include "../Demangler.hpp"
 #include "AbstractCallstack.hpp"
@@ -29,11 +30,6 @@ namespace Pot { namespace Debug
 	const std::string& BacktraceCallstack::str() const
 	{
 		return m_trace;
-	}
-
-	void BacktraceCallstack::setStackTrace(const std::string& trace)
-	{
-		m_trace = trace;
 	}
 
 	void BacktraceCallstack::fetchCallstack()
@@ -64,9 +60,9 @@ namespace Pot { namespace Debug
 				}
 
 				oss << "[" << std::setw(3) << std::right << i << "] "
-				    << Demangler(info.dli_sname, true)
-				    << " at " << getFileAndLine_internal(info.dli_saddr, lineBuffer)
-				    << " (in " << binaryName << ")";
+					<< Demangler(info.dli_sname, true)
+					<< " at " << getFileAndLine_internal(info.dli_saddr, lineBuffer)
+					<< " (in " << binaryName << ")";
 			}
 			else
 			{
