@@ -3,7 +3,9 @@
 
 #include <set>
 #include <utility>
+#include <string>
 #include <sstream>
+#include <iomanip>
 #include "Debug/Logger.hpp"
 #include "Debug/Demangler.hpp"
 #include "BaseDNA.hpp"
@@ -55,7 +57,7 @@ namespace Pot
 #ifdef POT_DEBUG
 		, alive(_alive)
 		, type(_type)
-		, callstack(c_framesToSkipForOrganismInfo, true)
+		, callstack(_ptr->m_callstack)
 #endif
 	{
 #ifndef POT_DEBUG
@@ -80,28 +82,42 @@ namespace Pot
 
 	DNACollector::~DNACollector()
 	{
-		ASSERT_DEBUG(m_dnaContainer.empty());
-		ASSERT_DEBUG(m_organismContainer.empty());
+		if (!m_dnaContainer.empty() || !m_organismContainer.empty())
+		{
+			std::ostringstream oss;
+			oss << "The collector is not empty when destroyed !" << std::endl;
+			dump_internal(oss, true);
+
+			Logger::log(c_tag, oss.str().c_str());
+		}
 	}
 	
 	void DNACollector::dump(const char* tag)
 	{
-		instance().dump_internal(tag);
+		std::ostringstream dumpStr;
+		instance().dump_internal(dumpStr, false);
+		Logger::log(tag, "\n%s", dumpStr.str().c_str());
 	}
 
-	void DNACollector::dump_internal(const char* tag) const
+	void DNACollector::dump_internal(std::ostream& outStream, bool displayCallstacks) const
 	{
-		Logger::log(tag, "======== DNACollector dump ========");
+#ifndef POT_DEBUG
+		POT_UNUSED(displayCallstacks);
+#endif
 
-		Logger::log(tag, "Current timestamp: %llu", m_timestamp.value());
-		Logger::log(tag, "Organism count: %u", organismCount());
-		Logger::log(tag, "Dna count: %U", dnaCount());
+		outStream << "======== DNACollector dump ========" << std::endl;
+
+		outStream << "Current timestamp: " <<  m_timestamp << std::endl;
+		outStream << "Organism count: " << organismCount() << std::endl;
+		outStream << "Dna count: " << dnaCount() << std::endl;
 
 		if (!m_organismContainer.empty())
-			Logger::log(tag, "");
+			outStream << std::endl;
 
 		size_t ptrCount = m_organismContainer.size();
-		Logger::log(tag, "Referenced organisms (for %u addess%s)", ptrCount, (ptrCount > 1 ? "es" : ""));
+		outStream << "Referenced organisms (for " << ptrCount
+		          << " addess" << (ptrCount > 1 ? "es" : "") << ")" << std::endl;
+
 		for (OrganismContainer::const_iterator ptrIt = m_organismContainer.begin(); ptrIt != m_organismContainer.end(); ++ptrIt)
 		{
 			const BaseOrganism* ptr = ptrIt->first;
@@ -110,30 +126,32 @@ namespace Pot
 			const OrganismByTimestamp& organismsByTimestamp = infoForPtr.second;
 
 			const size_t timestampCount = organismsByTimestamp.size();
-			Logger::log(tag, "* Addess: %#p (%u timestamp%s)", ptr, timestampCount, (timestampCount > 1 ? "s" : ""));
+			outStream << "* Addess: " << ptr
+			          << " (" << timestampCount << " timestamp" << (timestampCount > 1 ? "s" : "") << ")" << std::endl;
 			if (!aliveTimestamp.isValid())
-				Logger::log(tag, "  Is alive with timestamp %llu", aliveTimestamp.value());
+				outStream << "  Is alive with timestamp " <<  aliveTimestamp.value() << std::endl;
 			else
-				Logger::log(tag, "  Is not alive");
+				outStream << "  Is not alive" << std::endl;
 
 			size_t i = 0;
 			for (OrganismByTimestamp::const_iterator organismIt = organismsByTimestamp.begin(); organismIt != organismsByTimestamp.end(); ++organismIt)
 			{
 				const DNACollectorTimestamp& t = organismIt->first;
 
-				Logger::log(tag, "  [%3u] Timestamp: %llu", i, t.value());
+				outStream << "  -" << std::setw(3) << i << ": Timestamp: " << t.value() << std::endl;
 #ifdef POT_DEBUG
 				const OrganismInfo& info = organismIt->second;
-				Logger::log(tag, "        Alive: %s", Tools::bool2str(info.alive));
-				Logger::log(tag, "        Type: %s", Demangler(info.type)());
-				Logger::log(tag, "        Callstack:\n%s", info.callstack());
+				outStream <<     "        Alive: " << Tools::bool2str(info.alive) << std::endl
+				          <<     "        Type: " <<  Demangler(info.type) << std::endl;
+				if (displayCallstacks)
+					outStream << "        Callstack:" << std::endl << info.callstack() << std::endl;
 #endif
 				++i;
 			}
 		}
 
 		if (!m_dnaContainer.empty())
-			Logger::log(tag, "");
+			outStream << std::endl;
 
 		for (DNAContainer::const_iterator containerIt = m_dnaContainer.begin(); containerIt != m_dnaContainer.end(); ++containerIt)
 		{
@@ -141,27 +159,31 @@ namespace Pot
 			const DNAsByType& dnas = containerIt->second;
 
 			size_t typeCount = dnas.size();
-			Logger::log(tag, "DNAs registered for organism [%llu @ %#p] (in %u type%s):",
-			                 containerIt->first.value(), organismInfo.ptr, typeCount, (typeCount > 1 ? "s" : ""));
+			outStream << "DNAs registered for organism [" << containerIt->first.value() << " @ " << organismInfo.ptr << "]"
+			          << " (in " << typeCount << " type" << (typeCount > 1 ? "s" : "") << "):" << std::endl;
 			for (DNAsByType::const_iterator dnasIt = dnas.begin(); dnasIt != dnas.end(); ++dnasIt)
 			{
 				const std::type_index& type = dnasIt->first;
 				const DNAList& typedDnas = dnasIt->second;
 
 				const size_t dnaCount = typedDnas.size();
-				Logger::log(tag, "* %s (%u element%s)", Demangler(type)(), dnaCount, (dnaCount > 1 ? "s" : ""));
+				outStream << "* " << Demangler(type)
+				          << " (" << dnaCount << " element" << (dnaCount > 1 ? "s" : "") << ")" << std::endl;
 				for (size_t i = 0; i < typedDnas.size(); ++i)
 				{
 					const DNAInfo& dnaInfo = typedDnas[i];
-					Logger::log(tag, "  [%3u] Adress: %#p", i, &dnaInfo.dna);
-					Logger::log(tag, "        organism: current(%#p), stored(%#p)", dnaInfo.dna.organism(), dnaInfo.organism);
-					Logger::log(tag, "        timestamp: %llu", containerIt->first.value());
-					Logger::log(tag, "        Callstack:\n%s", dnaInfo.callstack());
+					outStream <<     "  -" << std::setw(3) << i << ": Adress: " << &dnaInfo.dna << std::endl
+					          <<     "        organism: current(" << dnaInfo.dna.organism() << "), stored(" << dnaInfo.organism << ")" << std::endl
+					          <<     "        timestamp: " << containerIt->first.value() << std::endl;
+#ifdef POT_DEBUG
+					if (displayCallstacks)
+						outStream << "        Callstack:" << std::endl << dnaInfo.callstack() << std::endl;
+#endif
 				}
 			}
 		}
 
-		Logger::log(tag, "===================================");
+		outStream << "===================================";
 	}
 
 	const char* DNACollector::tag()

@@ -19,8 +19,6 @@
 
 // TODO:
 // - fix test pool
-// - callstack: check utility of organism callstacks
-// - logs: type (remove "const*")
 // - Look for complexity improvements
 // - separate folder/namespace ?
 
@@ -114,7 +112,7 @@ namespace Pot
 		/* O(DnaCTC) / O(OrgC) + O(DnaCTC) */
 		void notifyOrganismDeath(const BaseOrganism& organism);
 
-		void dump_internal(const char* tag) const;
+		void dump_internal(std::ostream& outStream, bool displayCallstacks) const;
 
 		/* O(OrgC) */
 		const OrganismInfo* getOrganismInfoFromTimestamp(const DNACollectorTimestamp& t) const;

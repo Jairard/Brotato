@@ -239,13 +239,14 @@ void test4()
 }
 
 #include "Debug/Callstack.hpp"
+#include "Debug/SignalHandler.hpp"
 
 int main(int argc, char* argv[])
 {
-	POT_UNUSED(argc);
-	POT_UNUSED(argv);
-	
-	Logger::enableTag(Logger::CWarning);
+	ASSERT_RELEASE(argc > 0);
+	Pot::Debug::AbstractCallstack::setProgramName(argv[0]);
+	Pot::Debug::SignalHandler::setup();
+
 	Logger::enableTag(Logger::CAssert);
 	Logger::enableTag(Pot::DNACollector::tag());
 	Logger::log(Logger::CWarning, "");
