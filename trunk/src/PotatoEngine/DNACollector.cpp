@@ -57,7 +57,7 @@ namespace Pot
 #ifdef POT_DEBUG
 		, alive(_alive)
 		, type(_type)
-		, callstack(_ptr->m_callstack)
+		, callstack(_ptr != nullptr ? _ptr->m_callstack : Callstack())
 #endif
 	{
 #ifndef POT_DEBUG
@@ -128,7 +128,7 @@ namespace Pot
 			const size_t timestampCount = organismsByTimestamp.size();
 			outStream << "* Addess: " << ptr
 			          << " (" << timestampCount << " timestamp" << (timestampCount > 1 ? "s" : "") << ")" << std::endl;
-			if (!aliveTimestamp.isValid())
+			if (aliveTimestamp.isValid())
 				outStream << "  Is alive with timestamp " <<  aliveTimestamp.value() << std::endl;
 			else
 				outStream << "  Is not alive" << std::endl;
@@ -232,11 +232,10 @@ namespace Pot
 		    Demangler(dna)(), &dna,
 		    Demangler(organismType)(), dna.organism());
 
+		const BaseOrganism* organism = dna.organism();
 		// Create info structure and fill it
 		DNAInfo dnaInfo(dna);
-		dnaInfo.organism = dna.organism();
-
-		const BaseOrganism* organism = dna.organism();
+		dnaInfo.organism = organism;
 
 		/* Fetch the corresponding timestamp */
 		DNACollectorTimestamp t = DNACollectorTimestamp::c_invalid;
@@ -280,6 +279,8 @@ namespace Pot
 		const BaseOrganism* organism = dna.organism();
 		const std::type_index organismType = (organism != nullptr ? typeid(*organism) : typeid(organism));
 
+		// It would potentially be possible to get better information about the organism here
+		// by using the DNAInfo fetched later
 		Logger::log(c_tag, "unregister dna [%s @ %#p] for organism [%s @ %#p]",
 		    Demangler(dna)(), &dna,
 		    Demangler(organismType)(), dna.organism());
