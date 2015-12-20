@@ -18,6 +18,8 @@ class AbstractCallstack
 		virtual const std::string& str() const = 0;
 
 		static void setProgramName(const char* name);
+		static void enableFrameSkipping();
+		static void forbidFrameSkipping();
 		static std::string& outputFileAndLineFromAddress(const void* const address, std::string& outString, bool realTimeConstraint = false);
 
 	protected:
@@ -36,6 +38,7 @@ class AbstractCallstack
 		size_t m_skippedFrameCount;
 
 	private:
+		static bool s_canSkipFrames;
 		bool m_hasRealTimeConstraint;
 };
 }}

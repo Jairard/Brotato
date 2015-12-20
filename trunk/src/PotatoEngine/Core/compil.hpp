@@ -75,6 +75,8 @@
 # define POT_CYGWIN
 #endif
 
+// TODO: endianness ?
+
 ///////////////////
 // Configuration //
 ///////////////////

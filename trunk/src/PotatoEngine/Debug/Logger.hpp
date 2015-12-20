@@ -47,10 +47,12 @@ namespace Debug
 		
 		/* Members */
 		public:
+			static const char* CInfo;
 			static const char* CWarning;
 			static const char* CError;
 			static const char* CDefault;
 			static const char* CAssert;
+			static const std::string Info;
 			static const std::string Warning;
 			static const std::string Error;
 			static const std::string Default;

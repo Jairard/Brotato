@@ -2,6 +2,7 @@
 #include "AbstractCallstack.hpp"
 
 #include <sstream>
+#include "../../Core/compil.hpp"
 #include "../assert.hpp"
 #include "../Logger.hpp"
 
@@ -10,9 +11,14 @@ namespace Pot { namespace Debug
 	const size_t AbstractCallstack::c_defaultSkippedFrameCount = 3; // Maybe it'll be needed to specialize this constant
 	const char* AbstractCallstack::c_programName = nullptr;
 	const size_t AbstractCallstack::c_maxFrameCount = 128;
+#ifdef POT_DEBUG
+	bool AbstractCallstack::s_canSkipFrames = false;
+#else
+	bool AbstractCallstack::s_canSkipFrames = true;
+#endif
 
 	AbstractCallstack::AbstractCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint):
-		m_skippedFrameCount(skippedFrameCount),
+		m_skippedFrameCount(s_canSkipFrames ? skippedFrameCount : 0),
 		m_hasRealTimeConstraint(hasRealTimeConstraint)
 	{}
 
@@ -50,6 +56,16 @@ namespace Pot { namespace Debug
 		}
 
 		c_programName = name;
+	}
+
+	void AbstractCallstack::enableFrameSkipping()
+	{
+		s_canSkipFrames = true;
+	}
+
+	void AbstractCallstack::forbidFrameSkipping()
+	{
+		s_canSkipFrames = false;
 	}
 
 	std::string& AbstractCallstack::getFileAndLine_internal(const void* address, std::string& outString) const

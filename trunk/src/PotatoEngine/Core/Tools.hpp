@@ -72,6 +72,17 @@ class Tools: public NonInstantiable
 			return static_cast<T*>(ptr);
 		}
 
+		template <typename T, typename U>
+		static T numcast(const U val)
+		{
+			ASSERT_DEBUG(std::is_arithmetic<T>::value);
+			ASSERT_DEBUG(std::is_arithmetic<U>::value);
+
+			T res = static_cast<T>(val);
+			ASSERT_DEBUG_MSG(val == static_cast<U>(res), "Invalid numeric cast, possible loss of precision");
+			return res;
+		}
+
 		static const char* bool2str(bool expr)
 		{
 			static const char* str[2] = {"false", "true"};

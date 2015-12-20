@@ -215,9 +215,6 @@ void test3()
 // Pool
 void test4()
 {
-	// Pool test not valid because pool doesn't support inheritance ...
-	// TODO: manual organism handling in pool (via template bool)
-	/*
 	DNACollector::instantiate();
 
 	{
@@ -235,7 +232,6 @@ void test4()
 	}
 	
 	DNACollector::deleteInstance();
-	//*/
 }
 
 #include "Debug/Callstack.hpp"
@@ -247,18 +243,15 @@ int main(int argc, char* argv[])
 	Pot::Debug::AbstractCallstack::setProgramName(argv[0]);
 	Pot::Debug::SignalHandler::setup();
 
+	Logger::enableTag(Logger::CInfo);
 	Logger::enableTag(Logger::CAssert);
 	Logger::enableTag(Pot::DNACollector::tag());
-	Logger::log(Logger::CWarning, "");
+	Logger::log(Logger::CInfo, "");
 
-    Logger::log(Logger::CWarning, "Callstack:\n%s", Pot::Debug::Callstack()());
-
-    /*
 	test1();
 	test2();
 	test3();
 	test4();
-    //*/
 
 	return EXIT_SUCCESS;
 	

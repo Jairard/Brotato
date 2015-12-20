@@ -14,16 +14,18 @@ namespace Pot
 namespace Debug
 {
 
+const char* Logger::CInfo = "Info";
 const char* Logger::CWarning = "Warning";
 const char* Logger::CError = "Error";
 const char* Logger::CDefault = "Default";
 const char* Logger::CAssert = "Assert";
+const std::string Logger::Info = Logger::CInfo;
 const std::string Logger::Warning = Logger::CWarning;
 const std::string Logger::Error = Logger::CError;
 const std::string Logger::Default = Logger::CDefault;
 const std::string Logger::Assert = Logger::CAssert;
 
-const size_t Logger::c_bufferSize = 4096;
+const size_t Logger::c_bufferSize = 8192;
 const std::string Logger::c_vlogError = "An error occured while reading formatted data";
 std::list<std::string> Logger::m_enabledTags = std::list<std::string>();
 std::ostream* Logger::m_defaultStream = &std::cout;
