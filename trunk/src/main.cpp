@@ -6,6 +6,7 @@
 
 //#define DEBUG
 
+#include "PotatoEngine/stdafx.h"
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include "PotatoEngine/Core/Pool.hpp"
@@ -56,8 +57,8 @@ void initialize<Pot::RenderCell*, sf::RenderTarget*>(Pot::RenderCell* cell, sf::
 
 int main(int argc, char* argv[])
 {
-	UNUSED(argc);
-	UNUSED(argv);
+	POT_UNUSED(argc);
+	POT_UNUSED(argv);
 	
 	Pot::PotatoPlant plant("Potatoes gonna potate", sf::VideoMode(400, 400));
 	return plant.loop();

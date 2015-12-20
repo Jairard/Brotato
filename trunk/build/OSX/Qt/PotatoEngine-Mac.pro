@@ -39,7 +39,8 @@ SOURCES += \
     ../../../src/PotatoEngine/Debug/Callstack/StackWalker.cpp \
     ../../../src/PotatoEngine/Debug/SignalHandler.cpp \
     ../../../src/PotatoEngine/Debug/PosixSignalHandler.cpp \
-    ../../../src/PotatoEngine/Debug/WindowsSignalHandler.cpp
+    ../../../src/PotatoEngine/Debug/WindowsSignalHandler.cpp \
+    ../../../src/PotatoEngine/Core/BuildConfig.cpp
 
 HEADERS +=  \
     ../../../src/PotatoEngine/stdafx.h \
@@ -88,8 +89,10 @@ HEADERS +=  \
     ../../../src/PotatoEngine/Debug/Callstack/backward.hpp \
     ../../../src/PotatoEngine/Debug/SignalHandler.hpp \
     ../../../src/PotatoEngine/Debug/PosixSignalHandler.hpp \
-    ../../../src/PotatoEngine/Debug/WindowsSignalHandler.hpp
+    ../../../src/PotatoEngine/Debug/WindowsSignalHandler.hpp \
+    ../../../src/PotatoEngine/Core/BuildConfig.hpp
 
 OTHER_FILES += \
     ../../../src/TODO \
-    ../../../build/makefile
+    ../../../build/makefile \
+    ../../../../.gitignore

@@ -1,3 +1,4 @@
+#include "../stdafx.h"
 #include "catch.hpp"
 #include "../Core/AARect.hpp"
 #include "../Core/Rect.hpp"
