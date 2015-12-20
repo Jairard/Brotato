@@ -11,14 +11,17 @@ namespace Pot
 {
 	class BaseOrganism
 	{
+		template <typename T> friend class Pool;
 #ifdef POT_DEBUG
 		friend class DNACollector;
 #endif
-	public:
-		virtual ~BaseOrganism();
 
 	protected:
 		BaseOrganism();
+		virtual ~BaseOrganism();
+
+	private:
+		void shutdown() const;
 
 #ifdef POT_DEBUG
 	private:

@@ -67,8 +67,8 @@ class Pool
 		{
 			ASSERT_RELEASE(i < m_capacity);
 			ASSERT_DEBUG(!isAvailable(i));
-			
-			m_data[i].~T(); // Used to notify organism death
+
+			m_data[i].shutdown();
 			m_avaibleChunks.push_front(i);
 		}
 

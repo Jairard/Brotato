@@ -21,6 +21,11 @@ namespace Pot
 
 	BaseOrganism::~BaseOrganism()
 	{
+		shutdown();
+	}
+
+	void BaseOrganism::shutdown() const
+	{
 		DNACollector::instance().notifyOrganismDeath(*this);
 	}
 }

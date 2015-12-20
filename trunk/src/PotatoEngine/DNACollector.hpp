@@ -18,9 +18,9 @@
 #include "DNACollectorTimestamp.hpp"
 
 // TODO:
-// - fix test pool
 // - Look for complexity improvements
 // - separate folder/namespace ?
+// - unit tests
 
 /*
  * Complexity notations:
