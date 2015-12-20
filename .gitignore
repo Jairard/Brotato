@@ -36,9 +36,6 @@ trunk/build/Windows/Visual Studio/Brotato/ipch
 *.app
 bin/
 
-*.ttf
-*.png
-*.jpg
 *.plist
 
 trunk/bin/test
