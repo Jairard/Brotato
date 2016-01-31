@@ -80,14 +80,9 @@
 ///////////////////
 // Configuration //
 ///////////////////
-// TODO: name correctly and bind
-#define SOME_DEBUG_CONSTANT
 
-#define POT_RELEASE
-
-#ifdef SOME_DEBUG_CONSTANT
-# undef POT_RELEASE
-# define POT_DEBUG
+#ifndef POT_DEBUG
+# define POT_RELEASE
 #endif
 
 #if defined(POT_RELEASE) && defined(POT_DEBUG)

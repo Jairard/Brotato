@@ -1,13 +1,15 @@
 CC = g++
-CFLAGS = -std=c++11 -W -Wall -g
+DEBUG =
+CFLAGS = -std=c++11 -W -Wall -g $(DEBUG)
 LDFLAGS =
 TARGET_NAME = Brotato
-TARGET_EXTENSION = 
+TARGET_EXTENSION =
 SFML_LIB_EXTENSION =
 BOX2D_LIB_EXTENSION =
 RM =
 CREATE_DIR =
 ECHO =
+SPECIFIC_COMPIL_DIR =
 
 OS_LDFLAGS = 
 OS_DIR =
@@ -50,11 +52,11 @@ ENGINE_SRC =
 ENGINE_TESTS_SRC =
 
 # OBJ files
-OBJ_DIR = ../obj
+OBJ_DIR = ../obj/$(SPECIFIC_COMPIL_DIR)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # BIN files
-BIN_DIR = ../bin
+BIN_DIR = ../bin/$(SPECIFIC_COMPIL_DIR)
 
 # Subdirectories
 POTATO_ENGINE_SUBDIR = PotatoEngine
@@ -101,19 +103,19 @@ TEST_DELETE_TARGETS = $(ENGINE_TEST_OBJ:%=delete_%)
 DELETE_TARGETS = $(OBJ:%=delete_%) $(ENGINE_OBJ:%=delete_%) $(TEST_DELETE_TARGETS)
 
 all: $(OBJ) $(ENGINE_OBJ_NO_MAIN)
+	@ $(CREATE_DIR) $(BIN_DIR)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
 	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
 
 engine: $(ENGINE_OBJ)
+	@ $(CREATE_DIR) $(BIN_DIR)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
 	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
 
 engine_tests: $(ENGINE_OBJ_NO_MAIN) $(ENGINE_TEST_OBJ)
+	@ $(CREATE_DIR) $(BIN_DIR)
 	$(CC) -o $(BIN_DIR)/$(TARGET) $^ $(LDFLAGS) 
 	@ $(ECHO) 'Target' $(TARGET) 'successfully compiled !'
-
-c++11: OSX/Qt/main_11.cpp
-	g++ -std=c++11 -W -Wall -g -o c++11 OSX/Qt/main_11.cpp
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
 	@ $(CREATE_DIR) $(@D)
