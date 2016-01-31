@@ -236,6 +236,7 @@ void test4()
 
 #include "Debug/Callstack.hpp"
 #include "Debug/SignalHandler.hpp"
+#include "Core/BuildConfig.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -248,6 +249,9 @@ int main(int argc, char* argv[])
 	Logger::enableTag(Pot::DNACollector::tag());
 	Logger::log(Logger::CInfo, "");
 
+	const std::string windowTitle = "Potatoes gonna potate - " + Pot::BuildConfig::osAsString + " - " + Pot::BuildConfig::buildAsString;
+	Logger::log(Logger::Info, windowTitle);
+
 	test1();
 	test2();
 	test3();
@@ -255,6 +259,6 @@ int main(int argc, char* argv[])
 
 	return EXIT_SUCCESS;
 	
-	Pot::PotatoPlant plant("Potatoes gonna potate", sf::VideoMode(400, 400));
+	Pot::PotatoPlant plant(windowTitle.c_str(), sf::VideoMode(400, 400));
 	return plant.loop();
 }
