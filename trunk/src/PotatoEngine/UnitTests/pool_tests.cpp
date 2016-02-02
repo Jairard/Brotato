@@ -1,12 +1,19 @@
-#include "../stdafx.h"
 #include "catch.hpp"
-#include "../Core/Pool.hpp"
+#include <stdafx.h>
+#include <Core/Pool.hpp>
+
+// A type must define shutown() to be used in a pool
+class Poolable
+{
+public:
+	void shutdown() {};
+};
 
 SCENARIO("Pool", "pool")
 {
 	GIVEN("Aa int pool")
 	{
-		Pot::Pool<int> pool;
+		Pot::Pool<Poolable> pool;
 
 		THEN("initialization was OK")
 		{
@@ -21,7 +28,7 @@ SCENARIO("Pool", "pool")
 			size_t oldUsedChunkCount = pool.usedChunkCount();
 			size_t oldAvailableChunkCount = pool.availableChunkCount();
 
-			int* v = pool.create();
+			Poolable* v = pool.create();
 			CHECK(pool.usedChunkCount() == oldUsedChunkCount + 1);
 			CHECK(pool.availableChunkCount() == oldAvailableChunkCount - 1);
 
@@ -38,14 +45,14 @@ SCENARIO("Pool", "pool")
 			size_t oldUsedChunkCount = pool.usedChunkCount();
 			size_t oldAvailableChunkCount = pool.availableChunkCount();
 
-			int *v1 = pool.create(), *v2 = pool.create();
+			Poolable *p1 = pool.create(), *p2 = pool.create();
 			CHECK(pool.usedChunkCount() == oldUsedChunkCount + 2);
 			CHECK(pool.availableChunkCount() == oldAvailableChunkCount - 2);
 
 			THEN("we can destroy them")
 			{
-				pool.destroy(v1);
-				pool.destroy(v2);
+				pool.destroy(p1);
+				pool.destroy(p2);
 				CHECK(pool.usedChunkCount() == oldUsedChunkCount);
 				CHECK(pool.availableChunkCount() == oldAvailableChunkCount);
 			}

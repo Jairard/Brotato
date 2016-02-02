@@ -1,10 +1,9 @@
-#include "../stdafx.h"
 #include "catch.hpp"
-#include "../Core/Math.hpp"
+#include <Core/Math.hpp>
 
 SCENARIO("Math", "math")
 {
-	THEN("deg/rad conversion are correct")
+	THEN("deg/rad conversions are correct")
 	{
 		CHECK(Pot::Math::deg2rad(   0.f) == Approx(  0.f * M_PI));
 		CHECK(Pot::Math::deg2rad(  90.f) == Approx( 0.5f * M_PI));
@@ -30,12 +29,12 @@ SCENARIO("Math", "math")
 	
 	GIVEN("an angle")
 	{
-		const float angle = 4.567;
+		const float angle = 4.567f;
 		
 		THEN("it's not modified by chained rad/deg conversions")
 		{
-			REQUIRE(angle == Pot::Math::rad2deg(Pot::Math::deg2rad(angle)));
-			REQUIRE(angle == Pot::Math::deg2rad(Pot::Math::rad2deg(angle)));
+			REQUIRE(angle == Approx(Pot::Math::rad2deg(Pot::Math::deg2rad(angle))).epsilon(1E-7f));
+			REQUIRE(angle == Approx(Pot::Math::deg2rad(Pot::Math::rad2deg(angle))).epsilon(1E-7f));
 		}
 	}
 	

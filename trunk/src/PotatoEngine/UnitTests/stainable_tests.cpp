@@ -1,6 +1,5 @@
-#include "../stdafx.h"
 #include "catch.hpp"
-#include "../Core/Stainable.hpp"
+#include <Core/Stainable.hpp>
 
 SCENARIO("Stainable", "stainable")
 {
