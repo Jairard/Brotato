@@ -48,7 +48,7 @@ class Potato//: public DefaultOrganismImpl<Potato>
 		PotatoDNA child(unsigned int i);
 		/*/
 		Potato* parent() const        { return m_parent; }
-		unsigned int childCount() const { return m_children.size(); }
+		size_t childCount() const { return m_children.size(); }
 		Potato* child(unsigned int i);
 		//*/
 

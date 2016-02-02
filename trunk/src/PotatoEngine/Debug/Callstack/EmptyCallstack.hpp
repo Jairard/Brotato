@@ -10,7 +10,7 @@ namespace Pot { namespace Debug
 class EmptyCallstack : public AbstractCallstack
 {
 	public:
-		EmptyCallstack(size_t skippedFrameCount = 0);
+		EmptyCallstack(size_t sizetDummy = 0, bool boolDummy = false);
 		virtual ~EmptyCallstack();
 
 		virtual const std::string& str() const;

@@ -32,7 +32,7 @@ namespace Debug
 			void DrawString(int x, int y, const b2Color& color, const char* string, ...);
 			
 		private:
-			sf::Vector2f* b2va_2_sfva(const b2Vec2* vertices, int32 vertexCount) const;
+			sf::Vector2f* b2va_2_sfva(const b2Vec2* vertices, size_t vertexCount) const;
 		
 		// Potato maniipulators
 		public:
@@ -42,13 +42,13 @@ namespace Debug
 			void DrawRect(const AARect& aabb, const sf::Color& color);
 			void DrawRect(const Vector2f& p1, const Vector2f& p2, const Vector2f& p3, const Vector2f& p4, const sf::Color& color);
 			void DrawRect(const Vector2f* vertices, const sf::Color& color);
-			void DrawPolygon(const Vector2f* vertices, int32 vertexCount, const sf::Color& color);
+			void DrawPolygon(const Vector2f* vertices, size_t vertexCount, const sf::Color& color);
 			void DrawSolidPolygon(const Vector2f* vertices, size_t vertexCount, const sf::Color& color);
 			void DrawCircle(const Vector2f& center, float32 radius, const sf::Color& color);
 			void DrawSolidCircle(const Vector2f& center, float32 radius, const Vector2f& axis, const sf::Color& color);
 			
 		private:
-			sf::Vector2f* pva_2_sfva(const Vector2f* vertices, int32 vertexCount) const;
+			sf::Vector2f* pva_2_sfva(const Vector2f* vertices, size_t vertexCount) const;
 		
 		// SFML manipulators
 		public:
@@ -58,7 +58,7 @@ namespace Debug
 			void DrawTransform(const sf::Transform& t);
 			void DrawRect(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Vector2f& p3, const sf::Vector2f& p4, const sf::Color& color);
 			void DrawRect(const sf::Vector2f* vertices, const sf::Color& color);
-			void DrawPolygon(const sf::Vector2f* vertices, int32 vertexCount, const sf::Color& color);
+			void DrawPolygon(const sf::Vector2f* vertices, size_t vertexCount, const sf::Color& color);
 			void DrawSolidPolygon(const sf::Vector2f* vertices, size_t vertexCount, const sf::Color& color);
 			void DrawCircle(const sf::Vector2f& center, float32 radius, const sf::Color& color);
 			void DrawSolidCircle(const sf::Vector2f& center, float32 radius, const sf::Vector2f& axis, const sf::Color& color);

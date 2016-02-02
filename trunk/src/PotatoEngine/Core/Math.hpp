@@ -5,6 +5,10 @@
 #include "NonInstantiable.hpp"
 #include "Vector2.hpp"
 
+#ifndef M_PI
+# define M_PI 3.141592653589793238462643383279f
+#endif
+
 namespace Pot
 {
 

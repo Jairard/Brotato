@@ -57,7 +57,7 @@ void Renderer::DrawTransform(const b2Transform& t)
 void Renderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 	sf::Vector2f* sfVertices = b2va_2_sfva(vertices, vertexCount);
-	DrawPolygon(sfVertices, vertexCount, b2c_2_sfc(color));
+	DrawPolygon(sfVertices, static_cast<size_t>(vertexCount), b2c_2_sfc(color));
 	delete[] sfVertices;
 }
 
@@ -112,11 +112,11 @@ void Renderer::DrawString(int x, int y, const b2Color& color, const char* string
 	va_end(arg);
 }
 
-sf::Vector2f* Renderer::b2va_2_sfva(const b2Vec2* vertices, int32 vertexCount) const
+sf::Vector2f* Renderer::b2va_2_sfva(const b2Vec2* vertices, size_t vertexCount) const
 {
 	sf::Vector2f* res = new sf::Vector2f[vertexCount];
 
-	for (int32 i = 0; i < vertexCount; ++i)
+	for (size_t i = 0; i < vertexCount; ++i)
 		res[i] = b2v_2_sfv(vertices[i]);
 
 	return res;
@@ -155,7 +155,7 @@ void Renderer::DrawRect(const Vector2f* vertices, const sf::Color& color)
 	delete[] sfVertices;
 }
 
-void Renderer::DrawPolygon(const Vector2f* vertices, int32 vertexCount, const sf::Color& color)
+void Renderer::DrawPolygon(const Vector2f* vertices, size_t vertexCount, const sf::Color& color)
 {
 	sf::Vector2f* sfVertices = pva_2_sfva(vertices, vertexCount);
 	DrawPolygon(sfVertices, vertexCount, color);
@@ -179,11 +179,11 @@ void Renderer::DrawSolidCircle(const Vector2f& center, float32 radius, const Vec
 	DrawSolidCircle(pv_2_sfv(center), radius, pv_2_sfv(axis), color);
 }
 
-sf::Vector2f* Renderer::pva_2_sfva(const Vector2f* vertices, int32 vertexCount) const
+sf::Vector2f* Renderer::pva_2_sfva(const Vector2f* vertices, size_t vertexCount) const
 {
 	sf::Vector2f* res = new sf::Vector2f[vertexCount];
 
-	for (int32 i = 0; i < vertexCount; ++i)
+	for (size_t i = 0; i < vertexCount; ++i)
 		res[i] = pv_2_sfv(vertices[i]);
 
 	return res;
@@ -250,11 +250,11 @@ void Renderer::DrawRect(const sf::Vector2f* vertices, const sf::Color& color)
 	DrawPolygon(vertices, 4, color);
 }
 
-void Renderer::DrawPolygon(const sf::Vector2f* vertices, int32 vertexCount, const sf::Color& color)
+void Renderer::DrawPolygon(const sf::Vector2f* vertices, size_t vertexCount, const sf::Color& color)
 {
-	for (int32 i = 0; i < vertexCount; ++i)
+	for (size_t i = 0; i < vertexCount; ++i)
 	{
-		int32 j = (i == 0) ? vertexCount-1 : i-1;
+		size_t j = (i == 0) ? vertexCount-1 : i-1;
 		DrawSegment(vertices[i], vertices[j], color);
 	}
 }

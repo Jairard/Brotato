@@ -68,6 +68,11 @@ namespace Pot { namespace Debug
 		s_canSkipFrames = false;
 	}
 
+	bool AbstractCallstack::hasRealTimeConstraint() const
+	{
+		return m_hasRealTimeConstraint;
+	}
+
 	std::string& AbstractCallstack::getFileAndLine_internal(const void* address, std::string& outString) const
 	{
 		return outputFileAndLineFromAddress(address, outString, m_hasRealTimeConstraint);

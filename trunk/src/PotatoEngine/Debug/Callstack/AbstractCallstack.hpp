@@ -23,6 +23,7 @@ class AbstractCallstack
 		static std::string& outputFileAndLineFromAddress(const void* const address, std::string& outString, bool realTimeConstraint = false);
 
 	protected:
+		bool hasRealTimeConstraint() const;
 		std::string& getFileAndLine_internal(const void* address, std::string& outString) const;
 		virtual void setStackTrace(const std::string& trace) = 0;
 

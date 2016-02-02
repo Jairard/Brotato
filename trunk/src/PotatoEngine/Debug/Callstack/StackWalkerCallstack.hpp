@@ -1,28 +1,25 @@
 #ifndef __POT_WINDOWS_CALLSTACK__
 #define __POT_WINDOWS_CALLSTACK__
 
-#include "../../Core/compil.hpp"
-
-#if defined(POT_COMPILER_MSC) && (_MSC_VER >= 1100)
-# define POT_STACKWALKER_SUPPORT
-#endif
+#include "StackWalker.h"
 
 #ifdef POT_STACKWALKER_SUPPORT
 #include <string>
 #include <sstream>
 #include "AbstractCallstack.hpp"
-#include "StackWalker.h"
 
 namespace Pot { namespace Debug
 {
 class StackWalkerCallstack: public AbstractCallstack, public StackWalker
 {
 	public:
-		StackWalkerCallstack(size_t skippedFrameCount = AbstractCallstack::c_defaultSkippedFrameCount);
+		StackWalkerCallstack(size_t skippedFrameCount = AbstractCallstack::c_defaultSkippedFrameCount, bool hasRealTimeConstraint = false);
+		StackWalkerCallstack(const StackWalkerCallstack& parOther);
 		virtual ~StackWalkerCallstack();
 
 		// AbstractCallstack
 		virtual const std::string& str() const;
+		void operator=(const StackWalkerCallstack& other);
 
 	protected:
 		virtual void setStackTrace(const std::string& trace);

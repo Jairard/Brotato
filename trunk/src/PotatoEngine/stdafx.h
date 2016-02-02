@@ -22,6 +22,8 @@
 #ifdef POT_PLATFORM_WINDOWS
 #include <malloc.h>
 #include <tchar.h>
+#pragma warning(disable : 4091) // "'typedef ' : ignoré à gauche de '[...]' quand aucune variable n'est déclarée"
+#pragma warning(disable : 4996) // "'GetVersionExA': a été déclaré déconseillé"
 #endif
 
 #ifdef POT_COMPILER_GCC

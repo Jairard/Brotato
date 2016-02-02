@@ -7,10 +7,11 @@ namespace Pot { namespace Debug
 {
 	const std::string EmptyCallstack::c_message = "[no callstack support]";
 		
-	EmptyCallstack::EmptyCallstack(size_t skippedFrameCount):
+	EmptyCallstack::EmptyCallstack(size_t sizetDummy, bool boolDummy):
 		AbstractCallstack(0, false)
 	{
-		POT_UNUSED(skippedFrameCount);
+		POT_UNUSED(sizetDummy);
+		POT_UNUSED(boolDummy);
 	}
 
 	EmptyCallstack::~EmptyCallstack()

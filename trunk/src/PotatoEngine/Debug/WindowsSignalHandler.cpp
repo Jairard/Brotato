@@ -64,7 +64,14 @@ namespace Pot { namespace Debug
         else
         {
             std::string buffer;
-            oss << AbstractCallstack::outputFileAndLineFromAddress((void*)exceptionInfo->ContextRecord->Eip, buffer, false);
+#if defined(WIN64) || defined(_WIN64) || defined(__WIN64) || defined(__WIN64__)
+			const void* addr = (void*)exceptionInfo->ContextRecord->Rip;
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__WIN32__)
+			const void* addr = (void*)exceptionInfo->ContextRecord->Eip;
+#else
+#pragma(Arch is neither 32 nor 64 bits ?)
+#endif
+            oss << AbstractCallstack::outputFileAndLineFromAddress(addr, buffer, false);
         }
 
         Logger::log(Logger::CError, oss.str().c_str());

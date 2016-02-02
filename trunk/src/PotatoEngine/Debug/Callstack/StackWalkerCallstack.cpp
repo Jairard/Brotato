@@ -8,8 +8,8 @@
 
 namespace Pot { namespace Debug
 {
-    StackWalkerCallstack::StackWalkerCallstack(size_t skippedFrameCount):
-        AbstractCallstack(skippedFrameCount + 1),
+    StackWalkerCallstack::StackWalkerCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint):
+        AbstractCallstack(skippedFrameCount + 1, hasRealTimeConstraint),
         StackWalker(),
         m_trace(),
         m_traceStream(),
@@ -17,6 +17,16 @@ namespace Pot { namespace Debug
     {
         fetchCallstack();
     }
+
+	StackWalkerCallstack::StackWalkerCallstack(const StackWalkerCallstack& parOther) :
+		AbstractCallstack(parOther.m_skippedFrameCount, parOther.hasRealTimeConstraint()),
+		StackWalker(),
+		m_trace(parOther.m_trace),
+		m_traceStream(),
+		m_currentFrame(parOther.m_currentFrame)
+	{
+		// No need to call fetchCallstack()
+	}
 
     StackWalkerCallstack::~StackWalkerCallstack()
     {}
@@ -26,7 +36,15 @@ namespace Pot { namespace Debug
         return m_trace;
     }
 
-	void StackWalkerCallstacl::setStackTrace(const std::string& trace)
+	void StackWalkerCallstack::operator=(const StackWalkerCallstack& parOther)
+	{
+		AbstractCallstack::operator=(parOther);
+		// No need to copy the stream since it's temporary
+		m_trace = parOther.m_trace;
+		m_currentFrame = parOther.m_currentFrame;
+	}
+
+	void StackWalkerCallstack::setStackTrace(const std::string& trace)
 	{
 		m_trace = trace;
 	}
