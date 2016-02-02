@@ -86,7 +86,9 @@
 #endif
 
 #if defined(POT_RELEASE) && defined(POT_DEBUG)
-#error You can't define POT_DEBUG and POT_RELEASE at the same time
+#error You can't define POT_RELEASE and POT_DEBUG at the same time
+#elif !defined(POT_RELEASE) && !defined(POT_DEBUG)
+#error You must define either POT_RELEASE or POT_DEBUG
 #endif
 
 #endif

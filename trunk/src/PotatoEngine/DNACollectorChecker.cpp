@@ -277,7 +277,7 @@ namespace Pot
 
 				std::ostringstream oss;
 				oss << "DNACollector::checkIntegrity: ";
-				oss << "the organism " << (long)containerIt->first << " is " << (alive ? "alive" : "dead");
+				oss << "the organism " << containerIt->first << " is " << (alive ? "alive" : "dead");
 				oss << " but some DNAs referencing it are " << (alive ? "dead" : "alive");
 				handleError(checkDNAsStatus(t, alive), oss.str().c_str()); /* O(DnaC) */
 			}
