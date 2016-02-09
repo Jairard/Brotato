@@ -1,10 +1,10 @@
 #ifndef __POT_BASE_ORGANISM__
 #define __POT_BASE_ORGANISM__
 
-#include "Core/compil.hpp"
+#include "../Core/compil.hpp"
 #ifdef POT_DEBUG
+# include "../Debug/Callstack.hpp"
 # include "DNACollector.hpp"
-# include "Debug/Callstack.hpp"
 #endif
 
 namespace Pot

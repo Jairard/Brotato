@@ -1,9 +1,9 @@
 #ifndef __POT_CELLDNA__
 #define __POT_CELLDNA__
 
-#include "Core/Tools.hpp"
-#include "Debug/assert.hpp"
-#include "Debug/Logger.hpp"
+#include "../Core/Tools.hpp"
+#include "../Debug/assert.hpp"
+#include "../Debug/Logger.hpp"
 #include "DNACollector.hpp"
 #include "BaseDNA.hpp"
 #include "BaseOrganism.hpp"

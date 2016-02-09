@@ -1,10 +1,10 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "DnaCollectorChecker.hpp"
 
 #ifdef POT_DEBUG
 #include <set>
-#include "Debug/Logger.hpp"
-#include "Debug/Demangler.hpp"
+#include "../Debug/Logger.hpp"
+#include "../Debug/Demangler.hpp"
 #include "DNACollector.hpp"
 #include "DNACollectorTimestamp.hpp"
 #include "BaseDNA.hpp"

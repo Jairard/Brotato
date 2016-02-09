@@ -6,7 +6,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Core/Pool.hpp"
 #include "PotatoPlant.hpp"
-#include "DNA.hpp"
+#include "DnaSystem/DNA.hpp"
 
 namespace Pot
 {

@@ -2,8 +2,8 @@
 #define __POT_DNA_COLLECTOR_TIMESTAMP__
 
 #include <ostream>
-#include "Core/types.hpp"
-#include "Core/Tools.hpp"
+#include "../Core/types.hpp"
+#include "../Core/Tools.hpp"
 
 namespace Pot
 {

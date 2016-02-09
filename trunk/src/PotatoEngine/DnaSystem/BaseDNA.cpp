@@ -1,6 +1,6 @@
 #include "BaseDNA.hpp"
 
-#include "Debug/Logger.hpp"
+#include "../Debug/Logger.hpp"
 #include "DNACollector.hpp"
 
 namespace Pot

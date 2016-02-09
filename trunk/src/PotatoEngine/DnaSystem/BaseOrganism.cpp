@@ -1,10 +1,10 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "BaseOrganism.hpp"
 
 #include "DNA.hpp"
 #include "DNACollector.hpp"
 #ifdef POT_DEBUG
-# include "Debug/Callstack/AbstractCallstack.hpp"
+# include "../Debug/Callstack/AbstractCallstack.hpp"
 #endif
 
 namespace Pot

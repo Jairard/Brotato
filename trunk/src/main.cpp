@@ -24,9 +24,9 @@ std::cout << "yay !" << std::endl;
 #include <Core/BuildConfig.hpp>
 #include <Debug/Callstack.hpp>
 #include <Debug/SignalHandler.hpp>
-#include <BaseOrganism.hpp>
-#include <DNA.hpp>
-#include <DNACollector.hpp>
+#include <DnaSystem/BaseOrganism.hpp>
+#include <DnaSystem/DNA.hpp>
+#include <DnaSystem/DNACollector.hpp>
 #include <PotatoPlant.hpp>
 
 class FakeCell : public Pot::BaseOrganism

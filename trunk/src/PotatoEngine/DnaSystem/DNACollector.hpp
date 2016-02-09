@@ -8,12 +8,12 @@
 #include <typeinfo>
 #include <typeindex>
 #include <functional>
-#include "Core/Singleton.hpp"
-#include "Core/NonCopyable.hpp"
-#include "Core/Tools.hpp"
-#include "Core/types.hpp"
-#include "Debug/assert.hpp"
-#include "Debug/Callstack.hpp"
+#include "../Core/Singleton.hpp"
+#include "../Core/NonCopyable.hpp"
+#include "../Core/Tools.hpp"
+#include "../Core/types.hpp"
+#include "../Debug/assert.hpp"
+#include "../Debug/Callstack.hpp"
 #include "DnaCollectorChecker.hpp"
 #include "DNACollectorTimestamp.hpp"
 

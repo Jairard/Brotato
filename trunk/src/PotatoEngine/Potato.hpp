@@ -14,7 +14,7 @@
 #include "Core/ClassHelpers.hpp"
 #include "Stem.hpp"
 #include "Cell.hpp"
-#include "DNA.hpp"
+#include "DnaSystem/DNA.hpp"
 
 namespace Pot
 {
