@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6414DC5F-2B27-473E-A310-A7DC31825F18}</ProjectGuid>
+    <RootNamespace>PotatoEngine</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>POT_DEBUG;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;Box2D.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\lib\Windows\SFML\vs\x86;C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\lib\Windows\Box2D\vs\x86\Debug</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>POT_DEBUG;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <OmitFramePointers>false</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;Box2D.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\lib\Windows\SFML\vs\64;C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\lib\Windows\Box2D\vs\64\Debug</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\lib\Windows\SFML\vs\x86;C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\lib\Windows\Box2D\vs\x86\Release	</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;Box2D.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;Box2D.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\lib\Windows\SFML\vs\64;C:\Users\Jairard\Documents\Programmation\C++\Brotato\trunk\lib\Windows\Box2D\vs\64\Release</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\BaseDNA.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\BaseOrganism.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Cell.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Core\BuildConfig.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Core\Math.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Core\Transform.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\assert.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\AbstractCallstack.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\BacktraceCallstack.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\BackwardCPPCallstack.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\EmptyCallstack.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalker.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalkerCallstack.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Demangler.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Logger.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\PosixSignalHandler.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Renderer.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\SignalHandler.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\WindowsSignalHandler.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DNACollector.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DNACollectorChecker.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DNACollectorTimestamp.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\GeometryCell.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\InputListener.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\LineGeometry.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Potato.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\PotatoPlant.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\RectangleGeometry.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\RenderCell.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\stdafx.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Stem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\BaseDNA.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\BaseOrganism.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Cell.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\AARect.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\BuildConfig.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\ClassHelpers.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\compil.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\LibsHelpers.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\Math.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\NonCopyable.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\NonInstantiable.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\Pool.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\Rect.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\Singleton.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\Stainable.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\Tools.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\Transform.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\types.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Core\Vector2.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\assert.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\AbstractCallstack.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\BacktraceCallstack.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\backward.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\BackwardCPPCallstack.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\EmptyCallstack.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalker.h" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalkerCallstack.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Demangler.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Logger.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\PosixSignalHandler.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Renderer.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\SignalHandler.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\WindowsSignalHandler.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DNA.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DNACollector.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaCollectorChecker.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DNACollectorTimestamp.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\GeometryCell.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\InputListener.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\LineGeometry.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Potato.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\PotatoPlant.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\RectangleGeometry.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\RenderCell.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\stdafx.h" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Stem.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\targetver.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
