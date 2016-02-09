@@ -15,22 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\BaseDNA.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\BaseOrganism.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Cell.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DNACollector.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DNACollectorChecker.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DNACollectorTimestamp.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\GeometryCell.cpp">
@@ -108,6 +93,21 @@
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalkerCallstack.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseDNA.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseOrganism.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollector.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollectorChecker.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollectorTimestamp.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\stdafx.h">
@@ -116,25 +116,7 @@
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\targetver.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\BaseDNA.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\BaseOrganism.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Cell.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DNA.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DNACollector.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaCollectorChecker.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DNACollectorTimestamp.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\GeometryCell.hpp">
@@ -254,5 +236,26 @@
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalker.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseDNA.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseOrganism.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNA.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollector.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DnaCollectorChecker.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollectorTimestamp.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\..\misc\CodingConvention.txt" />
   </ItemGroup>
 </Project>
