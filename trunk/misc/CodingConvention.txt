@@ -1,0 +1,48 @@
+1 - Includes order
+
+- STD headers, alphabetical order
+- Externals headers by library, alphabetical order for the libraries AND inside a library
+- Headers from the engine by folder, using <>, alphabetical order for the folders AND inside a folder
+
+The deepest file should prevail, which means that "Folder1/Folder2/file1.hpp" should be included before "Folder1/file2.hpp".
+Empty line can be used as separator between STD and externals headers AND/OR between externals headers and engine headers for readability's sake.
+/!\ Particular cases:
+- For source files, the first include must be <stdafx.h> and the second one must be the corresponding header, using "". Then the general case is applied.
+- Some headers require to include <Core/compil.hpp> before any other (because they are platform-dependant).
+
+Example:
+
+Dummy.hpp:
+// Header guard
+#include <iostream>
+#include <vector>
+
+#include <Box2D/Box2D.h>
+#include <Box2D/RectangleShape.h>
+#include <SFML/Window.hpp>
+#include <SFML/Event.hpp>
+
+#include <Core/LibsHelpers.hpp>
+#include <Core/Vector2.hpp>
+#include <Debug/Logger.hpp>
+#include <Debug/Renderer.hpp>
+#include <Potato.hpp>
+
+// Rest of the header ...
+
+Dummy.cpp:
+#include <stdafx.h>
+#include "Dummy.hpp"
+
+#include <Box2D/Box2D.h>
+#include <Box2D/RectangleShape.h>
+#include <SFML/Window.hpp>
+#include <SFML/Event.hpp>
+
+#include <Core/LibsHelpers.hpp>
+#include <Core/Vector2.hpp>
+#include <Debug/Logger.hpp>
+#include <Debug/Renderer.hpp>
+#include <Potato.hpp>
+
+// Rest of the source ...
