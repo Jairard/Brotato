@@ -1,10 +1,10 @@
 #ifndef __POT_CORE_POOL__
 #define __POT_CORE_POOL__
 
+#include <list>
 #include <stdlib.h>
 #include <string.h>
-#include <list>
-#include "../Debug/assert.hpp"
+#include <Debug/assert.hpp>
 
 namespace Pot
 {

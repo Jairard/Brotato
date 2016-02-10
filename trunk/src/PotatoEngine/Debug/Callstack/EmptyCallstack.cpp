@@ -1,7 +1,7 @@
-#include "../../stdafx.h"
+#include <stdafx.h>
 #include "EmptyCallstack.hpp"
 
-#include "../../Core/Tools.hpp"
+#include <Core/Tools.hpp>
 
 namespace Pot { namespace Debug 
 {

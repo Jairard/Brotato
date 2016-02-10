@@ -1,11 +1,11 @@
 #ifndef __POT_LINEGEOMETRY__
 #define __POT_LINEGEOMETRY__
 
-#include "GeometryCell.hpp"
 #include <SFML/System/Vector2.hpp>
-#include "Core/ClassHelpers.hpp"
-#include "Core/LibsHelpers.hpp"
-#include "Core/Vector2.hpp"
+#include <Core/ClassHelpers.hpp>
+#include <Core/LibsHelpers.hpp>
+#include <Core/Vector2.hpp>
+#include <GeometryCell.hpp>
 
 namespace Pot
 {

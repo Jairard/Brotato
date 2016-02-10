@@ -1,8 +1,9 @@
-#include "../Core/compil.hpp"
+#include <stdafx.h>
 #include "Demangler.hpp"
 
-#include "../Core/Tools.hpp"
-#include "Logger.hpp"
+#include <Core/compil.hpp>
+#include <Core/Tools.hpp>
+#include <Debug/Logger.hpp>
 
 namespace Pot { namespace Debug
 {

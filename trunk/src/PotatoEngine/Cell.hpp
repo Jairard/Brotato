@@ -1,10 +1,10 @@
 #ifndef __POT_CELL__
 #define __POT_CELL__
 
-#include "Core/NonCopyable.hpp"
-#include "Core/ClassHelpers.hpp"
-#include "Debug/Logger.hpp"
-#include "Potato.hpp"
+#include <Core/ClassHelpers.hpp>
+#include <Core/NonCopyable.hpp>
+#include <Debug/Logger.hpp>
+#include <Potato.hpp>
 
 namespace Pot
 {

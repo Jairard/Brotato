@@ -2,8 +2,8 @@
 #define __POT_POTATOPLANT__
 
 #include <SFML/Graphics.hpp>
-#include "Core/ClassHelpers.hpp"
-#include "InputListener.hpp"
+#include <Core/ClassHelpers.hpp>
+#include <InputListener.hpp>
 
 namespace Pot
 {

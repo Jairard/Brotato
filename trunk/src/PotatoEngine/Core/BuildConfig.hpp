@@ -2,7 +2,7 @@
 #define __POT_BUILD_CONFIG__
 
 #include <string>
-#include "compil.hpp"
+#include <Core/compil.hpp>
 
 namespace Pot { namespace BuildConfig
 {

@@ -1,13 +1,15 @@
+#include <stdafx.h>
 #include "PosixSignalHandler.hpp"
 
 #ifdef POT_POSIX_SUPPORT
-#include <signal.h>
-#include <csignal>
 #include <cerrno>
-#include "../Core/Tools.hpp"
-#include "assert.hpp"
-#include "Logger.hpp"
-#include "Callstack.hpp"
+#include <csignal>
+#include <signal.h>
+
+#include <Core/Tools.hpp>
+#include <Debug/assert.hpp>
+#include <Debug/Callstack.hpp>
+#include <Debug/Logger.hpp>
 
 namespace Pot { namespace Debug
 {

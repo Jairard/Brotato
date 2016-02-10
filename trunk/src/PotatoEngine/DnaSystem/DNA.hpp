@@ -1,12 +1,12 @@
 #ifndef __POT_CELLDNA__
 #define __POT_CELLDNA__
 
-#include "../Core/Tools.hpp"
-#include "../Debug/assert.hpp"
-#include "../Debug/Logger.hpp"
-#include "DNACollector.hpp"
-#include "BaseDNA.hpp"
-#include "BaseOrganism.hpp"
+#include <Core/Tools.hpp>
+#include <Debug/assert.hpp>
+#include <Debug/Logger.hpp>
+#include <Dnasystem/BaseDNA.hpp>
+#include <Dnasystem/BaseOrganism.hpp>
+#include <Dnasystem/DNACollector.hpp>
 
 namespace Pot
 {
@@ -17,7 +17,7 @@ class BaseOrganism;
 template <typename OrganismType>
 class DNA: public BaseDNA
 {
-    static_assert(POT_STATIC_IS(OrganismType, BaseOrganism), "This organism does not inherit from ::Pot::BaseOrganims");
+	static_assert(POT_STATIC_IS(OrganismType, BaseOrganism), "This organism does not inherit from ::Pot::BaseOrganim");
 	friend class DNACollector;
 
 	private:

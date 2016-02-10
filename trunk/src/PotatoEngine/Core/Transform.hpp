@@ -2,11 +2,11 @@
 #define __POT_CORE_TRANSFORM__
 
 #include <SFML/Graphics/Transform.hpp>
-#include "Stainable.hpp"
-#include "Vector2.hpp"
-#include "ClassHelpers.hpp"
-#include "AARect.hpp"
-#include "Rect.hpp"
+#include <Core/AARect.hpp>
+#include <Core/ClassHelpers.hpp>
+#include <Core/Rect.hpp>
+#include <Core/Stainable.hpp>
+#include <Core/Vector2.hpp>
 
 namespace Pot
 {

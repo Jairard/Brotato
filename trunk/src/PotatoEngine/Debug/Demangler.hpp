@@ -1,11 +1,11 @@
 #ifndef __POT_DEBUG_DEMANGLER__
 #define __POT_DEBUG_DEMANGLER__
 
-#include <typeinfo>
-#include <typeindex>
-#include <string>
 #include <ostream>
-#include "Logger.hpp"
+#include <string>
+#include <typeindex>
+#include <typeinfo>
+#include <Debug/Logger.hpp>
 
 namespace Pot { namespace Debug
 {

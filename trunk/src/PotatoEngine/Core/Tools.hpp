@@ -1,18 +1,19 @@
 #ifndef __POT_CORE_TOOLS__
 #define __POT_CORE_TOOLS__
 
-#include <typeinfo>
-#include <type_traits>
-#include <string>
-#include <sstream>
-#include "../stdafx.h"
-#include "../Debug/assert.hpp"
-#include "compil.hpp"
-#include "NonInstantiable.hpp"
+#include <Core/compil.hpp>
 
 #ifdef POT_COMPILER_GCC
 #include <cxxabi.h>
 #endif
+#include <sstream>
+#include <string>
+#include <typeinfo>
+#include <type_traits>
+
+#include <Core/NonInstantiable.hpp>
+#include <Debug/assert.hpp>
+#include <stdafx.h>
 
 namespace Pot
 {

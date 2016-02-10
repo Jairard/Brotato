@@ -1,9 +1,9 @@
 #ifndef __POT_RECTANGLEGEOMETRY__
 #define __POT_RECTANGLEGEOMETRY__
 
-#include "GeometryCell.hpp"
-#include "Core/Vector2.hpp"
-#include "Core/ClassHelpers.hpp"
+#include <Core/ClassHelpers.hpp>
+#include <Core/Vector2.hpp>
+#include <GeometryCell.hpp>
 
 namespace Pot
 {

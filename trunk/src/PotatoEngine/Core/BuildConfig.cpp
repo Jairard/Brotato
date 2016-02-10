@@ -1,4 +1,4 @@
-#include "../stdafx.h"
+#include <stdafx.h>
 #include "BuildConfig.hpp"
 
 namespace Pot { namespace BuildConfig

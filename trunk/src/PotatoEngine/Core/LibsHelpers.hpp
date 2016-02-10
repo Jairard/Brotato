@@ -1,14 +1,15 @@
 #ifndef __POT_CORE_LIBSHELPERS__
 #define __POT_CORE_LIBSHELPERS__
 
-#include <SFML/System/Vector2.hpp>
+#include <Box2D/Box2D.h>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Transformable.hpp>
-#include <Box2D/Box2D.h>
-#include "AARect.hpp"
-#include "Rect.hpp"
-#include "Vector2.hpp"
+#include <SFML/System/Vector2.hpp>
+
+#include <Core/AARect.hpp>
+#include <Core/Rect.hpp>
+#include <Core/Vector2.hpp>
 
 // Vector2 helpers
 inline sf::Vector2f b2v_2_sfv(const b2Vec2& b2v)

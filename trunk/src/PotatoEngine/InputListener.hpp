@@ -2,7 +2,7 @@
 #define __POT_INPUTLISTENER__
 
 #include <SFML/Window/Event.hpp>
-#include "Core/Tools.hpp"
+#include <Core/Tools.hpp>
 
 namespace sf
 {

@@ -1,9 +1,9 @@
 #ifndef __POT_EMPTY_CALLSTACK__
 #define __POT_EMPTY_CALLSTACK__
 
-#include <string>
 #include <ostream>
-#include "AbstractCallstack.hpp"
+#include <string>
+#include <Debug/Callstack/AbstractCallstack.hpp>
 
 namespace Pot { namespace Debug
 {

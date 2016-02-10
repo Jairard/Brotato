@@ -1,7 +1,7 @@
 #ifndef __POT_TARGET_VER__
 #define __POT_TARGET_VER__
 
-#include "Core/compil.hpp"
+#include <Core/compil.hpp>
 
 // Including SDKDDKVer.h defines the highest available Windows platform.
 

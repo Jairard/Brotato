@@ -1,8 +1,8 @@
 #ifndef __POT_DEBUG_SIGNAL_HANDLER__
 #define __POT_DEBUG_SIGNAL_HANDLER__
 
-#include "../Core/NonInstantiable.hpp"
-#include "PosixSignalHandler.hpp"
+#include <Core/NonInstantiable.hpp>
+#include <Debug/PosixSignalHandler.hpp>
 
 namespace Pot { namespace Debug
 {

@@ -1,16 +1,16 @@
 #ifndef __POT_DEBUG_BACKTRACE_CALLSTACK__
 #define __POT_DEBUG_BACKTRACE_CALLSTACK__
 
-#include "../../Core/compil.hpp"
+#include <Core/compil.hpp>
 
 #ifdef POT_COMPILER_GCC
 #define POT_BACKTRACE_SUPPORT
 #endif
 
 #ifdef POT_BACKTRACE_SUPPORT
-#include <string>
 #include <ostream>
-#include "AbstractCallstack.hpp"
+#include <string>
+#include <Debug/Callstack/AbstractCallstack.hpp>
 
 namespace Pot { namespace Debug
 {

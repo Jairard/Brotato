@@ -1,8 +1,8 @@
 #ifndef __POT_CORE_TYPES__
 #define __POT_CORE_TYPES__
 
-#include <cstdint>
 #include <assert.h>
+#include <cstdint>
 
 typedef  int8_t  poti8; // pot_i8, pot_int8 ?
 typedef uint8_t  potu8; // pot_u8, pot_uint8 ?

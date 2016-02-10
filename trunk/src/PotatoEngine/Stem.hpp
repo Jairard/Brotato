@@ -1,12 +1,13 @@
 #ifndef __POT_STEM__
 #define __POT_STEM__
 
-#include <string>
 #include <list>
+#include <string>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "Core/Pool.hpp"
-#include "PotatoPlant.hpp"
-#include "DnaSystem/DNA.hpp"
+
+#include <Core/Pool.hpp>
+#include <DnaSystem/DNA.hpp>
+#include <PotatoPlant.hpp>
 
 namespace Pot
 {

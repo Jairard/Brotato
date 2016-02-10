@@ -2,9 +2,9 @@
 #define __POT_DEBUG_LOGGER__
 
 #include <list>
-#include <string>
 #include <stdarg.h>
-#include "../Core/NonInstantiable.hpp"
+#include <string>
+#include <Core/NonInstantiable.hpp>
 
 namespace Pot 
 {
@@ -13,7 +13,7 @@ namespace Debug
 	class Logger : public NonInstantiable
 	{
 		/* Methods */
-		public:		
+		public:
 			static void setDefaultStream(std::ostream& stream);
 			/* C++-like logs */
 			static void log(const std::string& msg);

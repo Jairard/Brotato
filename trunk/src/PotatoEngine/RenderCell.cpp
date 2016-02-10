@@ -1,12 +1,12 @@
-#include "stdafx.h"
+#include <stdafx.h>
 #include "RenderCell.hpp"
 
 #include <list>
-#include "Debug/Logger.hpp"
-#include "Debug/Renderer.hpp"
-#include "Core/Rect.hpp"
-#include "Core/LibsHelpers.hpp"
-#include "GeometryCell.hpp"
+#include <Core/LibsHelpers.hpp>
+#include <Core/Rect.hpp>
+#include <Debug/Logger.hpp>
+#include <Debug/Renderer.hpp>
+#include <GeometryCell.hpp>
 
 namespace Pot
 {

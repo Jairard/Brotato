@@ -1,15 +1,15 @@
-#include "stdafx.h"
+#include <stdafx.h>
 #include "Potato.hpp"
 
 #include <assert.h>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "Core/Tools.hpp"
-#include "Debug/Renderer.hpp"
-#include "Debug/Logger.hpp"
-#include "Stem.hpp"
-#include "Cell.hpp"
-//#include "PotatoDNA.hpp"
-#include "RenderCell.hpp"
+
+#include <Core/Tools.hpp>
+#include <Debug/Logger.hpp>
+#include <Debug/Renderer.hpp>
+#include <Cell.hpp>
+#include <RenderCell.hpp>
+#include <Stem.hpp>
 
 namespace Pot
 {

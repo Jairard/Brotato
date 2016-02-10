@@ -1,10 +1,10 @@
-#include "../stdafx.h"
+#include <stdafx.h>
 #include "Transform.hpp"
 
 #include <iostream>
-#include "../Debug/Logger.hpp"
-#include "LibsHelpers.hpp"
-#include "Math.hpp"
+#include <Core/LibsHelpers.hpp>
+#include <Core/Math.hpp>
+#include <Debug/Logger.hpp>
 
 namespace Pot
 {

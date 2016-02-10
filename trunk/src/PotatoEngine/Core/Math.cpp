@@ -1,6 +1,7 @@
-#include "../stdafx.h"
+#include <stdafx.h>
 #include "Math.hpp"
-#include "LibsHelpers.hpp"
+
+#include <Core/LibsHelpers.hpp>
 
 namespace Pot
 {

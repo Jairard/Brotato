@@ -1,18 +1,18 @@
-#include <stdlib.h>
-#include <iostream>
-#include <list>
-
+#include <stdafx.h>
 #include "PotatoPlant.hpp"
 
-#include "Core/Tools.hpp"
-#include "Core/Vector2.hpp"
-#include "Debug/Renderer.hpp"
-#include "Debug/Logger.hpp"
-#include "Stem.hpp"
-//#include "PotatoDNA.hpp"
-#include "RenderCell.hpp"
-#include "RectangleGeometry.hpp"
-#include "LineGeometry.hpp"
+#include <iostream>
+#include <list>
+#include <stdlib.h>
+
+#include <Core/Tools.hpp>
+#include <Core/Vector2.hpp>
+#include <Debug/Logger.hpp>
+#include <Debug/Renderer.hpp>
+#include <LineGeometry.hpp>
+#include <RectangleGeometry.hpp>
+#include <RenderCell.hpp>
+#include <Stem.hpp>
 
 namespace Pot
 {

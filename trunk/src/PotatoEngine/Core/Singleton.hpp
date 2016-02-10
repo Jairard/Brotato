@@ -2,7 +2,7 @@
 #define __POT_CORE_SINGLETON__
 
 #include <cstddef>
-#include "../Debug/assert.hpp"
+#include <Debug/assert.hpp>
 
 namespace Pot
 {

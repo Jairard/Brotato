@@ -1,13 +1,14 @@
-#include "../stdafx.h"
+#include <stdafx.h>
+#include "Logger.hpp"
+
 #include <cstdio>
-#include <iostream>
-#include <sstream>
 #include <ctime>
 #ifdef POT_COMPILER_MSC // POT_PLATFORM_WINDOWS ?
 # include <debugapi.h>
 #endif
-#include "Logger.hpp"
-#include "assert.hpp"
+#include <iostream>
+#include <sstream>
+#include <Debug/assert.hpp>
 
 namespace Pot
 {

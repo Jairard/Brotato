@@ -1,8 +1,8 @@
-#include "stdafx.h"
+#include <stdafx.h>
 #include "InputListener.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Debug/Logger.hpp"
+#include <Debug/Logger.hpp>
 
 namespace Pot
 {

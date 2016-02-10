@@ -1,21 +1,22 @@
 #ifndef __POT_DNA_COLLECTOR__
 #define __POT_DNA_COLLECTOR__
 
-#include <utility>
-#include <limits>
-#include <vector>
-#include <unordered_map>
-#include <typeinfo>
-#include <typeindex>
 #include <functional>
-#include "../Core/Singleton.hpp"
-#include "../Core/NonCopyable.hpp"
-#include "../Core/Tools.hpp"
-#include "../Core/types.hpp"
-#include "../Debug/assert.hpp"
-#include "../Debug/Callstack.hpp"
-#include "DnaCollectorChecker.hpp"
-#include "DNACollectorTimestamp.hpp"
+#include <limits>
+#include <typeindex>
+#include <typeinfo>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
+#include <Core/NonCopyable.hpp>
+#include <Core/Singleton.hpp>
+#include <Core/Tools.hpp>
+#include <Core/types.hpp>
+#include <Debug/assert.hpp>
+#include <Debug/Callstack.hpp>
+#include <DnaSystem/DnaCollectorChecker.hpp>
+#include <DnaSystem/DNACollectorTimestamp.hpp>
 
 // TODO:
 // - Look for complexity improvements

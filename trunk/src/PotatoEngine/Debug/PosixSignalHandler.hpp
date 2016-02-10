@@ -1,16 +1,16 @@
 #ifndef __POT_DEBUG_POSIX_SIGNAL_HANDLER__
 #define __POT_DEBUG_POSIX_SIGNAL_HANDLER__
 
-#include "../Core/compil.hpp"
+#include <Core/compil.hpp>
 
 #ifdef POT_POSIX_SUPPORT
 
+#include <cerrno>
+#include <csignal>
 #include <cstddef>
 #include <signal.h>
-#include <csignal>
-#include <cerrno>
-#include "../Core/types.hpp"
-#include "../Core/NonInstantiable.hpp"
+#include <Core/NonInstantiable.hpp>
+#include <Core/types.hpp>
 
 namespace Pot { namespace Debug
 {

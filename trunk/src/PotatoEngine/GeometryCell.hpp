@@ -2,10 +2,10 @@
 #define __POT_GEOMETRYCELL__
 
 #include <SFML/Graphics.hpp>
-#include "Core/AARect.hpp"
-#include "Core/Rect.hpp"
-#include "Core/ClassHelpers.hpp"
-#include "Cell.hpp"
+#include <Core/AARect.hpp>
+#include <Core/ClassHelpers.hpp>
+#include <Core/Rect.hpp>
+#include <Cell.hpp>
 
 namespace Pot
 {

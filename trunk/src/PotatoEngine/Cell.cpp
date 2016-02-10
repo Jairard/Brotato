@@ -1,8 +1,8 @@
-#include "stdafx.h"
+#include <stdafx.h>
 #include "Cell.hpp"
 
 #include <iostream>
-#include "Debug/Renderer.hpp"
+#include <Debug/Renderer.hpp>
 
 namespace Pot
 {

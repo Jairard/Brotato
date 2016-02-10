@@ -1,12 +1,12 @@
 #ifndef __POT_DEBUG_WINDOWS_SIGNAL_HANDLER__
 #define __POT_DEBUG_WINDOWS_SIGNAL_HANDLER__
 
-#include "../Core/compil.hpp"
+#include <Core/compil.hpp>
 
 #ifdef POT_PLATFORM_WINDOWS
 #include <wtypes.h>
 #include <string>
-#include "../Core/NonInstantiable.hpp"
+#include <Core/NonInstantiable.hpp>
 
 namespace Pot { namespace Debug
 {

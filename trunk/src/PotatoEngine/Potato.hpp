@@ -1,20 +1,22 @@
 #ifndef __POT_POTATO__
 #define __POT_POTATO__
 
-#include <type_traits>
 #include <assert.h>
-#include <string>
-#include <vector>
 #include <list>
-#include <SFML/Graphics/Transformable.hpp>
+#include <string>
+#include <type_traits>
+#include <vector>
+
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "Core/Transform.hpp"
-#include "Core/Tools.hpp"
-#include "Core/Stainable.hpp"
-#include "Core/ClassHelpers.hpp"
-#include "Stem.hpp"
-#include "Cell.hpp"
-#include "DnaSystem/DNA.hpp"
+#include <SFML/Graphics/Transformable.hpp>
+
+#include <Core/ClassHelpers.hpp>
+#include <Core/Stainable.hpp>
+#include <Core/Tools.hpp>
+#include <Core/Transform.hpp>
+#include <DnaSystem/DNA.hpp>
+#include <Cell.hpp>
+#include <Stem.hpp>
 
 namespace Pot
 {

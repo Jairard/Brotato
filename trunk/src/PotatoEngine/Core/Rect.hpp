@@ -1,8 +1,8 @@
 #ifndef __POT_CORE_RECT__
 #define __POT_CORE_RECT__
 
-#include "Vector2.hpp"
-#include "AARect.hpp"
+#include <Core/AARect.hpp>
+#include <Core/Vector2.hpp>
 
 namespace Pot
 {

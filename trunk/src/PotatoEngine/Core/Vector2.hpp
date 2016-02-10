@@ -1,8 +1,8 @@
 #ifndef __POT_CORE_VECTOR2__
 #define __POT_CORE_VECTOR2__
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 #ifndef ZERO
 # define ZERO	1E-15

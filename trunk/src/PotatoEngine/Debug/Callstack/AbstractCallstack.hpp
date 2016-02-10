@@ -1,8 +1,8 @@
 #ifndef __POT_DEBUG_ABSTRACT_CALLSTACK__
 #define __POT_DEBUG_ABSTRACT_CALLSTACK__
 
-#include <string>
 #include <ostream>
+#include <string>
 
 namespace Pot { namespace Debug
 {

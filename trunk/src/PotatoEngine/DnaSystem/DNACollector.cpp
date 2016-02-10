@@ -1,17 +1,18 @@
-#include "../stdafx.h"
+#include <stdafx.h>
 #include "DNACollector.hpp"
 
-#include <set>
-#include <utility>
-#include <string>
-#include <sstream>
 #include <iomanip>
-#include "../Debug/Logger.hpp"
-#include "../Debug/Demangler.hpp"
-#include "../Debug/CallStack/AbstractCallstack.hpp"
-#include "../Debug/CallStack.hpp"
-#include "BaseDNA.hpp"
-#include "BaseOrganism.hpp"
+#include <set>
+#include <sstream>
+#include <string>
+#include <utility>
+
+#include <Debug/CallStack/AbstractCallstack.hpp>
+#include <Debug/CallStack.hpp>
+#include <Debug/Demangler.hpp>
+#include <Debug/Logger.hpp>
+#include <DnaSystem/BaseDNA.hpp>
+#include <DnaSystem/BaseOrganism.hpp>
 
 namespace Pot
 {

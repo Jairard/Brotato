@@ -1,17 +1,17 @@
-#include "../../stdafx.h"
+#include <stdafx.h>
 #include "BacktraceCallstack.hpp"
 
 #ifdef POT_BACKTRACE_SUPPORT
 #include <cstdio>
 #include <cstring>
-#include <sstream>
-#include <iomanip>
-#include <execinfo.h>
 #include <dlfcn.h>
-#include "../../Core/Tools.hpp"
-#include "../assert.hpp"
-#include "../Demangler.hpp"
-#include "AbstractCallstack.hpp"
+#include <execinfo.h>
+#include <iomanip>
+#include <sstream>
+
+#include <Debug/Callstack/AbstractCallstack.hpp>
+#include <Debug/assert.hpp>
+#include <Debug/Demangler.hpp>
 
 #include <fstream>
 

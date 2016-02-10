@@ -1,11 +1,11 @@
-#include "../../stdafx.h"
+#include <stdafx.h>
 #include "BackwardCPPCallstack.hpp"
 
 #ifdef POT_BACKWARD_CPP_SUPPORT
 
 #include <sstream>
-#include "backward.hpp"
-#include "../Logger.hpp"
+#include <Debug/Callstack/backward.hpp>
+#include <Debug/Logger.hpp>
 
 // Will only work on Unix platforms
 namespace backward

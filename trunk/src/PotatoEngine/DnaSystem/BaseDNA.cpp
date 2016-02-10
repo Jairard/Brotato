@@ -1,7 +1,8 @@
+#include <stdafx.h>
 #include "BaseDNA.hpp"
 
-#include "../Debug/Logger.hpp"
-#include "DNACollector.hpp"
+#include <Debug/Logger.hpp>
+#include <Dnasystem/DNACollector.hpp>
 
 namespace Pot
 {

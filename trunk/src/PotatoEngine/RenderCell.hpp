@@ -2,9 +2,9 @@
 #define __POT_RENDERCELL__
 
 #include <SFML/Graphics.hpp>
-#include "Core/ClassHelpers.hpp"
-#include "Debug/Logger.hpp"
-#include "Cell.hpp"
+#include <Core/ClassHelpers.hpp>
+#include <Debug/Logger.hpp>
+#include <Cell.hpp>
 
 namespace Pot
 {

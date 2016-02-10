@@ -1,8 +1,9 @@
-#include "stdafx.h"
-#include "GeometryCell.hpp"
-#include "Core/LibsHelpers.hpp"
-#include "Debug/Logger.hpp"
-#include "Debug/Renderer.hpp"
+#include <stdafx.h>
+#include <GeometryCell.hpp>
+
+#include <Core/LibsHelpers.hpp>
+#include <Debug/Logger.hpp>
+#include <Debug/Renderer.hpp>
 
 namespace Pot
 {

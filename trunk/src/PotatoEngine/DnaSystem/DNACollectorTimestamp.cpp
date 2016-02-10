@@ -1,10 +1,10 @@
-#include "../stdafx.h"
+#include <stdafx.h>
 #include "DNACollectorTimestamp.hpp"
 
 #include <limits>
 #include <sstream>
-#include "../Core/types.hpp"
-#include "../Debug/assert.hpp"
+#include <Core/types.hpp>
+#include <Debug/assert.hpp>
 
 namespace Pot
 {

@@ -1,6 +1,7 @@
-#include "stdafx.h"
+#include <stdafx.h>
 #include "LineGeometry.hpp"
-#include "Debug/Logger.hpp"
+
+#include <Debug/Logger.hpp>
 
 namespace Pot
 {

@@ -1,10 +1,10 @@
 #ifndef __POT_DEBUG_CALLSTACK__
 #define __POT_DEBUG_CALLSTACK__
 
-#include "Callstack/EmptyCallstack.hpp"
-#include "Callstack/BacktraceCallstack.hpp"
-#include "Callstack/BackwardCPPCallstack.hpp"
-#include "Callstack/WindowsCallstack.hpp"
+#include <Debug/Callstack/BacktraceCallstack.hpp>
+#include <Debug/Callstack/BackwardCPPCallstack.hpp>
+#include <Debug/Callstack/EmptyCallstack.hpp>
+#include <Debug/Callstack/WindowsCallstack.hpp>
 
 namespace Pot { namespace Debug
 {

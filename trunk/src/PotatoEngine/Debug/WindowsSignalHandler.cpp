@@ -1,13 +1,13 @@
-#include "../stdafx.h"
+#include <stdafx.h>
 #include "WindowsSignalHandler.hpp"
 
 #ifdef POT_PLATFORM_WINDOWS
-#include <windows.h>
 #include <sstream>
-#include "assert.hpp"
-#include "Logger.hpp"
-#include "SignalHandler.hpp"
-#include "Callstack.hpp"
+#include <windows.h>
+#include <Debug/assert.hpp>
+#include <Debug/Callstack.hpp>
+#include <Debug/Logger.hpp>
+#include <Debug/SignalHandler.hpp>
 
 namespace Pot { namespace Debug
 {

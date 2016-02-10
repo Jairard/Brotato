@@ -1,10 +1,10 @@
-#include "../../stdafx.h"
+#include <stdafx.h>
 #include "AbstractCallstack.hpp"
 
 #include <sstream>
-#include "../../Core/compil.hpp"
-#include "../assert.hpp"
-#include "../Logger.hpp"
+#include <Core/compil.hpp>
+#include <Debug/assert.hpp>
+#include <Debug/Logger.hpp>
 
 namespace Pot { namespace Debug
 {

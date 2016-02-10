@@ -5,9 +5,9 @@
 #ifndef __POT_STD_AFX__
 #define __POT_STD_AFX__
 
-#include "Core/compil.hpp"
+#include <Core/compil.hpp>
 #define NOMINMAX
-#include "targetver.h"
+#include <targetver.h>
 
 #ifdef POT_PLATFORM_WINDOWS
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers

@@ -1,12 +1,12 @@
-#include "../stdafx.h"
+#include <stdafx.h>
 #include "SignalHandler.hpp"
 
 #include <sstream>
-#include "../Core/compil.hpp"
-#include "assert.hpp"
-#include "Logger.hpp"
-#include "PosixSignalHandler.hpp"
-#include "WindowsSignalHandler.hpp"
+#include <Core/compil.hpp>
+#include <Debug/assert.hpp>
+#include <Debug/Logger.hpp>
+#include <Debug/PosixSignalHandler.hpp>
+#include <Debug/WindowsSignalHandler.hpp>
 
 namespace Pot { namespace Debug
 {

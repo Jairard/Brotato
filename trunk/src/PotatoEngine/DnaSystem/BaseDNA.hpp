@@ -1,8 +1,8 @@
 #ifndef __POT_BASE_DNA__
 #define __POT_BASE_DNA__
 
-#include "../Core/Tools.hpp"
-#include "../Debug/assert.hpp"
+#include <Core/Tools.hpp>
+#include <Debug/assert.hpp>
 
 namespace std
 {

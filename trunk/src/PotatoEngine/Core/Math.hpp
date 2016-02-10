@@ -2,8 +2,8 @@
 #define __POT_CORE_MATH__
 
 #include <cmath>
-#include "NonInstantiable.hpp"
-#include "Vector2.hpp"
+#include <Core/NonInstantiable.hpp>
+#include <Core/Vector2.hpp>
 
 #ifndef M_PI
 # define M_PI 3.141592653589793238462643383279f

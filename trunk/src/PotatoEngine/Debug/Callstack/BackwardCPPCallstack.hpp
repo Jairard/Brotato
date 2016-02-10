@@ -1,7 +1,7 @@
 #ifndef __POT_BACKWARD_CPP_CALLSTACK__
 #define __POT_BACKWARD_CPP_CALLSTACK__
 
-#include "../../Core/compil.hpp"
+#include <Core/compil.hpp>
 
 #ifdef POT_PLATFORM_LINUX
 #define POT_BACKWARD_CPP_SUPPORT
@@ -12,7 +12,7 @@
 // (not tested yet, need Linux compil for that)
 
 #include <string>
-#include "AbstractCallstack.hpp"
+#include <Debug/Callstack/AbstractCallstack.hpp>
 
 namespace Pot { namespace Debug
 {

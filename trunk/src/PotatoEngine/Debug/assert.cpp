@@ -1,11 +1,11 @@
-#include "../stdafx.h"
-#include <iostream>
+#include <stdafx.h>
+#include "assert.hpp"
 
 #include <assert.h>
-#include <sstream>
 #include <cstring>
-#include "assert.hpp"
-#include "Logger.hpp"
+#include <iostream>
+#include <sstream>
+#include <Debug/Logger.hpp>
 
 namespace Pot
 {

@@ -1,7 +1,7 @@
 #ifndef __POT_CORE_CLASSHELPERS__
 #define __POT_CORE_CLASSHELPERS__
 
-#include "../Debug/assert.hpp"
+#include <Debug/assert.hpp>
 
 #define SAFETY_CHECK(VAR)   ASSERT_DEBUG_MSG(VAR != nullptr, #VAR " is null on accessor call")
 
