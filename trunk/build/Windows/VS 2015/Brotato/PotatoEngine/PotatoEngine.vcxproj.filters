@@ -87,12 +87,6 @@
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\EmptyCallstack.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalker.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalkerCallstack.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseDNA.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -106,6 +100,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollectorTimestamp.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\WindowsCallstack.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -230,12 +227,6 @@
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\EmptyCallstack.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalkerCallstack.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalker.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseDNA.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -252,6 +243,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollectorTimestamp.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\WindowsCallstack.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

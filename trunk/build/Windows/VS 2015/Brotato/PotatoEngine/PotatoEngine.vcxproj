@@ -151,8 +151,7 @@
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\BacktraceCallstack.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\BackwardCPPCallstack.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\EmptyCallstack.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalker.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalkerCallstack.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\WindowsCallstack.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Demangler.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\Logger.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\PosixSignalHandler.cpp" />
@@ -199,8 +198,7 @@
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\backward.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\BackwardCPPCallstack.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\EmptyCallstack.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalker.h" />
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\StackWalkerCallstack.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Callstack\WindowsCallstack.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Demangler.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\Logger.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\Debug\PosixSignalHandler.hpp" />
