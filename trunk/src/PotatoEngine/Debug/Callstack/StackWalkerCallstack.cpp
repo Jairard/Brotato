@@ -155,10 +155,16 @@ namespace Pot { namespace Debug
         //*/
     }
 
-    bool StackWalkerCallstack::isStringSet(CHAR str[])
-    {
-        return strlen(str) > 0;
-    }
+	void StackWalkerCallstack::fetchCallstack()
+	{
+		ShowCallstack();
+		m_trace = m_traceStream.str();
+	}
+
+	bool StackWalkerCallstack::isStringSet(CHAR str[])
+	{
+		return strlen(str) > 0;
+	}
 }}
 
 #endif
