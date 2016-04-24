@@ -2,10 +2,7 @@
 #include "BackwardCPPCallstack.hpp"
 
 #ifdef POT_BACKWARD_CPP_SUPPORT
-
 #include <sstream>
-#include <Debug/Callstack/backward.hpp>
-#include <Debug/Logger.hpp>
 
 // Will only work on Unix platforms
 namespace backward
@@ -17,53 +14,58 @@ namespace Pot { namespace Debug
 {
 	BackwardCPPCallstack::BackwardCPPCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint):
 		AbstractCallstack(skippedFrameCount, hasRealTimeConstraint),
-		m_trace()
+		m_trace(),
+		m_solver(),
+		m_resolvedTrace(),
+		m_frameCount(0)
 	{
+		init();
 		fetchCallstack();
+		cleanUp();
 	}
 
 	BackwardCPPCallstack::~BackwardCPPCallstack()
 	{}
 
-	const std::string& BackwardCPPCallstack::str() const
+	void BackwardCPPCallstack::init()
 	{
-		return m_trace;
+		AbstractCallstack::init();
+
+		m_trace.load_here(c_maxFrameCount);
+		m_solver.load_stacktrace(m_trace);
+		m_frameCount = m_trace.size();
 	}
 
-	void BackwardCPPCallstack::setStackTrace(const std::string& trace)
+	void* BackwardCPPCallstack::fetchNextEntry(const size_t index)
 	{
-		m_trace = trace;
+		if (index >= m_frameCount)
+			return nullptr;
+
+		const backward::Trace& currentTrace = m_trace[index];
+		m_resolvedTrace = m_solver.resolve(currentTrace);
+		return currentTrace.addr;
 	}
 
-	void BackwardCPPCallstack::fetchCallstack()
+	bool BackwardCPPCallstack::fetchSymbolName(const void* const address, std::string& outSymbolName) const
 	{
-		backward::StackTrace stack;
-		stack.load_here(c_maxFrameCount);
-		const size_t frameCount = stack.size();
+		POT_UNUSED(address);
+		outSymbolName = m_resolvedTrace.source.function;
+		return true;
+	}
 
-		backward::TraceResolver solver;
-		solver.load_stacktrace(stack);
+	bool BackwardCPPCallstack::fetchFileAndLine(const void* const address, std::string& outFileName, size_t& outLine) const
+	{
+		POT_UNUSED(address);
+		outFileName = m_resolvedTrace.source.filename;
+		outLine = m_resolvedTrace.source.line;
+		return true;
+	}
 
-		std::ostringstream oss;
-		// TODO: add code snippet for first non-skipped frame
-
-		for (size_t i = m_skippedFrameCount; i < frameCount; ++i)
-		{
-			if (i > m_skippedFrameCount)
-				oss << std::endl;
-
-			backward::ResolvedTrace trace = solver.resolve(stack[i]);
-			
-			oss << "[" << std::setw(3) << std::right << i << "] "
-			    << std::setw(50) << std::left << trace.source.function
-			    << " at " << trace.source.filename << ":" << trace.source.line << ", " << trace.source.col
-			    << " (in " << trace.object_filename << ")";
-		}
-
-		if (frameCount == c_maxFrameCount)
-			oss << std::endl << "[possibly truncated]";
-
-		m_trace = oss.str();
+	bool BackwardCPPCallstack::fetchBinaryName(const void* const address, std::string& outBinaryName) const
+	{
+		POT_UNUSED(address);
+		outBinaryName = m_resolvedTrace.object_filename;
+		return true;
 	}
 }}
 #endif

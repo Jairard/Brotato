@@ -20,115 +20,115 @@ namespace Pot { namespace Debug
 
 	WindowsCallstack::WindowsCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint):
 		AbstractCallstack(skippedFrameCount, hasRealTimeConstraint),
-		m_trace()
+		m_processHandle(nullptr),
+		m_threadHandle(nullptr),
+		m_context(),
+		m_stackFrame()
 	{
+		init();
 		fetchCallstack();
+		cleanUp();
 	}
 
 	WindowsCallstack::~WindowsCallstack()
 	{}
 
-	const std::string& WindowsCallstack::str() const
+	void WindowsCallstack::init()
 	{
-		return m_trace;
-	}
+		AbstractCallstack::init();
 
-	void WindowsCallstack::fetchCallstack()
-	{
-		const HANDLE process = GetCurrentProcess();
-		SymInitialize(process, nullptr, true);
+		m_processHandle = GetCurrentProcess();
+		SymInitialize(m_processHandle, nullptr, true);
+		m_threadHandle = GetCurrentThread();
 
-		CONTEXT context;
-		memset(&context, 0, sizeof(CONTEXT));
-		context.ContextFlags = CONTEXT_FULL;
-		RtlCaptureContext(&context);
+		memset(&m_context, 0, sizeof(CONTEXT));
+		m_context.ContextFlags = CONTEXT_FULL;
+		RtlCaptureContext(&m_context);
 
-		const Word address = GetContextOffset(context);
-
-		STACKFRAME frame;
-		memset(&frame, 0, sizeof(STACKFRAME));
+		memset(&m_stackFrame, 0, sizeof(STACKFRAME));
 		// setup initial stack frame
-		frame.AddrPC.Offset    = address;
-		frame.AddrPC.Mode      = AddrModeFlat;
-		frame.AddrFrame.Offset = GetFrameOffset(context);
-		frame.AddrFrame.Mode   = AddrModeFlat;
-		frame.AddrStack.Offset = GetStackOffset(context);
-		frame.AddrStack.Mode   = AddrModeFlat;
-
-		const HANDLE currentThread = GetCurrentThread();
-		std::ostringstream oss;
-		size_t frameCount = 0;
-
-		for (size_t i = m_skippedFrameCount; i < c_maxFrameCount; ++i)
-		{
-			if (!StackWalk(s_machineType, process, currentThread, &frame, &context, nullptr, SymFunctionTableAccess, SymGetModuleBase, nullptr))
-				break;
-
-			if (i > m_skippedFrameCount)
-				oss << std::endl;
-			oss << "[" << std::setw(3) << std::right << i << "] ";
-
-			fetchSymbolName(frame, process, oss);
-			fetchFileAndLine(process, address, oss);
-			fetchBinaryName(process, address, oss);
-		}
-
-		m_trace = oss.str();
-		SymCleanup(process);
+		m_stackFrame.AddrPC.Offset = GetContextOffset(m_context);
+		m_stackFrame.AddrPC.Mode = AddrModeFlat;
+		m_stackFrame.AddrFrame.Offset = GetFrameOffset(m_context);
+		m_stackFrame.AddrFrame.Mode = AddrModeFlat;
+		m_stackFrame.AddrStack.Offset = GetStackOffset(m_context);
+		m_stackFrame.AddrStack.Mode = AddrModeFlat;
 	}
 
-	void WindowsCallstack::fetchSymbolName(const STACKFRAME& frame, const HANDLE& currentProcess, std::ostringstream& outStream) const
+	void* WindowsCallstack::fetchNextEntry(const size_t index)
 	{
-		Word address = frame.AddrPC.Offset;
-		Word displacement;
+		POT_UNUSED(index);
 
-		const size_t symbolSize = sizeof(Symbol);
+		if (!StackWalk(s_machineType, m_processHandle, m_threadHandle, &m_stackFrame, &m_context, nullptr, SymFunctionTableAccess, SymGetModuleBase, nullptr))
+			return nullptr;
+
+		return reinterpret_cast<void*>(m_stackFrame.AddrPC.Offset);
+	}
+
+	void WindowsCallstack::cleanUp()
+	{
+		AbstractCallstack::cleanUp();
+		SymCleanup(m_processHandle);
+	}
+
+	bool WindowsCallstack::fetchSymbolName(const void* const address, std::string& outSymbolName) const
+	{
+		const Word wAddress = GetAdressAsWord(address);
+		Word displacement = 0;
+
 		const size_t nameSize = 256;
-		potb symbolBuffer[symbolSize + nameSize];
-		memset(symbolBuffer, 0, symbolSize + nameSize);
+		potbyte symbolBuffer[sizeof(Symbol) + nameSize];
+		memset(symbolBuffer, 0, sizeof(Symbol) + nameSize);
 		// Cast it to a symbol struct:
 		SymbolPtr pSymbol = reinterpret_cast<SymbolPtr>(symbolBuffer);
-		// Need to set the first two fields of this symbol before obtaining name info:
-		pSymbol->SizeOfStruct = symbolSize + nameSize;
+		pSymbol->SizeOfStruct = sizeof(Symbol) + nameSize;
 		pSymbol->MaxNameLength = nameSize - 1;
 
-		if (SymGetSymFromAddr(currentProcess, address, &displacement, pSymbol))
-			outStream << pSymbol->Name;
-		else
-			outStream << "[no symbol found at " << address << "]";
+		if (!SymGetSymFromAddr(m_processHandle, wAddress, &displacement, pSymbol))
+			return false;
+
+		outSymbolName = pSymbol->Name;
+		return true;
 	}
 
-	void WindowsCallstack::fetchFileAndLine(const HANDLE& currentProcess, const Word& address, std::ostringstream& outStream) const
+	bool WindowsCallstack::fetchFileAndLine(const void* const address, std::string& outFileName, size_t& outLine) const
 	{
+		const Word wAddress = GetAdressAsWord(address);
+		DWORD displacement = 0;
+
 		Line lineInfo;
 		memset(&lineInfo, 0, sizeof(lineInfo));
 		lineInfo.SizeOfStruct = sizeof(lineInfo);
 
-		DWORD displacement = 0;
-		size_t line = 0;
+		if (!SymGetLineFromAddr(m_processHandle, wAddress, &displacement, &lineInfo))
+			return false;
 
-		outStream << " at ";
-		if (SymGetLineFromAddr(currentProcess, address, &displacement, &lineInfo))
-		{
-			std::string fileName(lineInfo.FileName);
-			size_t lastSlash = fileName.find_last_of('\\');
-			outStream << fileName.substr(lastSlash + 1) << ":" << lineInfo.LineNumber;
-		}
-		else
-			outStream << "[file name not available]:[line number not available]";
+		const std::string fileName(lineInfo.FileName);
+		const size_t lastSlash = fileName.find_last_of('\\');
+		outFileName = fileName.substr(lastSlash + 1);
+		outLine = lineInfo.LineNumber;
+
+		return true;
 	}
 
-	void WindowsCallstack::fetchBinaryName(const HANDLE& currentProcess, const Word& address, std::ostringstream& outStream) const
+	bool WindowsCallstack::fetchBinaryName(const void* const address, std::string& outBinaryName) const
 	{
+		const Word wAddress = GetAdressAsWord(address);
+
 		Module moduleInfo;
 		memset(&moduleInfo, 0, sizeof(moduleInfo));
 		moduleInfo.SizeOfStruct = sizeof(moduleInfo);
 
-		outStream << " in ";
-		if (SymGetModuleInfo(currentProcess, address, &moduleInfo))
-			outStream << moduleInfo.ModuleName;
-		else
-			outStream << "[binary name not available]";
+		if (!SymGetModuleInfo(m_processHandle, wAddress, &moduleInfo))
+			return false;
+
+		outBinaryName = moduleInfo.ModuleName;
+		return true;
+	}
+
+	WindowsCallstack::Word WindowsCallstack::GetAdressAsWord(const void* const address) const
+	{
+		return reinterpret_cast<const Word>(address);
 	}
 }}
 #endif

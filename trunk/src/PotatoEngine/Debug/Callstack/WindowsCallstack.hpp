@@ -56,18 +56,24 @@ class WindowsCallstack: public AbstractCallstack
 		WindowsCallstack(size_t skippedFrameCount = AbstractCallstack::c_defaultSkippedFrameCount, bool hasRealTimeConstraint = false);
 		virtual ~WindowsCallstack();
 
-		virtual const std::string& str() const;
+	protected:
+		virtual void init();
+		virtual void cleanUp();
+
+		virtual void* fetchNextEntry(const size_t index);
+		virtual bool fetchSymbolName(const void* const address, std::string& outSymbolName) const;
+		virtual bool fetchFileAndLine(const void* const address, std::string& outFileName, size_t& outLine) const;
+		virtual bool fetchBinaryName(const void* const address, std::string& outBinaryName) const;
 
 	private:
-		void fetchCallstack();
+		Word GetAdressAsWord(const void* const address) const;
 
-		void fetchSymbolName(const STACKFRAME& frame, const HANDLE& currentProcess, std::ostringstream& outStream) const;
-		void fetchFileAndLine(const HANDLE& currentProcess, const Word& address, std::ostringstream& outStream) const;
-		void fetchBinaryName(const HANDLE& currentProcess, const Word& address, std::ostringstream& outStream) const;
-
-private:
-	static const Word s_machineType;
-		std::string m_trace;
+	private:
+		static const Word s_machineType;
+		HANDLE m_processHandle;
+		HANDLE m_threadHandle;
+		CONTEXT m_context;
+		STACKFRAME m_stackFrame;
 };
 }}
 #endif

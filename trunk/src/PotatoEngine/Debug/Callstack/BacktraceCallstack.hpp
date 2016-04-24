@@ -8,6 +8,7 @@
 #endif
 
 #ifdef POT_BACKTRACE_SUPPORT
+#include <dlfcn-compat.h>
 #include <ostream>
 #include <string>
 #include <Debug/Callstack/AbstractCallstack.hpp>
@@ -20,13 +21,22 @@ class BacktraceCallstack: public AbstractCallstack
 		BacktraceCallstack(size_t skippedFrameCount = AbstractCallstack::c_defaultSkippedFrameCount, bool hasRealTimeConstraint = false);
 		virtual ~BacktraceCallstack();
 
-		virtual const std::string& str() const;
+	protected:
+		virtual void init();
+		virtual void cleanUp();
+
+		virtual void* fetchNextEntry(const size_t index);
+		virtual bool fetchSymbolName(const void* const address, std::string& outSymbolName) const;
+		virtual bool fetchFileAndLine(const void* const address, std::string& outFileName, size_t& outLine) const;
+		virtual bool fetchBinaryName(const void* const address, std::string& outBinaryName) const;
 
 	private:
-		void fetchCallstack();
-
-	private:
-		std::string m_trace;
+		size_t m_frameCount;
+		void** m_adresses;
+		char** m_symbols;
+		Dl_info m_currentInfo;
+		size_t m_currentFrame;
+		bool m_dlAddrSuccess;
 };
 }}
 #endif

@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include "AbstractCallstack.hpp"
 
+#include <iomanip>
 #include <sstream>
 #include <Core/compil.hpp>
 #include <Debug/assert.hpp>
@@ -19,7 +20,9 @@ namespace Pot { namespace Debug
 
 	AbstractCallstack::AbstractCallstack(size_t skippedFrameCount, bool hasRealTimeConstraint):
 		m_skippedFrameCount(s_canSkipFrames ? skippedFrameCount : 0),
-		m_hasRealTimeConstraint(hasRealTimeConstraint)
+		m_hasRealTimeConstraint(hasRealTimeConstraint),
+		m_entries(),
+		m_trace()
 	{}
 
 	AbstractCallstack::~AbstractCallstack()
@@ -33,6 +36,16 @@ namespace Pot { namespace Debug
 	const char* AbstractCallstack::c_str() const
 	{
 		return str().c_str();
+	}
+
+	const std::string& AbstractCallstack::str() const
+	{
+		return m_trace;
+	}
+
+	const std::vector<CallStackEntry>& AbstractCallstack::entries() const
+	{
+		return m_entries;
 	}
 
 	void AbstractCallstack::setProgramName(const char* name)
@@ -61,14 +74,62 @@ namespace Pot { namespace Debug
 		s_canSkipFrames = false;
 	}
 
+	void AbstractCallstack::init()
+	{
+	}
+
+	void AbstractCallstack::fetchCallstack()
+	{
+		std::ostringstream oss;
+		size_t frameCount = 0;
+
+		for (size_t i = m_skippedFrameCount; i < c_maxFrameCount; ++i)
+		{
+			const void* const address = fetchNextEntry(i);
+			if (address == nullptr)
+			{
+				oss << std::endl << "[possibly truncated]";
+				break;
+			}
+
+			if (i > m_skippedFrameCount)
+				oss << std::endl;
+			oss << "[" << std::setw(3) << std::right << i << "] ";
+
+			CallStackEntry entry;
+			entry.m_index = i;
+			entry.m_address = address;
+
+			if (fetchSymbolName(address, entry.m_symbolName))
+				oss << entry.m_symbolName;
+			else
+				oss << "[no symbol found at " << address << "]";
+
+			oss << " at ";
+			if (fetchFileAndLine(address, entry.m_fileName, entry.m_line))
+				oss << entry.m_fileName << ":" << entry.m_line;
+			else
+				oss << "[file name not available]:[line number not available]";
+
+			oss << " in ";
+			if (fetchBinaryName(address, entry.m_binaryName))
+				oss << entry.m_binaryName;
+			else
+				oss << "[binary name not available]";
+
+			m_entries.push_back(entry);
+		}
+
+		m_trace = oss.str();
+	}
+
+	void AbstractCallstack::cleanUp()
+	{
+	}
+
 	bool AbstractCallstack::hasRealTimeConstraint() const
 	{
 		return m_hasRealTimeConstraint;
-	}
-
-	std::string& AbstractCallstack::getFileAndLine_internal(const void* address, std::string& outString) const
-	{
-		return outputFileAndLineFromAddress(address, outString, m_hasRealTimeConstraint);
 	}
 
 	std::string& AbstractCallstack::outputFileAndLineFromAddress(const void* const address, std::string& outString, bool realTimeConstraint)
@@ -170,6 +231,8 @@ namespace Pot { namespace Debug
 
 		// No need to call snprintf because the size we print is strictly inferior to the input size
 		sprintf(buffer, "%s:%d", filename, line);
+#else
+		ASSERT_NOT_IMPLEMENTED();
 #endif
 	}
 }}

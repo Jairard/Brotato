@@ -13,13 +13,11 @@ class EmptyCallstack : public AbstractCallstack
 		EmptyCallstack(size_t sizetDummy = 0, bool boolDummy = false);
 		virtual ~EmptyCallstack();
 
-		virtual const std::string& str() const;
-
 	protected:
-		virtual void setStackTrace(const std::string& trace);
-
-	private:
-		static const std::string c_message;
+		virtual void* fetchNextEntry(const size_t index);
+		virtual bool fetchSymbolName(const void* const address, std::string& outSymbolName) const;
+		virtual bool fetchFileAndLine(const void* const address, std::string& outFileName, size_t& outLine) const;
+		virtual bool fetchBinaryName(const void* const address, std::string& outBinaryName) const;
 };
 }}
 

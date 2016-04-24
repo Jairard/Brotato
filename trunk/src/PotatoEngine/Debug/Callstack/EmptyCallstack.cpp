@@ -5,8 +5,6 @@
 
 namespace Pot { namespace Debug 
 {
-	const std::string EmptyCallstack::c_message = "[no callstack support]";
-		
 	EmptyCallstack::EmptyCallstack(size_t sizetDummy, bool boolDummy):
 		AbstractCallstack(0, false)
 	{
@@ -17,13 +15,34 @@ namespace Pot { namespace Debug
 	EmptyCallstack::~EmptyCallstack()
 	{}
 
-	const std::string& EmptyCallstack::str() const
+	void* EmptyCallstack::fetchNextEntry(const size_t index)
 	{
-		return c_message;
+		POT_UNUSED(index);
+		return nullptr;
 	}
 
-	void EmptyCallstack::setStackTrace(const std::string& trace)
+	bool EmptyCallstack::fetchSymbolName(const void* const address, std::string& outSymbolName) const
 	{
-		POT_UNUSED(trace);
+		POT_UNUSED(address);
+		POT_UNUSED(outSymbolName);
+
+		return false;
+	}
+
+	bool EmptyCallstack::fetchFileAndLine(const void* const address, std::string& outFileName, size_t& outLine) const
+	{
+		POT_UNUSED(address);
+		POT_UNUSED(outFileName);
+		POT_UNUSED(outLine);
+
+		return false;
+	}
+
+	bool EmptyCallstack::fetchBinaryName(const void* const address, std::string& outBinaryName) const
+	{
+		POT_UNUSED(address);
+		POT_UNUSED(outBinaryName);
+
+		return false;
 	}
 }}
