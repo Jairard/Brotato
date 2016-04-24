@@ -33,7 +33,7 @@ namespace Pot { namespace Debug
 		static const size_t c_additionalFramesToSkip;
 		static const SignalInfo c_handledSignals[];
 		static const size_t c_signalCount;
-		static potb s_alternateStack[SIGSTKSZ];
+		static potbyte s_alternateStack[SIGSTKSZ];
 	};
 }}
 #endif

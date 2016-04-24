@@ -425,7 +425,7 @@ struct Trace {
 	Trace():
 		addr(0), idx(0) {}
 
-	explicit Trace(void* addr, size_t idx):
+	explicit Trace(void* addr, unsigned idx):
 		addr(addr), idx(idx) {}
 };
 
@@ -1509,7 +1509,7 @@ public:
 		// What a good boy am I.
 		struct isspace {
 			bool operator()(char c) {
-				return std::isspace(c);
+				return (std::isspace(c) != 0);
 			}
 		};
 

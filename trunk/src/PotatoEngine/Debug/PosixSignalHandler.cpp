@@ -44,7 +44,7 @@ namespace Pot { namespace Debug
 	};
 
 	const size_t PosixSignalHandler::c_signalCount = sizeof(PosixSignalHandler::c_handledSignals) / sizeof(PosixSignalHandler::c_handledSignals[0]);
-	potb PosixSignalHandler::s_alternateStack[SIGSTKSZ];
+	potbyte PosixSignalHandler::s_alternateStack[SIGSTKSZ];
 
 	// Inspired form http://spin.atomicobject.com/2013/01/13/exceptions-stack-traces-c/
 	void PosixSignalHandler::setup()

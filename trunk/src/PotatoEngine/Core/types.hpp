@@ -13,7 +13,7 @@ typedef uint32_t potu32;
 typedef  int64_t poti64;
 typedef uint64_t potu64;
 
-typedef unsigned char potb;
+typedef unsigned char potbyte;
 typedef float  potf32;
 typedef double potf64;
 
@@ -26,7 +26,7 @@ static_assert(sizeof(potu32) == 4, "");
 static_assert(sizeof(poti64) == 8, "");
 static_assert(sizeof(potu64) == 8, "");
 
-static_assert(sizeof(potb) == 1, "");
+static_assert(sizeof(potbyte) == 1, "");
 static_assert(sizeof(potf32) == 4, "");
 static_assert(sizeof(potf64) == 8, "");
 
