@@ -9,6 +9,8 @@
 namespace Pot
 {
 
+// TODO:
+// Check if it's possible to use default constructor / destructor
 template <typename T>
 class Pool
 {

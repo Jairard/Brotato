@@ -95,9 +95,6 @@
 ///////////////////
 // Configuration //
 ///////////////////
-#ifndef NDEBUG
-#endif
-
 #ifndef POT_DEBUG
 # define POT_RELEASE
 #endif
