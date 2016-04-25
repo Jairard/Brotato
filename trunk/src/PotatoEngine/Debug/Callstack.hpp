@@ -1,6 +1,7 @@
 #ifndef __POT_DEBUG_CALLSTACK__
 #define __POT_DEBUG_CALLSTACK__
 
+#include <stdafx.h>
 #include <Debug/Callstack/BacktraceCallstack.hpp>
 #include <Debug/Callstack/BackwardCPPCallstack.hpp>
 #include <Debug/Callstack/EmptyCallstack.hpp>
