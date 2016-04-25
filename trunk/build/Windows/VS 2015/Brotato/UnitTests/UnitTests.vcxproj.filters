@@ -33,6 +33,9 @@
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\UnitTests\libsHelpers_tests.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\UnitTests\DNA_tests.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\UnitTests\catch.hpp">
