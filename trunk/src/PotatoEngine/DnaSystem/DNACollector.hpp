@@ -104,6 +104,11 @@ namespace Pot
 		static const char* tag();
 		size_t memorySize() const;
 
+		/* O(OrgWC) */
+		size_t organismCount() const;
+		/* O(DnaC) */
+		size_t dnaCount() const;
+
 	private:
 		/* Release:                O(1) / O(OrgWC) + O(DnaWC) */
 		/* Debug:   O(OrgWC) + O(DnaWC) / O(OrgC)  + O(DnaWC) */
@@ -124,10 +129,6 @@ namespace Pot
 		/* Alive: O(1) / O(OrgWC) | O(OrgC) */
 		/* Dead:  O(DnaC) | O(DnaC) * O(OrgC) */
 		DNACollectorTimestamp fetchTimestamp(const BaseDNA& dna, const std::type_index& dnaTypeIndex, const BaseOrganism** outOrganism) const;
-		/* O(OrgWC) */
-		size_t organismCount() const;
-		/* O(DnaC) */
-		size_t dnaCount() const;
 
 #ifdef POT_DEBUG
 		/* O(1) / O(OrgC) */
