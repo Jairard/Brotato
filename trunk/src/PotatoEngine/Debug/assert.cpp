@@ -1,10 +1,10 @@
 #include <stdafx.h>
 #include "assert.hpp"
 
-#include <assert.h>
 #include <cstring>
 #include <iostream>
 #include <sstream>
+#include <Core/compil.hpp>
 #include <Debug/Logger.hpp>
 
 namespace Pot
@@ -36,7 +36,7 @@ namespace Pot
 	
 	void assertImpl(const char* msg, const char* file, long line, const char* function)
 	{
-		Logger::log(Logger::CAssert, "%s:%lu: Assert in %s: %s", file, line, function, msg);
-		assert(false);
+		Logger::log(Logger::CAssert, "%s:%u: Assert in %s: %s", file, line, function, msg);
+		POT_BREAKPOINT;
 	}
 }

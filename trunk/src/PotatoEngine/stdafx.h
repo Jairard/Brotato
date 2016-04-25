@@ -62,5 +62,13 @@ struct TOOLS_VSINK { template<typename ...Args> TOOLS_VSINK(const Args& ... ) {}
 # define POT_STATIC_IS(T1, T2)  ::std::is_base_of<T2, T1>::value
 #endif
 
+#ifdef POT_COMPILER_MSC
+#include <intrin.h>
+#define POT_BREAKPOINT __debugbreak()
+#else
+#include <assert.h>
+#define POT_BREAKPOINT assert(false)
+#endif
+
 // TODO: reference additional headers your program requires here
 #endif

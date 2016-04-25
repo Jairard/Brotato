@@ -1,6 +1,7 @@
 #ifndef __POT_DEBUG_ASSERT__
 #define __POT_DEBUG_ASSERT__
 
+#include "stdafx.h"
 #include <Core/compil.hpp>
 
 #define DONOTHING  ;
