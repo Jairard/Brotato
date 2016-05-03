@@ -160,9 +160,9 @@
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\Debug\WindowsSignalHandler.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseDNA.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseOrganism.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollector.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollectorChecker.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollectorTimestamp.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\Collector.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\CollectorChecker.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\CollectorTimestamp.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\GeometryCell.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\InputListener.cpp" />
     <ClCompile Include="..\..\..\..\..\src\PotatoEngine\LineGeometry.cpp" />
@@ -208,9 +208,9 @@
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseDNA.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\BaseOrganism.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNA.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollector.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DnaCollectorChecker.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\DNACollectorTimestamp.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\Collector.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\CollectorChecker.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\PotatoEngine\DnaSystem\CollectorTimestamp.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\GeometryCell.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\InputListener.hpp" />
     <ClInclude Include="..\..\..\..\..\src\PotatoEngine\LineGeometry.hpp" />
