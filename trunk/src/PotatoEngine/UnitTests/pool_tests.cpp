@@ -2,12 +2,7 @@
 #include <stdafx.h>
 #include <Core/Pool.hpp>
 
-// A type must define shutown() to be used in a pool
-class Poolable
-{
-public:
-	void shutdown() {};
-};
+class Poolable {};
 
 SCENARIO("Pool", "pool")
 {

@@ -4,6 +4,7 @@
 #include <list>
 #include <stdlib.h>
 #include <string.h>
+#include <Core/types.hpp>
 #include <Debug/assert.hpp>
 
 namespace Pot
@@ -18,7 +19,8 @@ class Pool
 		Pool(size_t capacity = c_defaultCapacity):
 			m_capacity(capacity)
 		{
-			m_data = new T[m_capacity];
+			// We don't use "new T[m_capacity]" to avoid calling constructors
+			m_data = reinterpret_cast<T*>(new potbyte[m_capacity * sizeof(T)]);
 			
 			for (std::size_t i = 0; i < m_capacity; ++i)
 				m_avaibleChunks.push_back(i);
@@ -26,7 +28,8 @@ class Pool
 
 		virtual ~Pool()
 		{
-			delete[] m_data;
+			// We don't use "delete[] m_data" to avoid calling destructors
+			delete reinterpret_cast<potbyte*>(m_data);
 		}
 
 		T* create()
@@ -35,7 +38,8 @@ class Pool
 			
 			T* chunk = &m_data[m_avaibleChunks.front()];
 			m_avaibleChunks.pop_front();
-			
+			new (chunk) T();
+
 			return chunk;
 		}
 
@@ -70,7 +74,7 @@ class Pool
 			ASSERT_RELEASE(i < m_capacity);
 			ASSERT_DEBUG(!isAvailable(i));
 
-			m_data[i].shutdown();
+			m_data[i].~T();
 			m_avaibleChunks.push_front(i);
 		}
 
