@@ -18,6 +18,7 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 	GIVEN("a derived organism")
 	{
 		Collector::instantiate();
+		Collector::setFullCheckMode(true);
 		const Collector& collector = Collector::instance();
 
 		const DerivedOrganism* const organism = new DerivedOrganism();
@@ -89,6 +90,7 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 	GIVEN("a base organism instance")
 	{
 		Collector::instantiate();
+		Collector::setFullCheckMode(true);
 		const BaseOrganism* const organism = new BaseOrganism();
 
 		{
@@ -112,6 +114,7 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 	GIVEN("a derived organism instance")
 	{
 		Collector::instantiate();
+		Collector::setFullCheckMode(true);
 		const DerivedOrganism* const organism = new DerivedOrganism();
 
 		{
@@ -129,6 +132,7 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 	GIVEN("a derived organism instance that has been upcasted")
 	{
 		Collector::instantiate();
+		Collector::setFullCheckMode(true);
 		const BaseOrganism* const organism = new DerivedOrganism();
 
 		{
