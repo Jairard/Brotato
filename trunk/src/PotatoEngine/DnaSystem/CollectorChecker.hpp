@@ -6,10 +6,10 @@
 #include <Core/NonCopyable.hpp>
 #include <Core/types.hpp>
 
-namespace Pot
+namespace Pot { namespace DnaSystem
 {
-	class DNACollector;
-	class DNACollectorTimestamp;
+	class Collector;
+	class CollectorTimestamp;
 
 	namespace Check
 	{
@@ -26,10 +26,10 @@ namespace Pot
 		};
 	}
 
-	class DNACollectorChecker: public NonCopyable
+	class CollectorChecker: public NonCopyable
 	{
 		public:
-			DNACollectorChecker(const DNACollector& collector);
+			CollectorChecker(const Collector& collector);
 			void checkIntegrityIFN();
 			void setFullCheckMode(bool fullCheck);
 
@@ -44,17 +44,17 @@ namespace Pot
 			void checkOrganisms_AliveTimestampIntegrity() const;
 			void checkOrganisms_TimestampStatusIntegrity() const;
 
-			bool checkDNAsStatus(const DNACollectorTimestamp& t, bool shouldBeAlive) const;
+			bool checkDNAsStatus(const CollectorTimestamp& t, bool shouldBeAlive) const;
 			void handleError(bool test, const char* msg) const;
 
 		private:
 			static const potu8 c_operationCountBetweenChecks;
-			const DNACollector& m_collector;
+			const Collector& m_collector;
 			potu64 m_operationCount;
 			Check::Type m_nextCheck;
 			bool m_fullCheckMode;
 	};
-}
+}}
 #endif
 
 #endif

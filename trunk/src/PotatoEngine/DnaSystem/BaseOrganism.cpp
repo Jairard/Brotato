@@ -5,9 +5,9 @@
 # include <Debug/Callstack/AbstractCallstack.hpp>
 #endif
 #include <DnaSystem/DNA.hpp>
-#include <DnaSystem/DNACollector.hpp>
+#include <DnaSystem/Collector.hpp>
 
-namespace Pot
+namespace Pot { namespace DnaSystem
 {
 #ifdef POT_DEBUG
 	const size_t BaseOrganism::c_framesToSkip = Debug::AbstractCallstack::c_defaultSkippedFrameCount;
@@ -26,6 +26,6 @@ namespace Pot
 
 	void BaseOrganism::shutdown() const
 	{
-		DNACollector::instance().notifyOrganismDeath(*this);
+		Collector::instance().notifyOrganismDeath(*this);
 	}
-}
+}}

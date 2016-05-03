@@ -6,19 +6,23 @@
 #include <Debug/Logger.hpp>
 #include <Dnasystem/BaseDNA.hpp>
 #include <Dnasystem/BaseOrganism.hpp>
-#include <Dnasystem/DNACollector.hpp>
+#include <Dnasystem/Collector.hpp>
 
 namespace Pot
 {
 
 using Debug::Logger;
+
+namespace DnaSystem
+{
+
 class BaseOrganism;
 
 template <typename OrganismType>
 class DNA: public BaseDNA
 {
 	static_assert(POT_STATIC_IS(OrganismType, BaseOrganism), "This organism does not inherit from ::Pot::BaseOrganim");
-	friend class DNACollector;
+	friend class Collector;
 
 	private:
 		DNA();
@@ -39,7 +43,8 @@ class DNA: public BaseDNA
 		void operator=(const OrganismType* cell);
 		OrganismType* operator->();
 
-		const OrganismType* typedOrganism() const; // Private
+	private:
+		const OrganismType* typedOrganism() const;
 
 	public:
 		static DNA<OrganismType> Invalid;
@@ -117,6 +122,6 @@ const OrganismType* DNA<OrganismType>::typedOrganism() const
 	return organism<const OrganismType>();
 }
 
-}
+}}
 
 #endif

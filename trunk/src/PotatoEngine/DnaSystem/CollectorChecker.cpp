@@ -1,29 +1,32 @@
 #include <stdafx.h>
-#include "DnaCollectorChecker.hpp"
+#include "CollectorChecker.hpp"
 
 #ifdef POT_DEBUG
 #include <set>
 #include <Debug/Demangler.hpp>
 #include <Debug/Logger.hpp>
 #include <DnaSystem/BaseDNA.hpp>
-#include <DnaSystem/DNACollector.hpp>
-#include <DnaSystem/DNACollectorTimestamp.hpp>
+#include <DnaSystem/Collector.hpp>
+#include <DnaSystem/CollectorTimestamp.hpp>
 
 namespace Pot
 {
-	using Debug::Logger;
-	using Debug::Demangler;
 
-	const potu8 DNACollectorChecker::c_operationCountBetweenChecks = 1;
+using Debug::Logger;
+using Debug::Demangler;
 
-	DNACollectorChecker::DNACollectorChecker(const DNACollector& collector):
+namespace DnaSystem
+{
+	const potu8 CollectorChecker::c_operationCountBetweenChecks = 1;
+
+	CollectorChecker::CollectorChecker(const Collector& collector):
 		m_collector(collector),
 		m_operationCount(0),
 		m_nextCheck(Check::Dna_TimestampValidity),
 		m_fullCheckMode(false)
 	{}
 
-	void DNACollectorChecker::checkIntegrityIFN()
+	void CollectorChecker::checkIntegrityIFN()
 	{
 		if (!m_fullCheckMode)
 		{
@@ -81,12 +84,12 @@ namespace Pot
 		}
 	}
 
-	void DNACollectorChecker::setFullCheckMode(bool fullCheck)
+	void CollectorChecker::setFullCheckMode(bool fullCheck)
 	{
 		m_fullCheckMode = fullCheck;
 	}
 
-	Check::Type DNACollectorChecker::getCheckToPerform()
+	Check::Type CollectorChecker::getCheckToPerform()
 	{
 		Check::Type currentCheck = Check::Length;
 		// We don't care about overflow on 'operationCount', even though it may disturb the check frequency a little bit
@@ -100,21 +103,21 @@ namespace Pot
 	}
 
 	/* O(DnaWC) * O(OrgWC) / O(DnaWC) * O(OrgC) */
-	void DNACollectorChecker::checkDnas_TimestampValidity() const
+	void CollectorChecker::checkDnas_TimestampValidity() const
 	{
-		const DNACollector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
-		const DNACollector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
-		DNACollector::DNAContainer::const_iterator containerIt;
+		const Collector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
+		const Collector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
+		Collector::DNAContainer::const_iterator containerIt;
 
 		for (containerIt = dnaContainer.begin(); containerIt != dnaContainer.end(); ++containerIt)
 		{
-			const DNACollectorTimestamp& t = containerIt->first;
+			const CollectorTimestamp& t = containerIt->first;
 
 			/* O(OrgWC) / O(OrgC) */
-			DNACollector::OrganismContainer::const_iterator orgContainerIt;
+			Collector::OrganismContainer::const_iterator orgContainerIt;
 			for (orgContainerIt = organismContainer.begin(); orgContainerIt != organismContainer.end(); ++orgContainerIt)
 			{
-				const DNACollector::OrganismByTimestamp& organisms = orgContainerIt->second.second;
+				const Collector::OrganismByTimestamp& organisms = orgContainerIt->second.second;
 				if (organisms.find(t) != organisms.end()) /* O(1) / O(TC) */
 					break;
 			}
@@ -127,25 +130,25 @@ namespace Pot
 	}
 
 	/* O(DnaWC) */
-	void DNACollectorChecker::checkDnas_NoEmptyList() const
+	void CollectorChecker::checkDnas_NoEmptyList() const
 	{
-		const DNACollector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
-		DNACollector::DNAContainer::const_iterator containerIt;
+		const Collector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
+		Collector::DNAContainer::const_iterator containerIt;
 
 		for (containerIt = dnaContainer.begin(); containerIt != dnaContainer.end(); ++containerIt)
 		{
-			const DNACollectorTimestamp& t = containerIt->first;
-			const DNACollector::DNAsByType& dnas = containerIt->second;
+			const CollectorTimestamp& t = containerIt->first;
+			const Collector::DNAsByType& dnas = containerIt->second;
 
 			std::ostringstream oss;
 			oss << "DNACollector::checkIntegrity: ";
 			oss << "the DNAsByType is empty for timestamp " << t;
 			handleError(!dnas.empty(), oss.str().c_str());
 
-			DNACollector::DNAsByType::const_iterator dnaIt;
+			Collector::DNAsByType::const_iterator dnaIt;
 			for (dnaIt = dnas.begin(); dnaIt != dnas.end(); ++dnaIt)
 			{
-				const DNACollector::DNAList& typedDnas = dnaIt->second;
+				const Collector::DNAList& typedDnas = dnaIt->second;
 
 				std::ostringstream oss;
 				oss << "DNACollector::checkIntegrity: ";
@@ -156,21 +159,21 @@ namespace Pot
 	}
 
 	/* O(DnaC * log(DnaC)) */
-	void DNACollectorChecker::checkDnas_Uniqueness() const
+	void CollectorChecker::checkDnas_Uniqueness() const
 	{
-		const DNACollector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
-		DNACollector::DNAContainer::const_iterator containerIt;
+		const Collector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
+		Collector::DNAContainer::const_iterator containerIt;
 		std::set<const BaseDNA*> dnaBuffer;
 
 		for (containerIt = dnaContainer.begin(); containerIt != dnaContainer.end(); ++containerIt)
 		{
-			const DNACollector::DNAsByType& dnas = containerIt->second;
-			DNACollector::DNAsByType::const_iterator dnaIt;
+			const Collector::DNAsByType& dnas = containerIt->second;
+			Collector::DNAsByType::const_iterator dnaIt;
 
 			for (dnaIt = dnas.begin(); dnaIt != dnas.end(); ++dnaIt)
 			{
-				const DNACollector::DNAList& typedDnas = dnaIt->second;
-				DNACollector::DNAList::const_iterator it;
+				const Collector::DNAList& typedDnas = dnaIt->second;
+				Collector::DNAList::const_iterator it;
 
 				for (it = typedDnas.begin(); it != typedDnas.end(); ++it)
 				{
@@ -188,21 +191,21 @@ namespace Pot
 	}
 
 	/* O(OrgC * log(OrgC)) */
-	void DNACollectorChecker::checkOrganisms_TimestampUniqueness() const
+	void CollectorChecker::checkOrganisms_TimestampUniqueness() const
 	{
-		const DNACollector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
-		DNACollector::OrganismContainer::const_iterator containerIt;
-		std::set<DNACollectorTimestamp> timestampBuffer;
+		const Collector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
+		Collector::OrganismContainer::const_iterator containerIt;
+		std::set<CollectorTimestamp> timestampBuffer;
 
 		for (containerIt = organismContainer.begin(); containerIt != organismContainer.end(); ++containerIt)
 		{
-			const DNACollector::OrganismByTimestamp& timestamps = containerIt->second.second;
-			DNACollector::OrganismByTimestamp::const_iterator it;
+			const Collector::OrganismByTimestamp& timestamps = containerIt->second.second;
+			Collector::OrganismByTimestamp::const_iterator it;
 
 			for (it = timestamps.begin(); it != timestamps.end(); ++it)
 			{
-				DNACollectorTimestamp t = it->first;
-				std::pair<std::set<DNACollectorTimestamp>::iterator, bool> res = timestampBuffer.insert(t);
+				CollectorTimestamp t = it->first;
+				std::pair<std::set<CollectorTimestamp>::iterator, bool> res = timestampBuffer.insert(t);
 				const bool alreadyIn = !res.second;
 
 				std::ostringstream oss;
@@ -214,20 +217,20 @@ namespace Pot
 	}
 
 	/* O(OrgWC) / O(OrgWC) * O(DnaWC) */
-	void DNACollectorChecker::checkOrganisms_TimestampValidity() const
+	void CollectorChecker::checkOrganisms_TimestampValidity() const
 	{
-		const DNACollector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
-		const DNACollector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
-		DNACollector::OrganismContainer::const_iterator containerIt;
+		const Collector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
+		const Collector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
+		Collector::OrganismContainer::const_iterator containerIt;
 
 		for (containerIt = organismContainer.begin(); containerIt != organismContainer.end(); ++containerIt)
 		{
-			const DNACollector::OrganismByTimestamp& timestamps = containerIt->second.second;
-			DNACollector::OrganismByTimestamp::const_iterator it;
+			const Collector::OrganismByTimestamp& timestamps = containerIt->second.second;
+			Collector::OrganismByTimestamp::const_iterator it;
 
 			for (it = timestamps.begin(); it != timestamps.end(); ++it)
 			{
-				const DNACollectorTimestamp& t = it->first;
+				const CollectorTimestamp& t = it->first;
 
 				std::ostringstream oss;
 				oss << "DNACollector::checkIntegrity: ";
@@ -238,18 +241,18 @@ namespace Pot
 	}
 
 	/* O(OrgWC) / O(OrgC) */
-	void DNACollectorChecker::checkOrganisms_AliveTimestampIntegrity() const
+	void CollectorChecker::checkOrganisms_AliveTimestampIntegrity() const
 	{
-		const DNACollector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
-		DNACollector::OrganismContainer::const_iterator containerIt;
+		const Collector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
+		Collector::OrganismContainer::const_iterator containerIt;
 
 		for (containerIt = organismContainer.begin(); containerIt != organismContainer.end(); ++containerIt)
 		{
-			const DNACollectorTimestamp& aliveTimestamp = containerIt->second.first;
-			if (aliveTimestamp == DNACollectorTimestamp::c_invalid)
+			const CollectorTimestamp& aliveTimestamp = containerIt->second.first;
+			if (aliveTimestamp == CollectorTimestamp::c_invalid)
 				continue;
 
-			const DNACollector::OrganismByTimestamp& timestamps = containerIt->second.second;
+			const Collector::OrganismByTimestamp& timestamps = containerIt->second.second;
 
 			std::ostringstream oss;
 			oss << "DNACollector::checkIntegrity: ";
@@ -260,19 +263,19 @@ namespace Pot
 	}
 
 	/* O(OrgWC) * O(DnaC) */
-	void DNACollectorChecker::checkOrganisms_TimestampStatusIntegrity() const
+	void CollectorChecker::checkOrganisms_TimestampStatusIntegrity() const
 	{
-		const DNACollector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
-		DNACollector::OrganismContainer::const_iterator containerIt;
+		const Collector::OrganismContainer& organismContainer = m_collector.m_organismContainer;
+		Collector::OrganismContainer::const_iterator containerIt;
 
 		for (containerIt = organismContainer.begin(); containerIt != organismContainer.end(); ++containerIt)
 		{
-			const DNACollector::OrganismByTimestamp& timestamps = containerIt->second.second;
-			DNACollector::OrganismByTimestamp::const_iterator it;
+			const Collector::OrganismByTimestamp& timestamps = containerIt->second.second;
+			Collector::OrganismByTimestamp::const_iterator it;
 
 			for (it = timestamps.begin(); it != timestamps.end(); ++it)
 			{
-				const DNACollectorTimestamp& t = it->first;
+				const CollectorTimestamp& t = it->first;
 				const bool alive = it->second.alive;
 
 				std::ostringstream oss;
@@ -284,19 +287,19 @@ namespace Pot
 		}
 	}
 
-	bool DNACollectorChecker::checkDNAsStatus(const DNACollectorTimestamp& t, bool shouldBeAlive) const
+	bool CollectorChecker::checkDNAsStatus(const CollectorTimestamp& t, bool shouldBeAlive) const
 	{
-		const DNACollector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
-		DNACollector::DNAContainer::const_iterator containerIt = dnaContainer.find(t);
+		const Collector::DNAContainer& dnaContainer = m_collector.m_dnaContainer;
+		Collector::DNAContainer::const_iterator containerIt = dnaContainer.find(t);
 		ASSERT_RELEASE(containerIt != dnaContainer.end());
 
-		const DNACollector::DNAsByType& dnas = containerIt->second;
-		DNACollector::DNAsByType::const_iterator dnasIt;
+		const Collector::DNAsByType& dnas = containerIt->second;
+		Collector::DNAsByType::const_iterator dnasIt;
 
 		for (dnasIt = dnas.begin(); dnasIt != dnas.end(); ++dnasIt)
 		{
-			const DNACollector::DNAList& typedDNAs = dnasIt->second;
-			DNACollector::DNAList::const_iterator typedIt;
+			const Collector::DNAList& typedDNAs = dnasIt->second;
+			Collector::DNAList::const_iterator typedIt;
 
 			for (typedIt = typedDNAs.begin(); typedIt != typedDNAs.end(); ++typedIt)
 			{
@@ -309,13 +312,13 @@ namespace Pot
 		return true;
 	}
 
-	void DNACollectorChecker::handleError(bool test, const char* msg) const
+	void CollectorChecker::handleError(bool test, const char* msg) const
 	{
 		if (!test)
 		{
-			DNACollector::dump(Logger::CError);
+			Collector::dump(Logger::CError);
 			ASSERT_DEBUG_MSG(test, msg);
 		}
 	}
-}
+}}
 #endif

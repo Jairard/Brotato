@@ -2,12 +2,15 @@
 #include "BaseDNA.hpp"
 
 #include <Debug/Logger.hpp>
-#include <Dnasystem/DNACollector.hpp>
+#include <Dnasystem/Collector.hpp>
 
 namespace Pot
 {
-	using Debug::Logger;
 
+using Debug::Logger;
+
+namespace DnaSystem
+{
 	BaseDNA::BaseDNA():
 		m_organism(nullptr)
 	{
@@ -29,12 +32,12 @@ namespace Pot
 
 	void BaseDNA::selfRegister(const std::type_info& organismType)
 	{
-		DNACollector::instance().registerDNA(*this, organismType);
+		Collector::instance().registerDNA(*this, organismType);
 	}
 
 	void BaseDNA::selfUnregister()
 	{
-		DNACollector::instance().unregisterDNA(*this);
+		Collector::instance().unregisterDNA(*this);
 	}
 
 	void BaseDNA::onOrganismDeath(const BaseOrganism* organism)
@@ -43,4 +46,4 @@ namespace Pot
 		ASSERT_DEBUG(organism == m_organism);
 		m_organism = nullptr;
 	}
-}
+}}

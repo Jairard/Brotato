@@ -9,15 +9,15 @@ namespace std
 	class type_info;
 }
 
-namespace Pot
+namespace Pot { namespace DnaSystem
 {
 
 class BaseOrganism;
-class DNACollector;
+class Collector;
 
 class BaseDNA
 {
-	friend class DNACollector;
+	friend class Collector;
 
 	public:
 		virtual ~BaseDNA();
@@ -55,6 +55,6 @@ void BaseDNA::setOrganism(const OrganismType* organism)
 	m_organism = Tools::as<const BaseOrganism>(organism);
 }
 
-}
+}}
 
 #endif

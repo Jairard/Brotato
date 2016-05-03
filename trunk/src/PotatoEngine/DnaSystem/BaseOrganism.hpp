@@ -4,16 +4,16 @@
 #include <Core/compil.hpp>
 #ifdef POT_DEBUG
 # include <Debug/Callstack.hpp>
-# include <DnaSystem/DNACollector.hpp>
+# include <DnaSystem/Collector.hpp>
 #endif
 
-namespace Pot
+namespace Pot { namespace DnaSystem
 {
 	class BaseOrganism
 	{
 		template <typename T> friend class Pool;
 #ifdef POT_DEBUG
-		friend class DNACollector;
+		friend class Collector;
 #endif
 
 	protected:
@@ -29,6 +29,6 @@ namespace Pot
 		Debug::Callstack m_callstack;
 #endif
 	};
-}
+}}
 
 #endif

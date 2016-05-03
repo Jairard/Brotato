@@ -15,13 +15,11 @@
 #include <Core/types.hpp>
 #include <Debug/assert.hpp>
 #include <Debug/Callstack.hpp>
-#include <DnaSystem/DnaCollectorChecker.hpp>
-#include <DnaSystem/DNACollectorTimestamp.hpp>
+#include <DnaSystem/CollectorChecker.hpp>
+#include <DnaSystem/CollectorTimestamp.hpp>
 
 // TODO:
 // - Look for complexity improvements
-// - separate folder/namespace ?
-// - unit tests
 
 /*
  * Complexity notations:
@@ -38,25 +36,28 @@
  */
 namespace Pot
 {
+
+namespace Debug
+{
+	class Logger;
+}
+
+namespace DnaSystem
+{
 	class BaseDNA;
 	class BaseOrganism;
-
-	namespace Debug
-	{
-		class Logger;
-	}
 
 	using Debug::Logger;
 	using Debug::Callstack;
 
-	class DNACollector: public Singleton<DNACollector>, public NonCopyable
+	class Collector: public Singleton<Collector>, public NonCopyable
 	{
 		template <typename T>
 		friend class Singleton;
 		friend class BaseDNA;
 		friend class BaseOrganism;
 #ifdef POT_DEBUG
-		friend class DNACollectorChecker;
+		friend class CollectorChecker;
 #endif
 
 	private:
@@ -88,22 +89,23 @@ namespace Pot
 		// DNA container
 		typedef std::vector<DNAInfo> DNAList;
 		typedef std::unordered_map<std::type_index, DNAList> DNAsByType;
-		typedef std::unordered_map<DNACollectorTimestamp, DNAsByType> DNAContainer;
+		typedef std::unordered_map<CollectorTimestamp, DNAsByType> DNAContainer;
 
 		// Organism container
-		typedef std::unordered_map<DNACollectorTimestamp, OrganismInfo> OrganismByTimestamp;
-		typedef std::pair<DNACollectorTimestamp, OrganismByTimestamp> OrganismsInfoForPointer; // DNACollectorTimestamp: aliveTimestamp
+		typedef std::unordered_map<CollectorTimestamp, OrganismInfo> OrganismByTimestamp;
+		typedef std::pair<CollectorTimestamp, OrganismByTimestamp> OrganismsInfoForPointer; // CollectorTimestamp: aliveTimestamp
 		typedef std::unordered_map<const BaseOrganism*, OrganismsInfoForPointer> OrganismContainer;
 
 	protected:
-		DNACollector();
-		~DNACollector();
+		Collector();
+		~Collector();
 
 	public:
 		static void dump(const char* tag = c_tag);
 		static const char* tag();
-		size_t memorySize() const;
+		static void setFullCheckMode(bool enabled);
 
+		size_t memorySize() const;
 		/* O(OrgWC) */
 		size_t organismCount() const;
 		/* O(DnaC) */
@@ -121,18 +123,18 @@ namespace Pot
 		void dump_internal(std::ostream& outStream, bool displayCallstacks) const;
 
 		/* O(OrgC) */
-		const OrganismInfo* getOrganismInfoFromTimestamp(const DNACollectorTimestamp& t) const;
+		const OrganismInfo* getOrganismInfoFromTimestamp(const CollectorTimestamp& t) const;
 		/* O(1) / O(OrgWC) | O(OrgC) */
-		const DNACollectorTimestamp& createOrganismEntry(const BaseOrganism* ptr, const std::type_info& type);
+		const CollectorTimestamp& createOrganismEntry(const BaseOrganism* ptr, const std::type_info& type);
 		/* O(1) / O(OrgWC) | O(OrgC) */
-		void clearOrganismInfoForTimestamp(const BaseOrganism* ptr, const DNACollectorTimestamp& t);
+		void clearOrganismInfoForTimestamp(const BaseOrganism* ptr, const CollectorTimestamp& t);
 		/* Alive: O(1) / O(OrgWC) | O(OrgC) */
 		/* Dead:  O(DnaC) | O(DnaC) * O(OrgC) */
-		DNACollectorTimestamp fetchTimestamp(const BaseDNA& dna, const std::type_index& dnaTypeIndex, const BaseOrganism** outOrganism) const;
+		CollectorTimestamp fetchTimestamp(const BaseDNA& dna, const std::type_index& dnaTypeIndex, const BaseOrganism** outOrganism) const;
 
 #ifdef POT_DEBUG
 		/* O(1) / O(OrgC) */
-		void checkOrganismStatus(const BaseOrganism* ptr, const DNACollectorTimestamp& t, bool shouldBeAlive) const;
+		void checkOrganismStatus(const BaseOrganism* ptr, const CollectorTimestamp& t, bool shouldBeAlive) const;
 		void checkIntegrityIFN();
 #endif
 
@@ -142,11 +144,11 @@ namespace Pot
 			static const size_t c_framesToSkipForOrganismInfo;
 			DNAContainer m_dnaContainer;
 			OrganismContainer m_organismContainer;
-			DNACollectorTimestamp m_timestamp;
+			CollectorTimestamp m_timestamp;
 #ifdef POT_DEBUG
-			DNACollectorChecker m_checker;
+			CollectorChecker m_checker;
 #endif
 	};
-}
+}}
 
 #endif

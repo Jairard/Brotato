@@ -1,25 +1,24 @@
 #include "catch.hpp"
-#include <Debug/Callstack.hpp>
 #include <DnaSystem/BaseOrganism.hpp>
 #include <DnaSystem/DNA.hpp>
-#include <DnaSystem/DNACollector.hpp>
+#include <DnaSystem/Collector.hpp>
 
-using Pot::DNACollector;
+using Pot::DnaSystem::Collector;
 
 SCENARIO("DNA-Organism system", "dna-organism system")
 {
-	class BaseOrganism: public Pot::BaseOrganism
+	class BaseOrganism: public Pot::DnaSystem::BaseOrganism
 	{};
-	typedef Pot::DNA<BaseOrganism> BaseOrganismDNA;
+	typedef Pot::DnaSystem::DNA<BaseOrganism> BaseOrganismDNA;
 
 	class DerivedOrganism: public BaseOrganism
 	{};
-	typedef Pot::DNA<DerivedOrganism> DerivedOrganismDNA;
+	typedef Pot::DnaSystem::DNA<DerivedOrganism> DerivedOrganismDNA;
 
 	GIVEN("a derived organism")
 	{
-		DNACollector::instantiate();
-		const DNACollector& collector = DNACollector::instance();
+		Collector::instantiate();
+		const Collector& collector = Collector::instance();
 
 		const DerivedOrganism* const organism = new DerivedOrganism();
 		{
@@ -69,7 +68,7 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 		}
 
 		delete organism;
-		DNACollector::deleteInstance();
+		Collector::deleteInstance();
 	}
 
 	GIVEN("a class that inherits from Pot::BaseOrganism")
@@ -89,7 +88,7 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 
 	GIVEN("a base organism instance")
 	{
-		DNACollector::instantiate();
+		Collector::instantiate();
 		const BaseOrganism* const organism = new BaseOrganism();
 
 		{
@@ -107,12 +106,12 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 		}
 
 		delete organism;
-		DNACollector::deleteInstance();
+		Collector::deleteInstance();
 	}
 
 	GIVEN("a derived organism instance")
 	{
-		DNACollector::instantiate();
+		Collector::instantiate();
 		const DerivedOrganism* const organism = new DerivedOrganism();
 
 		{
@@ -124,12 +123,12 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 		}
 
 		delete organism;
-		DNACollector::deleteInstance();
+		Collector::deleteInstance();
 	}
 
 	GIVEN("a derived organism instance that has been upcasted")
 	{
-		DNACollector::instantiate();
+		Collector::instantiate();
 		const BaseOrganism* const organism = new DerivedOrganism();
 
 		{
@@ -147,6 +146,6 @@ SCENARIO("DNA-Organism system", "dna-organism system")
 		}
 
 		delete organism;
-		DNACollector::deleteInstance();
+		Collector::deleteInstance();
 	}
 }
